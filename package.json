@@ -10,7 +10,6 @@
     "start-dev-single-page": "node_modules/.bin/http-server src/static",
     "start-dev-hmr": "node_modules/.bin/webpack-dev-server --progress --inline --hot --open",
     "build": "NODE_ENV=production node_modules/.bin/webpack -p"
-
   },
   "dependencies": {
     "babel-cli": "^6.11.4",
@@ -23,6 +22,7 @@
     "cross-env": "^3.1.4",
     "ejs": "^2.5.1",
     "express": "^4.14.0",
+    "mongoose": "^4.9.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-router": "^2.6.1"
