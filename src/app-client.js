@@ -1,8 +1,9 @@
-// src/app-client.js
+'use strict';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NotFound from './components/NotFound';
+import AppRoutes from './components/AppRoutes';
 
 window.onload = () => {
-  ReactDOM.render(<NotFound/>, document.getElementById('main'));
+  ReactDOM.render(<AppRoutes/>, document.getElementById('main'));
 };
