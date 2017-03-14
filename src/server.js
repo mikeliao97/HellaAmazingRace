@@ -8,6 +8,10 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import routes from './routes';
 import NotFoundPage from './components/NotFoundPage';
+import Mongoose from './serv/dbconfig';
+import Races from './serv/schemas/races';
+import User from './serv/schemas/users';
+import Results from './serv/schemas/results';
 
 const app = new Express();
 const server = new Server(app);
