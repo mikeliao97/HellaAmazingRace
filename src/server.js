@@ -9,7 +9,7 @@ import { match, RouterContext } from 'react-router';
 import routes from './routes';
 import NotFoundPage from './components/NotFoundPage';
 import Mongoose from './serv/dbconfig';
-// import Races from './schemas/races';
+import Races from './schemas/races';
 import User from './serv/schemas/users';
 // import Results from './schemas/results';
 
