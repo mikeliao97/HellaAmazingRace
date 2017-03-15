@@ -4,10 +4,6 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default class Layout extends React.Component {
-
-
-
-  // removing this.props.children breaks routing for some reason, leave for now
   render() {
     return (
       <div>
@@ -39,10 +35,6 @@ export default class Layout extends React.Component {
                 </div>
             </div>
         </nav>
-
-        <div>
-          <img src="https://maps.googleapis.com/maps/api/staticmap?center=37.783714,-122.408645&zoom=14&size=400x400&markers=37.783714,-122.408645&key=AIzaSyCGPICzsGnm9HgAdoW7nRyZSD1oSaR0IVY"></img>
-        </div>
 
         <div>{this.props.children}</div>
 

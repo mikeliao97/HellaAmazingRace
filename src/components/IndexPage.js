@@ -6,9 +6,7 @@ export default class IndexPage extends React.Component {
   render() {
     return (
       <div>
-
-
-      tesdasdasd
+      <h1>You're logged in.</h1>
       </div>
     );
   }
