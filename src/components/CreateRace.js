@@ -6,6 +6,7 @@ export default class CreateRace extends React.Component {
   render() {
 
     let mapData = {
+      title: 'testing',
       start: null,
       finish: null,
       checkpoints: []
