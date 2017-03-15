@@ -5,11 +5,11 @@
   "main": "src/server.js",
   "repository": "",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node_modules/.bin/babel-node --presets react,es2015 src/server.js",
+    "start": "nodemon src/server.js --exec babel-node --presets react,es2015",
     "start-dev": "npm run start-dev-hmr",
     "start-dev-single-page": "node_modules/.bin/http-server src/static",
     "start-dev-hmr": "node_modules/.bin/webpack-dev-server --progress --inline --hot --open",
-    "build": "NODE_ENV=production node_modules/.bin/webpack -p"
+    "build": "NODE_ENV=production node_modules/.bin/webpack -p --watch"
   },
   "dependencies": {
     "@google/maps": "^0.3.1",
