@@ -23,7 +23,9 @@ export default class CreateRace extends React.Component {
     };
 
     const saveRace = () => {
-      console.log('save my race');
+      $.post('/SaveRace', mapData, (something) => {
+        console.log('something ', something);
+      });
     };
 
 

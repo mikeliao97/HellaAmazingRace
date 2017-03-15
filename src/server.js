@@ -103,6 +103,27 @@ app.get('*', util.isLoggedIn, (req, res) => {
   );
 });
 
+
+
+///// POST Requests /////
+app.post('/saveRace', (req, res) => {
+  console.log('i got it!');
+  res.send('hurray');
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';
 server.listen(port, err => {
