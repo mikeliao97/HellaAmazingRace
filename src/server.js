@@ -11,7 +11,8 @@ import NotFoundPage from './components/NotFoundPage';
 import Mongoose from './serv/dbconfig';
 import Races from './serv/schemas/races';
 import User from './serv/schemas/users';
-import UserHelpers from './serv/dbhelpers/userHelpers';
+import UserHelpers from './serv/dbhelpers/UserHelpers';
+import RaceHelpers from './serv/dbhelpers/RaceHelpers';
 import Results from './serv/schemas/results';
 import passport from 'passport';
 import util from './config/utility';
@@ -102,6 +103,26 @@ app.get('*', util.isLoggedIn, (req, res) => {
     }
   );
 });
+
+
+
+///// POST Requests /////
+
+// store saved race
+app.post('/saveRace', RaceHelpers.storeSavedRace);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';

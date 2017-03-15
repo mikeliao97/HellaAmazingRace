@@ -1,5 +1,5 @@
 exports.isLoggedIn = (req, res, next) => {
-  if (req.url ==='/') {
+  if (req.url === '/') {
     next();
   } else if (req.user) {
     next();
