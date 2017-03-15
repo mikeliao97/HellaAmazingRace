@@ -23,7 +23,7 @@ export default class Layout extends React.Component {
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav">
                         <li>
-                            <a href="#">About</a>
+                            <a href="#"></a>
                         </li>
                         <li>
                             <a href="#">Services</a>
