@@ -33,12 +33,10 @@ passport.use(new Strategy({
 ));
 
 passport.serializeUser(function(user, cb) {
-  console.log('when am i ran', user);
   cb(null, user);
 });
 
 passport.deserializeUser(function(obj, cb) {
-  console.log('what is this, obj');
   cb(null, obj);
 });
 
