@@ -66,7 +66,24 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
-    console.log(req.user);
+
+    User.findOne({ userId: req.user.id, displayName: req.user.displayName })
+      .exec((err, found) => {
+        if (!found) {
+          var user = new User({
+            userId: req.user.id,
+            displayName: req.user.displayName
+          });
+          user.save((err, newUser) => {
+            if (err) {
+              console.log('failed');
+            } else {
+              console.log('user saved');
+            }
+          });
+        }
+      });
+
     res.redirect('/home');
   });
 
