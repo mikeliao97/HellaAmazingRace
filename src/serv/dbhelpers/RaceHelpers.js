@@ -3,9 +3,7 @@ import Race from '../schemas/races';
 exports.storeSavedRace = (req, res) => {
   var race = req.body;
   Race.findOne(race).exec((err, found) => {
-    if (err) {
-      return err;
-    } else if (!found) {
+    if (!found) {
       var newRace = new Race({
         title: race.title,
         start: race.start,
@@ -19,6 +17,8 @@ exports.storeSavedRace = (req, res) => {
           res.send('Race Saved');
         }
       });
+    } else {
+      res.send('Race name already exists');
     }
   });
 }
