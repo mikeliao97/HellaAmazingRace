@@ -19,9 +19,6 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
 
-
-
-
 //passport
 var Strategy = require('passport-facebook').Strategy;
 
@@ -44,9 +41,6 @@ passport.deserializeUser(function(obj, cb) {
   console.log('what is this, obj');
   cb(null, obj);
 });
-
-
-
 
 
 // server setup
@@ -78,7 +72,7 @@ app.get('/auth/facebook/callback',
   });
 
 
-
+// wildcard route for react routing
 app.get('*', util.isLoggedIn, (req, res) => {
   match(
     { routes, location: req.url },
