@@ -12,6 +12,37 @@ import Mongoose from './serv/dbconfig';
 import Races from './serv/schemas/races';
 import User from './serv/schemas/users';
 import Results from './serv/schemas/results';
+import passport from 'passport';
+
+
+
+
+
+//passport
+var Strategy = require('passport-facebook').Strategy;
+
+passport.use(new Strategy({
+  clientID: '630724287121611',
+  clientSecret: '39b0e9bbb91cdb757f264099dff78b0b',
+  callbackURL: 'http://localhost:3000/auth/facebook/callback'
+},
+  function(accessToken, refreshToken, profile, cb) {
+    return cb(null, profile);
+  }
+));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+
+
+
+
 
 const app = new Express();
 const server = new Server(app);
@@ -19,6 +50,22 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(Express.static(path.join(__dirname, 'static')));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// passport routes
+app.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  function(req, res) {
+    res.render('landing');
+  });
+
+
 
 app.get('*', (req, res) => {
   match(
