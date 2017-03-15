@@ -11,6 +11,7 @@ import NotFoundPage from './components/NotFoundPage';
 import Mongoose from './serv/dbconfig';
 import Races from './serv/schemas/races';
 import User from './serv/schemas/users';
+import UserHelpers from './serv/dbhelpers/userHelpers';
 import Results from './serv/schemas/results';
 import passport from 'passport';
 import util from './config/utility';
@@ -66,7 +67,12 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('/home');
+    // on successful login check user credentials and store in DB if not found yet.
+    UserHelpers.checkUserIfNewAndCreate(req.user.id, req.user.displayName)
+      .then(res.redirect('/home'))
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
 
