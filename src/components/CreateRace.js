@@ -6,7 +6,7 @@ export default class CreateRace extends React.Component {
   render() {
     return (
       <div>
-        <a href="/auth/facebook">Log In with Facebook</a>
+        <h1> Create a Race</h1>
       </div>
     );
   }
