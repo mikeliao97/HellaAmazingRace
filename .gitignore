@@ -4,6 +4,10 @@
 logs
 *.log
 
+
+src/static/js/bundle.js
+
+
 # Runtime data
 pids
 *.pid
