@@ -2,7 +2,7 @@
 
 import path from 'path';
 import { Server } from 'http';
-import Express from 'express';
+import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
@@ -13,6 +13,10 @@ import Races from './serv/schemas/races';
 import User from './serv/schemas/users';
 import Results from './serv/schemas/results';
 import passport from 'passport';
+import util from './config/utility';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
 
 
@@ -32,10 +36,12 @@ passport.use(new Strategy({
 ));
 
 passport.serializeUser(function(user, cb) {
+  console.log('when am i ran', user);
   cb(null, user);
 });
 
 passport.deserializeUser(function(obj, cb) {
+  console.log('what is this, obj');
   cb(null, obj);
 });
 
@@ -43,14 +49,20 @@ passport.deserializeUser(function(obj, cb) {
 
 
 
-
-const app = new Express();
+// server setup
+const app = new express();
 const server = new Server(app);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-app.use(Express.static(path.join(__dirname, 'static')));
-
+app.use(express.static(path.join(__dirname, 'static')));
+app.use(cookieParser('shhhh, very secret'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'shhh, it\'s a secret',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -62,12 +74,12 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
-    res.render('landing');
+    res.redirect('/home');
   });
 
 
 
-app.get('*', (req, res) => {
+app.get('*', util.isLoggedIn, (req, res) => {
   match(
     { routes, location: req.url },
     (err, redirectLocation, renderProps) => {
