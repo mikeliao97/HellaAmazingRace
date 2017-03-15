@@ -20,7 +20,6 @@ export default class CreateRace extends React.Component {
       } else {
         mapData.checkpoints.push('some data');
       }
-      console.log(mapData);
     };
 
     const saveRace = () => {
@@ -34,7 +33,7 @@ export default class CreateRace extends React.Component {
         <div className="text-center">
           <button type="button" className="btn btn-primary" value="start" onClick={addMapData}>Set Start</button>
           <button type="button" className="btn btn-primary"onClick={addMapData}>Set Checkpoint</button>
-          <button type="button" className="btn btn-primary" value="finish" onclick={addMapData}>Set Finish</button>
+          <button type="button" className="btn btn-primary" value="finish" onClick={addMapData}>Set Finish</button>
         </div>
         <div className="text-center">
           <button type="button" className="btn btn-primary" onClick={saveRace}>Save Race</button>
