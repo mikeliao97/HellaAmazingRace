@@ -17,16 +17,16 @@ export default class Layout extends React.Component {
                         <span className="icon-bar"></span>
                     </button>
                     <a className="navbar-brand" href="#">
-                        <img src="http://placehold.it/150x50&text=Logo" alt="" />
+                        <img src="img/logo.jpg" alt="" />
                     </a>
                 </div>
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav">
                         <li>
-                            <a href="#">About</a>
+                            <a href="home">Home</a>
                         </li>
                         <li>
-                            <a href="#">Services</a>
+                            <a href="CreateRace">Create Race</a>
                         </li>
                         <li>
                             <a href="#">Contact</a>
