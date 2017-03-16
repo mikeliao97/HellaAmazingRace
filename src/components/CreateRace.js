@@ -1,8 +1,7 @@
 'use strict';
 
 import React from 'react';
-import GoogleMapReact from 'google-map-react';
-
+import RaceMap from './map';
 
 
 export default class CreateRace extends React.Component {
@@ -13,11 +12,6 @@ export default class CreateRace extends React.Component {
       start: null,
       finish: null,
       checkpoints: []
-    };
-
-    const defaultMap = {
-      center: {lat: 59.95, lng: 30.33},
-      zoom: 11
     };
 
     const addMapData = (e) => {
@@ -37,15 +31,13 @@ export default class CreateRace extends React.Component {
       });
     };
 
-
-
     return (
       <div>
         <h1 className="text-center"> Create a Race</h1>
-        <GoogleMapReact
-          defaultCenter={defaultMap.center}
-          defaultZoom={defaultMap.zoom}
-        />
+
+        <div>
+          <RaceMap />
+        </div>
 
         <div className="text-center">
           <button type="button" className="btn btn-primary" value="start" onClick={addMapData}>Set Start</button>

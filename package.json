@@ -1,6 +1,6 @@
 {
-  "name": "Hella Amazing Race",
-  "version": "1.0",
+  "name": "hella-amazing-race",
+  "version": "",
   "description": "Hella Amazing Race",
   "main": "src/server.js",
   "repository": "https://github.com/HellaAmazingHackers/HellaAmazingRace.git",
