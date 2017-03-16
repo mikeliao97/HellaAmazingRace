@@ -8,10 +8,12 @@ export default class RaceMap extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('loaded');
   }
 
 
+  getLocation() {
+    console.log(navigator.geolocation.getCurrentPosition());
+  }
 
   render() {
 
