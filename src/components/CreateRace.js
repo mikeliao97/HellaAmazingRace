@@ -81,6 +81,11 @@ export default class CreateRace extends React.Component {
           <button type="button" className="btn btn-primary" onClick={this.saveRace.bind(this)}>Save Race</button>
           <button type="button" className="btn btn-primary" onClick={this.saveRace.bind(this)}>Start Race</button>
         </div>
+
+        <div> Start: {this.state.start} <br/>
+              Checkpoints {this.state.checkpoints} <br/>
+              Finish: {this.state.finish}
+        </div>
       </div>
     );
   }
