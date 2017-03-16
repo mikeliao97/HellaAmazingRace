@@ -5,11 +5,20 @@ import GoogleMapReact from 'google-map-react';
 
 
 export default class RaceMap extends React.Component {
+
+  constructor(props) {
+    super(props);
+    console.log('loaded');
+  }
+
+
+
   render() {
 
+
     const defaultProps = {
-      center: {lat: -122.4, lng: 37.78},
-      zoom: 10
+      center: { lat: 37.78, lng: -122.4 },
+      zoom: 15
   };
 
     return (

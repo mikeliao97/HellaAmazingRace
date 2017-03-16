@@ -15,7 +15,7 @@ export default class CreateRace extends React.Component {
     };
 
     const mapStyle = {
-      width: '600',
+      width: '600px',
       height: '400px',
       margin: '0 auto 0 auto'
     };
