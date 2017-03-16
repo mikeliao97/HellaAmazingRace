@@ -14,6 +14,12 @@ export default class CreateRace extends React.Component {
       checkpoints: []
     };
 
+    const mapStyle = {
+      width: '600',
+      height: '400px',
+      position: 'absolute'
+    };
+
     const addMapData = (e) => {
       let value = e.target.value;
       if (value === 'start') {
@@ -35,7 +41,7 @@ export default class CreateRace extends React.Component {
       <div>
         <h1 className="text-center"> Create a Race</h1>
 
-        <div>
+        <div style={mapStyle} className="text-center">
           <RaceMap />
         </div>
 
