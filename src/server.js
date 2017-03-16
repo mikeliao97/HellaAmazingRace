@@ -83,7 +83,6 @@ app.get('*', util.isLoggedIn, (req, res) => {
 });
 
 
-
 ///// POST Requests /////
 
 // store saved race

@@ -38,11 +38,16 @@ export default class CreateRace extends React.Component {
       });
     };
 
+    const testChange = (locationData) => {
+      console.log('i have my data, ', locationData);
+    };
+
     return (
       <div>
         <h1 className="text-center"> Create a Race</h1>
-          <Autocomplete />
-          
+        <Autocomplete
+          testChange={testChange.bind(this)} 
+        />
         <div style={mapStyle} className="text-center">
           <RaceMap />
         </div>
