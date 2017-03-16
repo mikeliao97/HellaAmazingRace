@@ -39,7 +39,12 @@ export default class CreateRace extends React.Component {
     };
 
     const getDataOnSearch = (locationData) => {
-      console.log('i have my data, ', locationData);
+      let formattedLocationData = {
+        Place: locationData.label,
+        Latitude: locationData.location.lat,
+        Longitude: locationData.location.lng
+      }
+      console.log(formattedLocationData);
     };
 
     return (

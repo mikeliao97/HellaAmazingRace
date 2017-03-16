@@ -10,7 +10,6 @@ export default class Autocomplete extends React.Component {
   render() {
 
     const onSuggestSelect = (suggest) => {
-      console.log(suggest);
       this.props.getDataOnSearch(suggest);
     }
 
