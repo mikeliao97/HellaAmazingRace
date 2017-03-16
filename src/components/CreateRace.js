@@ -7,63 +7,79 @@ import Autocomplete from './Autocomplete';
 
 
 export default class CreateRace extends React.Component {
-  render() {
 
-    let mapData = {
-      title: 'testing',
+  constructor(props) {
+    super(props);
+    this.state = {
       start: null,
       finish: null,
-      checkpoints: []
-    };
+      checkpoints: [],
+    }
+  }
+
+  addMapData(e) {
+    let value = e.target.value;
+    if (value === 'start') {
+      this.setState({
+        start: 'starting point'
+      });
+    } else if (value === 'finish') {
+      this.setState({
+        finish: 'test me'
+      });
+    } else {
+      var newArray = this.state.checkpoints.slice();
+      newArray.push('some checkpoints');
+      this.setState({
+        checkpoints: newArray
+      });
+    }
+    console.log(this);
+  }
+
+  saveRace() {
+    $.post('/SaveRace', this.state.mapData, (something) => {
+      console.log('something ', something);
+    });
+  }
+
+  getDataOnSearch(locationData) {
+    let formattedLocationData = {
+      Place: locationData.label,
+      Latitude: locationData.location.lat,
+      Longitude: locationData.location.lng
+    }
+    console.log(formattedLocationData);
+  }
+
+  render() {
 
     const mapStyle = {
       width: '600px',
       height: '400px',
     };
 
-    const addMapData = (e) => {
-      let value = e.target.value;
-      if (value === 'start') {
-        mapData.start = 'test';
-      } else if (value === 'finish') {
-        mapData.finish = 'another test';
-      } else {
-        mapData.checkpoints.push('some data');
-      }
-    };
-
-    const saveRace = () => {
-      $.post('/SaveRace', mapData, (something) => {
-        console.log('something ', something);
-      });
-    };
-
-    const getDataOnSearch = (locationData) => {
-      let formattedLocationData = {
-        Place: locationData.label,
-        Latitude: locationData.location.lat,
-        Longitude: locationData.location.lng
-      }
-      console.log(formattedLocationData);
-    };
-
     return (
       <div>
+
         <h1 className="text-center"> Create a Race</h1>
+
         <Autocomplete
-          getDataOnSearch={getDataOnSearch.bind(this)} 
+          getDataOnSearch={this.getDataOnSearch.bind(this)} 
         />
+
         <div style={mapStyle} className="text-center">
           <RaceMap />
         </div>
+
         <div className="text-center">
-          <button type="button" className="btn btn-primary" value="start" onClick={addMapData}>Set Start</button>
-          <button type="button" className="btn btn-primary"onClick={addMapData}>Set Checkpoint</button>
-          <button type="button" className="btn btn-primary" value="finish" onClick={addMapData}>Set Finish</button>
+          <button type="button" className="btn btn-primary" value="start" onClick={this.addMapData.bind(this)}>Set Start</button>
+          <button type="button" className="btn btn-primary"onClick={this.addMapData.bind(this)}>Set Checkpoint</button>
+          <button type="button" className="btn btn-primary" value="finish" onClick={this.addMapData.bind(this)}>Set Finish</button>
         </div>
         <div className="text-center">
-          <button type="button" className="btn btn-primary" onClick={saveRace}>Save Race</button>
-          <button type="button" className="btn btn-primary" onClick={saveRace}>Start Race</button>
+          <button type="button" className="btn btn-primary" onClick={this.saveRace.bind(this)}>Save Race</button>
+          <button type="button" className="btn btn-primary" onClick={this.saveRace.bind(this)}>Start Race</button>
         </div>
       </div>
     );
