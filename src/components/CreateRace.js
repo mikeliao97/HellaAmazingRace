@@ -14,6 +14,7 @@ export default class CreateRace extends React.Component {
       start: null,
       finish: null,
       checkpoints: [],
+      searchData: null
     }
   }
 
@@ -49,7 +50,9 @@ export default class CreateRace extends React.Component {
       Latitude: locationData.location.lat,
       Longitude: locationData.location.lng
     }
-    console.log(formattedLocationData);
+    this.setState({
+      searchData: JSON.stringify(formattedLocationData)
+    });
   }
 
   render() {
@@ -84,7 +87,8 @@ export default class CreateRace extends React.Component {
 
         <div> Start: {this.state.start} <br/>
               Checkpoints {this.state.checkpoints} <br/>
-              Finish: {this.state.finish}
+              Finish: {this.state.finish} <br/>
+              Current Search: {this.state.searchData}
         </div>
       </div>
     );
