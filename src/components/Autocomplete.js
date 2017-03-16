@@ -11,7 +11,7 @@ export default class Autocomplete extends React.Component {
 
     const onSuggestSelect = (suggest) => {
       console.log(suggest);
-      this.props.testChange(suggest);
+      this.props.getDataOnSearch(suggest);
     }
 
     return (

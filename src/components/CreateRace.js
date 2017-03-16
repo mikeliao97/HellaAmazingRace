@@ -38,7 +38,7 @@ export default class CreateRace extends React.Component {
       });
     };
 
-    const testChange = (locationData) => {
+    const getDataOnSearch = (locationData) => {
       console.log('i have my data, ', locationData);
     };
 
@@ -46,7 +46,7 @@ export default class CreateRace extends React.Component {
       <div>
         <h1 className="text-center"> Create a Race</h1>
         <Autocomplete
-          testChange={testChange.bind(this)} 
+          getDataOnSearch={getDataOnSearch.bind(this)} 
         />
         <div style={mapStyle} className="text-center">
           <RaceMap />
