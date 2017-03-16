@@ -11,6 +11,7 @@ export default class CreateRace extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: '',
       start: null,
       finish: null,
       checkpoints: [],
@@ -20,26 +21,26 @@ export default class CreateRace extends React.Component {
 
   addMapData(e) {
     let value = e.target.value;
+    let searchData = this.state.searchData;
     if (value === 'start') {
       this.setState({
-        start: 'starting point'
+        start: searchData
       });
     } else if (value === 'finish') {
       this.setState({
-        finish: 'test me'
+        finish: searchData
       });
     } else {
-      var newArray = this.state.checkpoints.slice();
-      newArray.push('some checkpoints');
+      var updatedCheckpoints = this.state.checkpoints.slice();
+      updatedCheckpoints.push(searchData);
       this.setState({
-        checkpoints: newArray
+        checkpoints: updatedCheckpoints
       });
     }
-    console.log(this);
   }
 
   saveRace() {
-    $.post('/SaveRace', this.state.mapData, (something) => {
+    $.post('/SaveRace', this.state, (something) => {
       console.log('something ', something);
     });
   }
@@ -52,6 +53,13 @@ export default class CreateRace extends React.Component {
     }
     this.setState({
       searchData: JSON.stringify(formattedLocationData)
+    });
+  }
+
+  updateTitle(e) {
+    let title = e.target.value;
+    this.setState({
+      title: title
     });
   }
 
@@ -77,7 +85,7 @@ export default class CreateRace extends React.Component {
 
         <div className="text-center">
           <button type="button" className="btn btn-primary" value="start" onClick={this.addMapData.bind(this)}>Set Start</button>
-          <button type="button" className="btn btn-primary"onClick={this.addMapData.bind(this)}>Set Checkpoint</button>
+          <button type="button" className="btn btn-primary"value="checkpoints" onClick={this.addMapData.bind(this)}>Set Checkpoint</button>
           <button type="button" className="btn btn-primary" value="finish" onClick={this.addMapData.bind(this)}>Set Finish</button>
         </div>
         <div className="text-center">
@@ -85,10 +93,16 @@ export default class CreateRace extends React.Component {
           <button type="button" className="btn btn-primary" onClick={this.saveRace.bind(this)}>Start Race</button>
         </div>
 
-        <div> Start: {this.state.start} <br/>
-              Checkpoints {this.state.checkpoints} <br/>
-              Finish: {this.state.finish} <br/>
-              Current Search: {this.state.searchData}
+        <div className="text-center">
+          <form>
+          Race Title: 
+            <input type="text" value={this.state.title} onChange={this.updateTitle.bind(this)} />
+          </form>
+          <div> Start: {this.state.start} <br/>
+                Checkpoints {this.state.checkpoints} <br/>
+                Finish: {this.state.finish} <br/>
+                Current Search: {this.state.searchData}
+          </div>
         </div>
       </div>
     );
