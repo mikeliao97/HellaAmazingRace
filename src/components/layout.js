@@ -29,7 +29,7 @@ export default class Layout extends React.Component {
                             <a href="CreateRace">Create Race</a>
                         </li>
                         <li>
-                            <a href="#">Contact</a>
+                            <a href="RunRace">Run Race</a>
                         </li>
                     </ul>
                 </div>

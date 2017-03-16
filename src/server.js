@@ -77,6 +77,9 @@ app.get('/auth/facebook/callback',
   });
 
 
+///// get saved race route
+
+
 // wildcard route for react routing
 app.get('*', util.isLoggedIn, (req, res) => {
   res.sendFile(path.join(__dirname, 'static/index-static.html'))
