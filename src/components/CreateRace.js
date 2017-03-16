@@ -1,8 +1,8 @@
 'use strict';
 
 import React from 'react';
-import RaceMap from './map';
-import Geosuggest from 'react-geosuggest';
+import RaceMap from './Map';
+import Autocomplete from './Autocomplete';
 
 
 
@@ -42,11 +42,13 @@ export default class CreateRace extends React.Component {
     return (
       <div>
         <h1 className="text-center"> Create a Race</h1>
-
-        <div> <Geosuggest /> </div>
-
+        
         <div style={mapStyle} className="text-center">
           <RaceMap />
+        </div>
+
+        <div>
+          <Autocomplete />
         </div>
 
         <div className="text-center">
