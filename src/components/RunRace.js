@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import RaceMap from './Map';
+import PubMap from './mapbox';
 import Autocomplete from './Autocomplete';
 
 
@@ -23,7 +23,7 @@ export default class RunRace extends React.Component {
       <div>
         <h1 className="text-center"> Run a Race</h1>
         <div style={mapStyle} className="text-center">
-          <RaceMap />
+          <PubMap />
         </div>
       </div>
     );
