@@ -1,6 +1,8 @@
 'use strict';
 
 import React from 'react';
+import RaceMap from './map';
+
 
 export default class CreateRace extends React.Component {
   render() {
@@ -10,6 +12,12 @@ export default class CreateRace extends React.Component {
       start: null,
       finish: null,
       checkpoints: []
+    };
+
+    const mapStyle = {
+      width: '600px',
+      height: '400px',
+      margin: '0 auto 0 auto'
     };
 
     const addMapData = (e) => {
@@ -29,10 +37,14 @@ export default class CreateRace extends React.Component {
       });
     };
 
-
     return (
       <div>
         <h1 className="text-center"> Create a Race</h1>
+
+        <div style={mapStyle} className="text-center">
+          <RaceMap />
+        </div>
+
         <div className="text-center">
           <button type="button" className="btn btn-primary" value="start" onClick={addMapData}>Set Start</button>
           <button type="button" className="btn btn-primary"onClick={addMapData}>Set Checkpoint</button>
