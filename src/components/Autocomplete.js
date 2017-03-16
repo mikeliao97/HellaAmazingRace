@@ -1,14 +1,35 @@
-'use strict';
+import React from 'react'
+import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete'
 
-import React from 'react';
-import Geosuggest from 'react-geosuggest';
+class SimpleForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { address: 'San Francisco, CA' }
+    this.onChange = (address) => this.setState({ address })
+  }
 
-export default class Autocomplete extends React.Component {
+  handleFormSubmit = (event) => {
+    event.preventDefault()
+    const { address } = this.state
+
+    geocodeByAddress(address,  (err, { lat, lng }) => {
+      if (err) { console.log('Oh no!', err) }
+
+      console.log(`Yay! got latitude and longitude for ${address}`, { lat, lng })
+    })
+  }
+
   render() {
     return (
-      <div>
-        <Geosuggest className="geosuggest"/>
-      </div>
-    );
+      <form onSubmit={this.handleFormSubmit}>
+        <PlacesAutocomplete
+          value={this.state.address}
+          onChange={this.onChange}
+        />
+        <button type="submit">Submit</button>
+      </form>
+    )
   }
 }
+
+export default SimpleForm

@@ -21,8 +21,6 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
 
-
-
 //passport
 var Strategy = require('passport-facebook').Strategy;
 
@@ -81,29 +79,7 @@ app.get('/auth/facebook/callback',
 
 // wildcard route for react routing
 app.get('*', util.isLoggedIn, (req, res) => {
-  match(
-    { routes, location: req.url },
-    (err, redirectLocation, renderProps) => {
-
-      if (err) {
-        return res.status(500).send(err.message);
-      }
-
-      if (redirectLocation) {
-        return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-      }
-
-      let markup;
-      if (renderProps) {
-        markup = renderToString(<RouterContext {...renderProps}/>);
-      } else {
-        markup = renderToString(<NotFoundPage/>);
-        res.status(404);
-      }
-
-      return res.render('index', { markup });
-    }
-  );
+  res.sendFile(path.join(__dirname, 'static/index-static.html'))
 });
 
 
