@@ -2,10 +2,15 @@ import React from 'react';
 import Geosuggest from 'react-geosuggest';
 
 export default class Autocomplete extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
 
     const onSuggestSelect = (suggest) => {
-      console.log(suggest);
+      this.props.getDataOnSearch(suggest);
     }
 
     return (
