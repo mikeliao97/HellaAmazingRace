@@ -17,7 +17,7 @@ export default class CreateRace extends React.Component {
     const mapStyle = {
       width: '600',
       height: '400px',
-      position: 'absolute'
+      margin: '0 auto 0 auto'
     };
 
     const addMapData = (e) => {

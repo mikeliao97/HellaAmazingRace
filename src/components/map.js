@@ -8,8 +8,8 @@ export default class RaceMap extends React.Component {
   render() {
 
     const defaultProps = {
-      center: {lat: 59.95, lng: 30.33},
-      zoom: 11
+      center: {lat: -122.4, lng: 37.78},
+      zoom: 10
   };
 
     return (
