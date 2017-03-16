@@ -1,6 +1,8 @@
 'use strict';
 
 import React from 'react';
+import MapboxMap from './map';
+
 
 export default class CreateRace extends React.Component {
   render() {
@@ -33,6 +35,8 @@ export default class CreateRace extends React.Component {
     return (
       <div>
         <h1 className="text-center"> Create a Race</h1>
+        <MapboxMap />
+
         <div className="text-center">
           <button type="button" className="btn btn-primary" value="start" onClick={addMapData}>Set Start</button>
           <button type="button" className="btn btn-primary"onClick={addMapData}>Set Checkpoint</button>
