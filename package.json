@@ -1,9 +1,9 @@
 {
-  "name": "",
+  "name": "hella-amazing-race",
   "version": "",
-  "description": "",
+  "description": "Hella Amazing Race",
   "main": "src/server.js",
-  "repository": "",
+  "repository": "https://github.com/HellaAmazingHackers/HellaAmazingRace.git",
   "scripts": {
     "start": "nodemon src/server.js --exec babel-node --presets react,es2015",
     "start-dev": "npm run start-dev-hmr",
@@ -27,9 +27,12 @@
     "ejs": "^2.5.1",
     "express": "^4.14.0",
     "express-session": "^1.15.1",
+    "google-map-react": "^0.23.0",
+    "immutable": "^3.8.1",
     "mongoose": "^4.9.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
+    "react-mapbox-gl": "^1.4.0",
     "react-router": "^2.6.1"
   },
   "devDependencies": {
