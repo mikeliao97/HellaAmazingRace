@@ -10,29 +10,48 @@ export default class PubMap extends React.Component {
     this.state = {
       lat: null,
       lng: null,
-      lineCoords: []
     }
+    window.lineCoords = [];
+    // TESTING COORDS FOR REAL TIME TRACKING ONLY
+    window.lat = 37.8199;
+    window.lng = -122.4783;
   }
 
   componentDidMount() {
-    setInterval(() => {
-      console.log('getting location');
-      this.getCurrentLocation((ready) => {
+    this.pubnubConnect();
+
+    this.getCurrentLocation((ready) => {
         if (ready) {
+          // one time map render on page ready
           this.renderMap();
+          // then init future realtime pubnub tracking
+          setInterval(() => {
+            this.getCurrentLocation((ready) => {
+              if (ready) {
+                console.log(this.state, 'state\n')
+                // pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
+                // TESTING COORDS FOR REAL TIME TRACKING ONLY
+                pubnub.publish({channel:pnChannel, message:{lat: window.lat + 0.005, lng:window.lng + 0.02}});
+
+              }
+            });
+          }, 3000);
         }
       });
-    }, 3000);
-    // this.pubnubConnect();
-    // setInterval( () => {
-    //   pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
-    // }, 5000);
 
+    // for redrawing of future location changes
+    // setInterval(() => {
+    //   this.getCurrentLocation((ready) => {
+    //     if (ready) {
+    //       pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
+    //     }
+    //   });
+    // }, 3000);
   }
 
   renderMap() {
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
-    this.addLineCoordinates(currLoc);
+    lineCoords.push(new google.maps.LatLng(this.state.lat, this.state.lng));
     // save map to window to be able to redraw as current location changes
     window.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
@@ -54,13 +73,13 @@ export default class PubMap extends React.Component {
     })
   }
 
-  addLineCoordinates(coords) {
-    let newCoords = this.state.lineCoords.slice();
-    newCoords.push(coords);
-    this.setState({
-      lineCoords: newCoords
-    });
-  }
+  // addLineCoordinates(coords) {
+  //   let newCoords = this.state.lineCoords.slice();
+  //   newCoords.push(coords);
+  //   this.setState({
+  //     lineCoords: newCoords
+  //   });
+  // }
 
   // not used yet
   redrawMap(payload) {
@@ -70,10 +89,10 @@ export default class PubMap extends React.Component {
     map.setCenter({lat:lat, lng:lng, alt:0});
     marker.setPosition({lat:lat, lng:lng, alt:0});
 
-    this.addLineCoordinates(new google.maps.LatLng(lat, lng));
+    lineCoords.push(new google.maps.LatLng(lat, lng));
 
     let lineCoordinatesPath = new google.maps.Polyline({
-      path: this.state.lineCoords,
+      path: window.lineCoords,
       geodesic: true,
       strokeColor: '#2E10FF'
     });
@@ -84,7 +103,7 @@ export default class PubMap extends React.Component {
   // not used yet
   pubnubConnect() {
     window.pnChannel = "map-channel";
-    var pubnub = new PubNub({
+    window.pubnub = new PubNub({
       publishKey: 'pub-c-1e471fcb-f49a-481a-84ae-32b4e950ffa8',
       subscribeKey: 'sub-c-00a667ae-0a73-11e7-9734-02ee2ddab7fe'
     });
