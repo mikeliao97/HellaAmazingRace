@@ -13,40 +13,29 @@ export default class PubMap extends React.Component {
     }
     window.lineCoords = [];
     // TESTING COORDS FOR REAL TIME TRACKING ONLY
-    window.lat = 37.8199;
-    window.lng = -122.4783;
+    // window.lat = 37.8199;
+    // window.lng = -122.4783;
   }
 
   componentDidMount() {
     this.pubnubConnect();
 
     this.getCurrentLocation((ready) => {
-        if (ready) {
-          // one time map render on page ready
-          this.renderMap();
-          // then init future realtime pubnub tracking
-          setInterval(() => {
-            this.getCurrentLocation((ready) => {
-              if (ready) {
-                console.log(this.state, 'state\n')
-                // pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
-                // TESTING COORDS FOR REAL TIME TRACKING ONLY
-                pubnub.publish({channel:pnChannel, message:{lat: window.lat + 0.005, lng:window.lng + 0.02}});
-
-              }
-            });
-          }, 3000);
-        }
-      });
-
-    // for redrawing of future location changes
-    // setInterval(() => {
-    //   this.getCurrentLocation((ready) => {
-    //     if (ready) {
-    //       pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
-    //     }
-    //   });
-    // }, 3000);
+      if (ready) {
+        // one time map render on page ready
+        this.renderMap();
+        // then init future realtime pubnub tracking
+        setInterval(() => {
+          this.getCurrentLocation((ready) => {
+            if (ready) {
+              pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
+              // TESTING COORDS FOR REAL TIME TRACKING ONLY
+              // pubnub.publish({channel:pnChannel, message:{lat: Math.random() * 120, lng: Math.random() * 120}});
+            }
+          });
+        }, 1000);
+      }
+    });
   }
 
   renderMap() {
@@ -73,16 +62,8 @@ export default class PubMap extends React.Component {
     })
   }
 
-  // addLineCoordinates(coords) {
-  //   let newCoords = this.state.lineCoords.slice();
-  //   newCoords.push(coords);
-  //   this.setState({
-  //     lineCoords: newCoords
-  //   });
-  // }
-
-  // not used yet
   redrawMap(payload) {
+    console.log('updating current location marker');
     let lat = payload.message.lat;
     let lng = payload.message.lng;
 
@@ -100,7 +81,6 @@ export default class PubMap extends React.Component {
     lineCoordinatesPath.setMap(map);
   }
 
-  // not used yet
   pubnubConnect() {
     window.pnChannel = "map-channel";
     window.pubnub = new PubNub({
