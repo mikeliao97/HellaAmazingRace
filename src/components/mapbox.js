@@ -12,9 +12,6 @@ export default class PubMap extends React.Component {
       lng: null,
     }
     window.lineCoords = [];
-    // TESTING COORDS FOR REAL TIME TRACKING ONLY
-    // window.lat = 37.8199;
-    // window.lng = -122.4783;
   }
 
   componentDidMount() {
@@ -24,18 +21,18 @@ export default class PubMap extends React.Component {
       if (ready) {
         // one time map render on page ready
         this.renderMap();
-        // then init future realtime pubnub tracking
-        setInterval(() => {
-          this.getCurrentLocation((ready) => {
-            if (ready) {
-              pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
-              // TESTING COORDS FOR REAL TIME TRACKING ONLY
-              // pubnub.publish({channel:pnChannel, message:{lat: Math.random() * 120, lng: Math.random() * 120}});
-            }
-          });
-        }, 1000);
       }
     });
+
+    // watch for location changes
+    setInterval(() => {
+      this.getCurrentLocation();
+    }, 3000);
+  }
+
+  componentDidUpdate() {
+    // when current location in state changes, redraw map with path
+    pubnub.publish({channel:pnChannel, message:{lat: this.state.lat, lng:this.state.lng}});
   }
 
   renderMap() {
@@ -58,7 +55,10 @@ export default class PubMap extends React.Component {
         lat: location.coords.latitude,
         lng: location.coords.longitude
       });
-      cb('Done fetching location, ready.');
+
+      if (cb) {
+        cb('Done fetching location, ready.');
+      }
     })
   }
 
