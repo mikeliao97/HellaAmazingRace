@@ -23,6 +23,11 @@ export default class PubMap extends React.Component {
         }
       });
     }, 3000);
+    // this.pubnubConnect();
+    // setInterval( () => {
+    //   pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
+    // }, 5000);
+
   }
 
   renderMap() {
@@ -57,6 +62,7 @@ export default class PubMap extends React.Component {
     });
   }
 
+  // not used yet
   redrawMap(payload) {
     let lat = payload.message.lat;
     let lng = payload.message.lng;
@@ -75,6 +81,7 @@ export default class PubMap extends React.Component {
     lineCoordinatesPath.setMap(map);
   }
 
+  // not used yet
   pubnubConnect() {
     window.pnChannel = "map-channel";
     var pubnub = new PubNub({
