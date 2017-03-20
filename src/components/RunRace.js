@@ -25,7 +25,11 @@ export default class RunRace extends React.Component {
     let raceTitle = { title: this.state.searchedRace };
 
     $.post('/loadRace', raceTitle, (response) => {
-      console.log(response);
+      if (response === 'Race doesn\'t exist') {
+        alert('Race title doesn\'t exist, search again.');
+      } else {
+        console.log(response);
+      }
     });
   }
 
