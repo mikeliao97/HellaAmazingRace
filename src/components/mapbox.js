@@ -10,29 +10,34 @@ export default class PubMap extends React.Component {
     this.state = {
       lat: null,
       lng: null,
-      lineCoords: []
     }
+    window.lineCoords = [];
   }
 
   componentDidMount() {
-    setInterval(() => {
-      console.log('getting location');
-      this.getCurrentLocation((ready) => {
-        if (ready) {
-          this.renderMap();
-        }
-      });
-    }, 3000);
-    // this.pubnubConnect();
-    // setInterval( () => {
-    //   pubnub.publish({channel:pnChannel, message:{lat: this.state.lat + 0.001, lng:this.state.lng + 0.01}});
-    // }, 5000);
+    this.pubnubConnect();
 
+    this.getCurrentLocation((ready) => {
+      if (ready) {
+        // one time map render on page ready
+        this.renderMap();
+      }
+    });
+
+    // watch for location changes
+    setInterval(() => {
+      this.getCurrentLocation();
+    }, 3000);
+  }
+
+  componentDidUpdate() {
+    // when current location in state changes, redraw map with path
+    pubnub.publish({channel:pnChannel, message:{lat: this.state.lat, lng:this.state.lng}});
   }
 
   renderMap() {
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
-    this.addLineCoordinates(currLoc);
+    lineCoords.push(new google.maps.LatLng(this.state.lat, this.state.lng));
     // save map to window to be able to redraw as current location changes
     window.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
@@ -50,30 +55,25 @@ export default class PubMap extends React.Component {
         lat: location.coords.latitude,
         lng: location.coords.longitude
       });
-      cb('Done fetching location, ready.');
+
+      if (cb) {
+        cb('Done fetching location, ready.');
+      }
     })
   }
 
-  addLineCoordinates(coords) {
-    let newCoords = this.state.lineCoords.slice();
-    newCoords.push(coords);
-    this.setState({
-      lineCoords: newCoords
-    });
-  }
-
-  // not used yet
   redrawMap(payload) {
+    console.log('updating current location marker');
     let lat = payload.message.lat;
     let lng = payload.message.lng;
 
     map.setCenter({lat:lat, lng:lng, alt:0});
     marker.setPosition({lat:lat, lng:lng, alt:0});
 
-    this.addLineCoordinates(new google.maps.LatLng(lat, lng));
+    lineCoords.push(new google.maps.LatLng(lat, lng));
 
     let lineCoordinatesPath = new google.maps.Polyline({
-      path: this.state.lineCoords,
+      path: window.lineCoords,
       geodesic: true,
       strokeColor: '#2E10FF'
     });
@@ -81,10 +81,9 @@ export default class PubMap extends React.Component {
     lineCoordinatesPath.setMap(map);
   }
 
-  // not used yet
   pubnubConnect() {
     window.pnChannel = "map-channel";
-    var pubnub = new PubNub({
+    window.pubnub = new PubNub({
       publishKey: 'pub-c-1e471fcb-f49a-481a-84ae-32b4e950ffa8',
       subscribeKey: 'sub-c-00a667ae-0a73-11e7-9734-02ee2ddab7fe'
     });
