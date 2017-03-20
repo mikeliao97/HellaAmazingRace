@@ -91,7 +91,7 @@ app.get('*', util.isLoggedIn, (req, res) => {
 // store saved race
 app.post('/saveRace', RaceHelpers.storeSavedRace);
 
-
+app.post('/loadRace', RaceHelpers.loadRaceData);
 
 
 

@@ -22,9 +22,11 @@ export default class RunRace extends React.Component {
   }
 
   loadRace() {
-    let raceTitle = { title: this.state.searchedRace.toLowerCase() }
-    console.log(raceTitle);
-    // $.post('/loadRace', JSON.stringify(raceTitle));
+    let raceTitle = { title: this.state.searchedRace };
+
+    $.post('/loadRace', raceTitle, (response) => {
+      console.log(response);
+    });
   }
 
   render() {
@@ -35,7 +37,7 @@ export default class RunRace extends React.Component {
     };
 
     return (
-      <div>
+      <div className="text-center">
         <h1 className="text-center"> Run a Race</h1>
 
         <form>
@@ -43,9 +45,7 @@ export default class RunRace extends React.Component {
           <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
         </form>
 
-        <div style={mapStyle} className="text-center">
-          <PubMap />
-        </div>
+        <PubMap />
       </div>
     );
   }
