@@ -8,38 +8,41 @@ export default class PubMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: null,
-      longitude: null
+      lat: null,
+      lng: null
     }
   }
 
   componentDidMount() {
-    this.renderMap();
     setInterval(() => {
       console.log('getting location');
-      this.getCurrentLocation();
+      this.getCurrentLocation((ready) => {
+        if (ready) {
+          this.renderMap();
+        }
+      });
     }, 5000);
   }
 
   renderMap() {
-    var uluru = {lat: -25.363, lng: 131.044};
+    var currLoc = {lat: this.state.lat, lng: this.state.lng};
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: uluru
+      zoom: 15,
+      center: currLoc
     });
     var marker = new google.maps.Marker({
-      position: uluru,
+      position: currLoc,
       map: map
     });
   }
 
-  getCurrentLocation() {
+  getCurrentLocation(cb) {
     navigator.geolocation.getCurrentPosition((location) => {
       this.setState({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
+        lat: location.coords.latitude,
+        lng: location.coords.longitude
       });
-      console.log(this.state);
+      cb(true);
     })
   }
 
