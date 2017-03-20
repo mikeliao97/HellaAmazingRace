@@ -11,7 +11,8 @@ export default class RunRace extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchedRace: 'test'
+      searchedRace: 'test',
+      markers: {}
     }
   }
 
@@ -28,7 +29,9 @@ export default class RunRace extends React.Component {
       if (response === 'Race doesn\'t exist') {
         alert('Race title doesn\'t exist, search again.');
       } else {
-        console.log(response);
+        this.setState({
+          markers: response
+        });
       }
     });
   }
@@ -49,7 +52,7 @@ export default class RunRace extends React.Component {
           <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
         </form>
 
-        <PubMap />
+        <PubMap markers={this.state.markers}/>
       </div>
     );
   }

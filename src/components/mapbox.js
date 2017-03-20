@@ -31,6 +31,7 @@ export default class PubMap extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log(this.props);
     // when current location in state changes, redraw map with path
     pubnub.publish({channel:pnChannel, message:{lat: this.state.lat, lng:this.state.lng}});
   }
