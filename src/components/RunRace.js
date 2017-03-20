@@ -22,6 +22,12 @@ export default class RunRace extends React.Component {
     return (
       <div>
         <h1 className="text-center"> Run a Race</h1>
+
+        <form>
+          <input type="text"/>
+          <button type="button" className="btn btn-primary" onClick={console.log('clicked')}>Load Race</button>
+        </form>
+
         <div style={mapStyle} className="text-center">
           <PubMap />
         </div>
