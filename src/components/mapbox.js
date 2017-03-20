@@ -8,7 +8,8 @@ export default class PubMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentLocation: null
+      latitude: null,
+      longitude: null
     }
   }
 
@@ -34,7 +35,11 @@ export default class PubMap extends React.Component {
 
   getCurrentLocation() {
     navigator.geolocation.getCurrentPosition((location) => {
-      console.log(location, this.state, 'my current location object and my state');
+      this.setState({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      });
+      console.log(this.state);
     })
   }
 
