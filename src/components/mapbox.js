@@ -7,10 +7,17 @@ export default class PubMap extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      currentLocation: null
+    }
   }
 
   componentDidMount() {
     this.renderMap();
+    setInterval(() => {
+      console.log('getting location');
+      this.getCurrentLocation();
+    }, 5000);
   }
 
   renderMap() {
@@ -23,6 +30,12 @@ export default class PubMap extends React.Component {
       position: uluru,
       map: map
     });
+  }
+
+  getCurrentLocation() {
+    navigator.geolocation.getCurrentPosition((location) => {
+      console.log(location, this.state, 'my current location object and my state');
+    })
   }
 
   render() {
