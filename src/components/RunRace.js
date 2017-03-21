@@ -3,6 +3,7 @@
 import React from 'react';
 import PubMap from './MapBox';
 import Autocomplete from './Autocomplete';
+import Timer from './Timer';
 
 
 
@@ -40,6 +41,8 @@ export default class RunRace extends React.Component {
     return (
       <div className="text-center">
         <h1 className="text-center"> Run a Race</h1>
+
+        <Timer />
 
         <form>
           <input type="text" value={this.state.searchedRace} onChange={this.searchedRaceNameChange.bind(this)}/>
