@@ -7,4 +7,4 @@ exports.isLoggedIn = (req, res, next) => {
     console.log('not logged in');
     res.redirect('/');
   }
-}
+};
