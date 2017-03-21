@@ -64,6 +64,7 @@ export default class PubMap extends React.Component {
     window.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
       center: currLoc
+
     });
     window.marker = new google.maps.Marker({
       position: currLoc,

@@ -14,6 +14,7 @@ export default class RaceMap extends React.Component {
       // lat: null,
       // lng: null
     }
+    window.markers = [];
   }
 
 
@@ -47,19 +48,40 @@ export default class RaceMap extends React.Component {
 
 
   renderMap() {
+    // save reference to react functions since google maps event listeners are goofy.
+    window.react = this;
+
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
     // save map to window to be able to redraw as current location changes
     window.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
       center: currLoc
+
     });
     window.marker = new google.maps.Marker({
       position: currLoc,
       map: map
     });
 
+    // init event listeners for map
+    map.addListener('click', function(event) {
+      react.addMarker(event.latLng);
+    });
+
+
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
+
+
+
+  addMarker(location) {
+    var marker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+    markers.push(marker);
+  }
+
 
 
   render() {
