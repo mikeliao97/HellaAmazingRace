@@ -52,13 +52,13 @@ export default class Stopwatch extends React.Component {
       <div>
         <TimeElapsed id="timer" timeElapsed={timeElapsed} />
         <button onClick={this.toggle}>
-          {isRunning ? 'Stop' : 'Start'}
+          {isRunning ? 'Stop Race' : 'Start Race'}
         </button>
         <button
           onClick={isRunning ? this.lap : this.reset}
           disabled={!isRunning && !timeElapsed}
          >
-          {isRunning || !timeElapsed ? 'Lap' : 'Reset'}
+          {isRunning || !timeElapsed ? 'Lap' : 'Reset Race Time'}
         </button>
         {lapTimes.length > 0 && <LapTimes lapTimes={lapTimes} />}
       </div>

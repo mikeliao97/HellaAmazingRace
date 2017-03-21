@@ -13,7 +13,8 @@ export default class RunRace extends React.Component {
     super(props);
     this.state = {
       searchedRace: 'test',
-      markers: null
+      markers: null,
+      title: null
     }
   }
 
@@ -31,7 +32,8 @@ export default class RunRace extends React.Component {
         alert('Race title doesn\'t exist, search again.');
       } else {
         this.setState({
-          markers: response
+          markers: response,
+          title: this.state.searchedRace
         });
       }
     });
@@ -41,6 +43,7 @@ export default class RunRace extends React.Component {
     return (
       <div className="text-center">
         <h1 className="text-center"> Run a Race</h1>
+        <h3 className="text-center"> {this.state.title ? `Get Ready to start ${this.state.title}!` : ''}</h3>
 
         <form>
           <input type="text" value={this.state.searchedRace} onChange={this.searchedRaceNameChange.bind(this)}/>
