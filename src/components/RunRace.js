@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import PubMap from './mapbox';
+import PubMap from './MapBox';
 import Autocomplete from './Autocomplete';
 
 
