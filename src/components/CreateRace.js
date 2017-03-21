@@ -75,13 +75,11 @@ export default class CreateRace extends React.Component {
 
         <h1 className="text-center"> Create a Race</h1>
 
+          <RaceMap />
+
         <Autocomplete
           getDataOnSearch={this.getDataOnSearch.bind(this)} 
         />
-
-        <div style={mapStyle} className="text-center">
-          <RaceMap />
-        </div>
 
         <div className="text-center">
           <button type="button" className="btn btn-primary" value="start" onClick={this.addMapData.bind(this)}>Set Start</button>
