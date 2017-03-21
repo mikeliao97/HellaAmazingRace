@@ -42,7 +42,7 @@ export default class RunRace extends React.Component {
       <div className="text-center">
         <h1 className="text-center"> Run a Race</h1>
 
-        <Timer />
+        <Timer/>
 
         <form>
           <input type="text" value={this.state.searchedRace} onChange={this.searchedRaceNameChange.bind(this)}/>
