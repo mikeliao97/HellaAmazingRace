@@ -25,7 +25,6 @@ exports.storeSavedRace = (req, res) => {
 
 exports.loadRaceData = (req, res) => {
   Race.findOne(req.body).exec((err, raceData) => {
-    console.log(raceData);
     if (!raceData) {
       res.send('Race doesn\'t exist');
     } else {

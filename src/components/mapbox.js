@@ -31,9 +31,8 @@ export default class PubMap extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props);
     // when current location in state changes, redraw map with path
-    pubnub.publish({channel:pnChannel, message:{lat: this.state.lat, lng:this.state.lng}});
+    pubnub.publish({channel:pnChannel, message:{lat: this.state.lat, lng:this.state.lng, markers: this.props.markers}});
   }
 
   renderMap() {
@@ -48,6 +47,8 @@ export default class PubMap extends React.Component {
       position: currLoc,
       map: map
     });
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+
   }
 
   getCurrentLocation(cb) {
@@ -65,6 +66,8 @@ export default class PubMap extends React.Component {
 
   redrawMap(payload) {
     console.log('updating current location marker');
+      console.log(payload, '\n\n\n\n\n\n\n\n\n\n');
+
     let lat = payload.message.lat;
     let lng = payload.message.lng;
 
