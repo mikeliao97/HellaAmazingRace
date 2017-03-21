@@ -6,6 +6,7 @@
   "repository": "https://github.com/HellaAmazingHackers/HellaAmazingRace.git",
   "scripts": {
     "start": "babel-node ./src/server.js --presets react,es2015",
+    "s": "nodemon src/server.js --exec babel-node --presets react,es2015",
     "start-dev": "npm run start-dev-hmr",
     "start-dev-single-page": "node_modules/.bin/http-server src/static",
     "start-dev-hmr": "node_modules/.bin/webpack-dev-server --progress --inline --hot --open",
