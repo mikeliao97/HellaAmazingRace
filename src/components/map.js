@@ -48,8 +48,8 @@ export default class RaceMap extends React.Component {
 
 
   renderMap() {
-    // save reference to react functions since google maps event listeners are goofy.
-    window.react = this;
+    // save reference to component functions since google maps event listeners are goofy.
+    window.component = this;
 
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
     // save map to window to be able to redraw as current location changes
@@ -65,7 +65,7 @@ export default class RaceMap extends React.Component {
 
     // init event listeners for map
     map.addListener('click', function(event) {
-      react.addMarker(event.latLng);
+      component.addMarker(event.latLng);
     });
 
 
@@ -87,7 +87,14 @@ export default class RaceMap extends React.Component {
   render() {
 
     return (
-      <div id="map"/>
+      <div className="text-center">
+        <div>
+            <button type="button" className="btn btn-primary" value="hide">Hide All Markers</button>
+            <button type="button" className="btn btn-primary" value="show">Show All Markers</button>
+            <button type="button" className="btn btn-primary" value="delete">Delete All Markers</button>
+        </div>
+        <div id="map"/>
+      </div>
     );
   }
 
