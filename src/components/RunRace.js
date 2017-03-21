@@ -37,12 +37,6 @@ export default class RunRace extends React.Component {
   }
 
   render() {
-
-    const mapStyle = {
-      width: '600px',
-      height: '400px',
-    };
-
     return (
       <div className="text-center">
         <h1 className="text-center"> Run a Race</h1>
