@@ -40,7 +40,17 @@ export default class RunRace extends React.Component {
   }
 
   verifyLocation() {
-    // google geometry stuff
+    let currLocation = new google.maps.LatLng( window.currentLocation[0], window.currentLocation[1] );
+    let checkpointLocation = new google.maps.LatLng( window.markers[0].getPosition().lat(), window.markers[0].getPosition().lng() );
+    let distance = google.maps.geometry.spherical.computeDistanceBetween(currLocation, checkpointLocation);
+
+    if (distance < 100) {
+      window.markers.splice(1);
+      console.log(window.markers);
+      alert('Continue to next checkpoint!');
+    } else {
+      alert(`You are still ${Math.floor(distance)} meters away.`);
+    }
   }
 
   render() {
@@ -64,7 +74,7 @@ export default class RunRace extends React.Component {
         <Timer/>
 
         <div style={verifyBtnStyle}>
-          <button type="button" className="btn btn-success btn-block">I Have Arrived at Current Checkpoint</button>
+          <button type="button" className="btn btn-success btn-block" onClick={this.verifyLocation.bind(this)}>I Have Arrived at Current Checkpoint</button>
         </div>
 
 
