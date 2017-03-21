@@ -31,6 +31,7 @@ export default class RunRace extends React.Component {
       if (response === 'Race doesn\'t exist') {
         alert('Race title doesn\'t exist, search again.');
       } else {
+        window.checkpointsLoaded = false;
         this.setState({
           markers: response,
           title: this.state.searchedRace
@@ -45,9 +46,12 @@ export default class RunRace extends React.Component {
     let distance = google.maps.geometry.spherical.computeDistanceBetween(currLocation, checkpointLocation);
 
     if (distance < 100) {
-      window.markers.splice(1);
-      console.log(window.markers);
-      alert('Continue to next checkpoint!');
+      window.markers.shift();
+      if (!window.markers.length) {
+        alert('Congrats, you have finished the race!');
+      } else {
+        alert('Continue to next checkpoint!');
+      }
     } else {
       alert(`You are still ${Math.floor(distance)} meters away.`);
     }

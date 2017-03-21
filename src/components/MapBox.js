@@ -13,10 +13,10 @@ export default class PubMap extends React.Component {
       // lng: -122.00116100000002,
       lat: null,
       lng: null,
-      checkpointsLoaded: false
     }
     window.lineCoords = [];
     window.markers = [];
+    window.checkpointsLoaded = false;
   }
 
 
@@ -104,7 +104,7 @@ export default class PubMap extends React.Component {
     let lat = payload.message.lat;
     let lng = payload.message.lng;
 
-    if (payload.message.markers) {
+    if (payload.message.markers && !window.checkpointsLoaded) {
       let markersArr = this.generateMarkersArray(payload.message.markers);
 
       // clear out old checkpoint markers first
@@ -121,6 +121,8 @@ export default class PubMap extends React.Component {
       markersArr.forEach((location, order) => {
         this.createMarker(location, order);
       });
+
+      window.checkpointsLoaded = true;
     }
 
 
