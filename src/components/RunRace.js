@@ -13,7 +13,8 @@ export default class RunRace extends React.Component {
     super(props);
     this.state = {
       searchedRace: 'test',
-      markers: null
+      markers: null,
+      title: null
     }
   }
 
@@ -30,24 +31,56 @@ export default class RunRace extends React.Component {
       if (response === 'Race doesn\'t exist') {
         alert('Race title doesn\'t exist, search again.');
       } else {
+        window.checkpointsLoaded = false;
         this.setState({
-          markers: response
+          markers: response,
+          title: this.state.searchedRace
         });
       }
     });
   }
 
+  verifyLocation() {
+    let currLocation = new google.maps.LatLng( window.currentLocation[0], window.currentLocation[1] );
+    let checkpointLocation = new google.maps.LatLng( window.markers[0].getPosition().lat(), window.markers[0].getPosition().lng() );
+    let distance = google.maps.geometry.spherical.computeDistanceBetween(currLocation, checkpointLocation);
+
+    if (distance < 100) {
+      window.markers.shift();
+      if (!window.markers.length) {
+        alert('Congrats, you have finished the race!');
+      } else {
+        alert('Continue to next checkpoint!');
+      }
+    } else {
+      alert(`You are still ${Math.floor(distance)} meters away.`);
+    }
+  }
+
   render() {
+
+    const verifyBtnStyle = {
+      'width': '800px',
+      'margin-left': 'auto',
+      'margin-right': 'auto'
+    };
+
     return (
       <div className="text-center">
         <h1 className="text-center"> Run a Race</h1>
-
-        <Timer />
+        <h3 className="text-center"> {this.state.title ? `Get Ready to start ${this.state.title}!` : ''}</h3>
 
         <form>
           <input type="text" value={this.state.searchedRace} onChange={this.searchedRaceNameChange.bind(this)}/>
           <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
         </form>
+
+        <Timer/>
+
+        <div style={verifyBtnStyle}>
+          <button type="button" className="btn btn-success btn-block" onClick={this.verifyLocation.bind(this)}>I Have Arrived at Current Checkpoint</button>
+        </div>
+
 
         <PubMap markers={this.state.markers}/>
       </div>
