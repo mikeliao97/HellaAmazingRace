@@ -39,7 +39,18 @@ export default class RunRace extends React.Component {
     });
   }
 
+  verifyLocation() {
+    // google geometry stuff
+  }
+
   render() {
+
+    const verifyBtnStyle = {
+      'width': '800px',
+      'margin-left': 'auto',
+      'margin-right': 'auto'
+    };
+
     return (
       <div className="text-center">
         <h1 className="text-center"> Run a Race</h1>
@@ -51,6 +62,11 @@ export default class RunRace extends React.Component {
         </form>
 
         <Timer/>
+
+        <div style={verifyBtnStyle}>
+          <button type="button" className="btn btn-success btn-block">I Have Arrived at Current Checkpoint</button>
+        </div>
+
 
         <PubMap markers={this.state.markers}/>
       </div>
