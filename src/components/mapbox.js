@@ -8,15 +8,18 @@ export default class PubMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lat: null,
-      lng: null,
+      lat: 37.8123698,
+      lng: -122.00116100000002,
       checkpointsLoaded: false
     }
     window.lineCoords = [];
+    window.markers = [];
   }
 
   componentDidMount() {
     this.pubnubConnect();
+
+    this.renderMap();
 
     this.getCurrentLocation((ready) => {
       if (ready) {
@@ -78,13 +81,18 @@ export default class PubMap extends React.Component {
     let lng = payload.message.lng;
 
     if (payload.message.markers) {
-      let formattedMarkers = this.generateMarkersArray(payload.message.markers);
+      let markersArr = this.generateMarkersArray(payload.message.markers);
 
-      formattedMarkers.forEach((marker) => {
-        new google.maps.Marker({
-          position: marker,
-          map: map
+      // clear out old checkpoint markers first
+      if (window.markers.length) {
+        window.markers.forEach((marker) => {
+          marker.setMap(null);
         });
+      }
+
+      // add most recent search checkpoints
+      markersArr.forEach((location, order) => {
+        this.createMarker(location, order);
       });
     }
 
@@ -101,6 +109,27 @@ export default class PubMap extends React.Component {
     });
 
     lineCoordinatesPath.setMap(map);
+  }
+
+  createMarker(location, order) {
+   let contentString = `<p> Checkpoint ${order}</p>`
+
+    // create popup window to be shown on marker click
+    var infoWindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+    let checkpointMarker = new google.maps.Marker({
+      position: location,
+      map: map,
+      title: `Checkpoint ${order}`
+    });
+
+    checkpointMarker.addListener('click', () => {
+      infoWindow.open(map, checkpointMarker);
+    });
+
+    window.markers.push(checkpointMarker);
   }
 
   generateMarkersArray(markers) {
