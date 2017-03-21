@@ -100,20 +100,19 @@ body {
 }
 
 
-
-
-
 /* Google Maps Styling */
 
 #map {
-  width: 600px;
+  width: 800px;
   height: 400px;
+  margin-left: auto;
+  margin-right: auto;
   background-color: grey;
 }
 
 
-
 /* Font styling for Timer Component */
+
 #timer {
   font-size: 1.45em;
   font-weight: 100;
