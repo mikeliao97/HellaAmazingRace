@@ -3,7 +3,9 @@ module.exports = {
   'facebookAuth': {
     'clientID': '630724287121611', // your App ID
     'clientSecret': '39b0e9bbb91cdb757f264099dff78b0b', // your App Secret
-    'callbackURL': 'https://hella-amazing-race.herokuapp.com/auth/facebook/callback'
+    'callbackURL': 'http://localhost:3000/auth/facebook/callback'
+    // 'callbackURL': 'https://hella-amazing-race.herokuapp.com/auth/facebook/callback'
+
   },
 
   // 'twitterAuth' : {
