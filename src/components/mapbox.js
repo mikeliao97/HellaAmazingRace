@@ -76,7 +76,12 @@ export default class PubMap extends React.Component {
 
 
 
-  getCurrentLocation(cb) {
+   getCurrentLocation(cb) {
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
     navigator.geolocation.getCurrentPosition((location) => {
       this.setState({
         lat: location.coords.latitude,
@@ -86,7 +91,9 @@ export default class PubMap extends React.Component {
       if (cb) {
         cb('Done fetching location, ready.');
       }
-    })
+    }, (err) => {
+      console.log('error occurred: ', err);
+    }, options)
   }
 
 

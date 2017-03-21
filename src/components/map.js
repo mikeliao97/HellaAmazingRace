@@ -20,6 +20,11 @@ export default class RaceMap extends React.Component {
 
 
   getCurrentLocation(cb) {
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
     navigator.geolocation.getCurrentPosition((location) => {
       this.setState({
         lat: location.coords.latitude,
@@ -29,7 +34,9 @@ export default class RaceMap extends React.Component {
       if (cb) {
         cb('Done fetching location, ready.');
       }
-    })
+    }, (err) => {
+      console.log('error occurred: ', err);
+    }, options)
   }
 
 
@@ -44,6 +51,19 @@ export default class RaceMap extends React.Component {
     //   }
     // });
   }
+
+
+
+  // componentDidUpdate() {
+
+  //   if (this.props.searchData) {
+  //     this.setState({
+  //       lat: this.props.searchData.Latitude,
+  //       lng: this.props.searchData.Longitude
+  //     });
+  //   }
+    
+  // }
 
 
 
@@ -63,38 +83,36 @@ export default class RaceMap extends React.Component {
       map: map
     });
 
-    // init event listeners for map
-    map.addListener('click', function(event) {
-      component.addMarker(event.latLng);
-    });
-
-
     marker.setAnimation(google.maps.Animation.BOUNCE);
+
+    // init event listeners for map
+    // map.addListener('click', function(event) {
+    //   component.addMarker(event.latLng);
+    // });
   }
 
 
 
-  addMarker(location) {
-    var marker = new google.maps.Marker({
-      position: location,
-      map: map
-    });
-    markers.push(marker);
-  }
+  // addMarker(location) {
+  //   var marker = new google.maps.Marker({
+  //     position: location,
+  //     map: map
+  //   });
+  //   markers.push(marker);
+  // }
 
 
+      // <div className="text-center">
+      //   <div>
+      //       <button type="button" className="btn btn-primary" value="hide">Hide All Markers</button>
+      //       <button type="button" className="btn btn-primary" value="show">Show All Markers</button>
+      //       <button type="button" className="btn btn-primary" value="delete">Delete All Markers</button>
+      //   </div>
 
   render() {
 
     return (
-      <div className="text-center">
-        <div>
-            <button type="button" className="btn btn-primary" value="hide">Hide All Markers</button>
-            <button type="button" className="btn btn-primary" value="show">Show All Markers</button>
-            <button type="button" className="btn btn-primary" value="delete">Delete All Markers</button>
-        </div>
-        <div id="map"/>
-      </div>
+      <div id="map"/>
     );
   }
 
