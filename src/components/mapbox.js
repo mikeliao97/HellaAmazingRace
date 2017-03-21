@@ -8,14 +8,25 @@ export default class PubMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // uncomment when navigator geolocation stops working randomly
+      // lat: 37.8123698,
+      // lng: -122.00116100000002,
       lat: null,
       lng: null,
+      checkpointsLoaded: false
     }
     window.lineCoords = [];
+    window.markers = [];
   }
+
+
 
   componentDidMount() {
     this.pubnubConnect();
+
+
+    // uncomment when navigator geolocation stops working randomly
+    // this.renderMap();
 
     this.getCurrentLocation((ready) => {
       if (ready) {
@@ -30,10 +41,21 @@ export default class PubMap extends React.Component {
     }, 3000);
   }
 
+
+
   componentDidUpdate() {
     // when current location in state changes, redraw map with path
-    pubnub.publish({channel:pnChannel, message:{lat: this.state.lat, lng:this.state.lng}});
+    pubnub.publish({
+      channel:pnChannel, 
+      message: {
+        lat: this.state.lat,
+        lng:this.state.lng, 
+        markers: this.props.markers
+      }
+    });
   }
+
+
 
   renderMap() {
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
@@ -47,7 +69,11 @@ export default class PubMap extends React.Component {
       position: currLoc,
       map: map
     });
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+
   }
+
+
 
   getCurrentLocation(cb) {
     navigator.geolocation.getCurrentPosition((location) => {
@@ -62,10 +88,32 @@ export default class PubMap extends React.Component {
     })
   }
 
+
+
   redrawMap(payload) {
     console.log('updating current location marker');
     let lat = payload.message.lat;
     let lng = payload.message.lng;
+
+    if (payload.message.markers) {
+      let markersArr = this.generateMarkersArray(payload.message.markers);
+
+      // clear out old checkpoint markers first
+      // if (window.markers.length) {
+      //   while (markers.length) {
+      //     console.log(markers);
+      //     markers[markers.length - 1].setMap(null);
+      //     markers[markers.length - 1] = null;
+      //     markers.splice(0, markers.length - 1);
+      //   }
+      // }
+
+      // add most recent search checkpoints
+      markersArr.forEach((location, order) => {
+        this.createMarker(location, order);
+      });
+    }
+
 
     map.setCenter({lat:lat, lng:lng, alt:0});
     marker.setPosition({lat:lat, lng:lng, alt:0});
@@ -81,6 +129,55 @@ export default class PubMap extends React.Component {
     lineCoordinatesPath.setMap(map);
   }
 
+
+
+  createMarker(location, order) {
+    order += 1;
+    let contentString = `<p> Checkpoint ${order}</p>`
+
+    // create popup window to be shown on marker click
+    var infoWindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+    let checkpointMarker = new google.maps.Marker({
+      position: location,
+      title: `Checkpoint ${order}`
+    });
+
+    checkpointMarker.addListener('click', () => {
+      infoWindow.open(map, checkpointMarker);
+    });
+
+    checkpointMarker.setMap(map);
+    window.markers.push(checkpointMarker);
+  }
+
+
+
+  generateMarkersArray(markers) {
+      let markersArr = [];
+      markers.start = JSON.parse(markers.start);
+      markers.checkpoints = JSON.parse(markers.checkpoints);
+      markers.finish = JSON.parse(markers.finish);
+
+      // push start
+      markersArr.push({lat: markers.start.Latitude, lng: markers.start.Longitude});
+
+      // push all checkpoints
+      markers.checkpoints.forEach((marker) => {
+        marker = JSON.parse(marker);
+        markersArr.push({lat: marker.Latitude, lng: marker.Longitude});
+      });
+
+      // push finish
+      markersArr.push({lat: markers.finish.Latitude, lng: markers.finish.Longitude});
+
+      return markersArr;
+  }
+
+
+
   pubnubConnect() {
     window.pnChannel = "map-channel";
     window.pubnub = new PubNub({
@@ -88,8 +185,10 @@ export default class PubMap extends React.Component {
       subscribeKey: 'sub-c-00a667ae-0a73-11e7-9734-02ee2ddab7fe'
     });
     pubnub.subscribe({channels: [pnChannel]});
-    pubnub.addListener({message:this.redrawMap});
+    pubnub.addListener({message:this.redrawMap.bind(this)});
   }
+
+
 
   render() {
     return (

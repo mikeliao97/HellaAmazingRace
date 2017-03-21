@@ -10,21 +10,43 @@ export default class RunRace extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      searchedRace: 'test',
+      markers: null
+    }
+  }
+
+  searchedRaceNameChange(e) {
+    this.setState({
+      searchedRace: e.target.value
+    });
+  }
+
+  loadRace() {
+    let raceTitle = { title: this.state.searchedRace };
+
+    $.post('/loadRace', raceTitle, (response) => {
+      if (response === 'Race doesn\'t exist') {
+        alert('Race title doesn\'t exist, search again.');
+      } else {
+        this.setState({
+          markers: response
+        });
+      }
+    });
   }
 
   render() {
-
-    const mapStyle = {
-      width: '600px',
-      height: '400px',
-    };
-
     return (
-      <div>
+      <div className="text-center">
         <h1 className="text-center"> Run a Race</h1>
-        <div style={mapStyle} className="text-center">
-          <PubMap />
-        </div>
+
+        <form>
+          <input type="text" value={this.state.searchedRace} onChange={this.searchedRaceNameChange.bind(this)}/>
+          <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
+        </form>
+
+        <PubMap markers={this.state.markers}/>
       </div>
     );
   }
