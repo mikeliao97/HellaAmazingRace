@@ -10,6 +10,7 @@ export default class PubMap extends React.Component {
     this.state = {
       lat: null,
       lng: null,
+      checkpointsLoaded: false
     }
     window.lineCoords = [];
   }
@@ -32,7 +33,14 @@ export default class PubMap extends React.Component {
 
   componentDidUpdate() {
     // when current location in state changes, redraw map with path
-    pubnub.publish({channel:pnChannel, message:{lat: this.state.lat, lng:this.state.lng, markers: this.props.markers}});
+    pubnub.publish({
+      channel:pnChannel, 
+      message: {
+        lat: this.state.lat,
+        lng:this.state.lng, 
+        markers: this.props.markers
+      }
+    });
   }
 
   renderMap() {
@@ -70,10 +78,13 @@ export default class PubMap extends React.Component {
     let lng = payload.message.lng;
 
     if (payload.message.markers) {
-      let start = JSON.parse(payload.message.markers.start);
-      let checkpoints = JSON.parse(payload.message.markers.checkpoints);
-      let finish = JSON.parse(payload.message.markers.finish);
-      console.log(start, checkpoints, finish);
+      let markers = payload.message.markers;
+      let start = JSON.parse(markers.start);
+      let checkpoints = JSON.parse(markers.checkpoints);
+      let finish = JSON.parse(markers.finish);
+      markers.reduce((marker, key) => {
+        console.log(marker, key);
+      });
     }
 
 

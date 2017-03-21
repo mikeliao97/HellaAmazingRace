@@ -7,7 +7,7 @@ exports.storeSavedRace = (req, res) => {
       var newRace = new Race({
         title: race.title,
         start: race.start,
-        checkpoints: race.checkpoints,
+        checkpoints: JSON.stringify(race.checkpoints),
         finish: race.finish
       });
       newRace.save((err, newRace) => {
