@@ -78,12 +78,13 @@ export default class PubMap extends React.Component {
     let lng = payload.message.lng;
 
     if (payload.message.markers) {
-      let markers = payload.message.markers;
-      let start = JSON.parse(markers.start);
-      let checkpoints = JSON.parse(markers.checkpoints);
-      let finish = JSON.parse(markers.finish);
-      markers.reduce((marker, key) => {
-        console.log(marker, key);
+      let formattedMarkers = this.generateMarkersArray(payload.message.markers);
+
+      formattedMarkers.forEach((marker) => {
+        new google.maps.Marker({
+          position: marker,
+          map: map
+        });
       });
     }
 
@@ -102,6 +103,27 @@ export default class PubMap extends React.Component {
     lineCoordinatesPath.setMap(map);
   }
 
+  generateMarkersArray(markers) {
+      let markersArr = [];
+      markers.start = JSON.parse(markers.start);
+      markers.checkpoints = JSON.parse(markers.checkpoints);
+      markers.finish = JSON.parse(markers.finish);
+
+      // push start
+      markersArr.push({lat: markers.start.Latitude, lng: markers.start.Longitude});
+
+      // push all checkpoints
+      markers.checkpoints.forEach((marker) => {
+        marker = JSON.parse(marker);
+        markersArr.push({lat: marker.Latitude, lng: marker.Longitude});
+      });
+
+      // push finish
+      markersArr.push({lat: markers.finish.Latitude, lng: markers.finish.Longitude});
+
+      return markersArr;
+  }
+
   pubnubConnect() {
     window.pnChannel = "map-channel";
     window.pubnub = new PubNub({
@@ -109,7 +131,7 @@ export default class PubMap extends React.Component {
       subscribeKey: 'sub-c-00a667ae-0a73-11e7-9734-02ee2ddab7fe'
     });
     pubnub.subscribe({channels: [pnChannel]});
-    pubnub.addListener({message:this.redrawMap});
+    pubnub.addListener({message:this.redrawMap.bind(this)});
   }
 
   render() {

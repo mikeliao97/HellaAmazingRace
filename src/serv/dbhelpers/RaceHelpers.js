@@ -3,6 +3,7 @@ import Race from '../schemas/races';
 exports.storeSavedRace = (req, res) => {
   var race = req.body;
   Race.findOne(race).exec((err, found) => {
+    console.log(race.checkpoints);
     if (!found) {
       var newRace = new Race({
         title: race.title,
