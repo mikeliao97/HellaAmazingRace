@@ -66,10 +66,16 @@ export default class PubMap extends React.Component {
 
   redrawMap(payload) {
     console.log('updating current location marker');
-      console.log(payload, '\n\n\n\n\n\n\n\n\n\n');
-
     let lat = payload.message.lat;
     let lng = payload.message.lng;
+
+    if (payload.message.markers) {
+      let start = JSON.parse(payload.message.markers.start);
+      let checkpoints = JSON.parse(payload.message.markers.checkpoints);
+      let finish = JSON.parse(payload.message.markers.finish);
+      console.log(start, checkpoints, finish);
+    }
+
 
     map.setCenter({lat:lat, lng:lng, alt:0});
     marker.setPosition({lat:lat, lng:lng, alt:0});

@@ -12,7 +12,7 @@ export default class RunRace extends React.Component {
     super(props);
     this.state = {
       searchedRace: 'test',
-      markers: {}
+      markers: null
     }
   }
 
