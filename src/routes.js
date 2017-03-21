@@ -1,8 +1,8 @@
 'use strict';
 
-import React from 'react'
-import { Route, IndexRoute } from 'react-router'
-import Layout from './components/Layout';
+import React from 'react';
+import { Route, IndexRoute } from 'react-router';
+import Layout from './components/layout';
 import IndexPage from './components/IndexPage';
 import NotFoundPage from './components/NotFoundPage';
 import LoginPage from './components/LoginPage';
