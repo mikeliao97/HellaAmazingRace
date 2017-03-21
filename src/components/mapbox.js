@@ -8,18 +8,25 @@ export default class PubMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lat: 37.8123698,
-      lng: -122.00116100000002,
+      // uncomment when navigator geolocation stops working randomly
+      // lat: 37.8123698,
+      // lng: -122.00116100000002,
+      lat: null,
+      lng: null,
       checkpointsLoaded: false
     }
     window.lineCoords = [];
     window.markers = [];
   }
 
+
+
   componentDidMount() {
     this.pubnubConnect();
 
-    this.renderMap();
+
+    // uncomment when navigator geolocation stops working randomly
+    // this.renderMap();
 
     this.getCurrentLocation((ready) => {
       if (ready) {
@@ -34,6 +41,8 @@ export default class PubMap extends React.Component {
     }, 3000);
   }
 
+
+
   componentDidUpdate() {
     // when current location in state changes, redraw map with path
     pubnub.publish({
@@ -45,6 +54,8 @@ export default class PubMap extends React.Component {
       }
     });
   }
+
+
 
   renderMap() {
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
@@ -62,6 +73,8 @@ export default class PubMap extends React.Component {
 
   }
 
+
+
   getCurrentLocation(cb) {
     navigator.geolocation.getCurrentPosition((location) => {
       this.setState({
@@ -75,6 +88,8 @@ export default class PubMap extends React.Component {
     })
   }
 
+
+
   redrawMap(payload) {
     console.log('updating current location marker');
     let lat = payload.message.lat;
@@ -84,11 +99,14 @@ export default class PubMap extends React.Component {
       let markersArr = this.generateMarkersArray(payload.message.markers);
 
       // clear out old checkpoint markers first
-      if (window.markers.length) {
-        window.markers.forEach((marker) => {
-          marker.setMap(null);
-        });
-      }
+      // if (window.markers.length) {
+      //   while (markers.length) {
+      //     console.log(markers);
+      //     markers[markers.length - 1].setMap(null);
+      //     markers[markers.length - 1] = null;
+      //     markers.splice(0, markers.length - 1);
+      //   }
+      // }
 
       // add most recent search checkpoints
       markersArr.forEach((location, order) => {
@@ -111,8 +129,11 @@ export default class PubMap extends React.Component {
     lineCoordinatesPath.setMap(map);
   }
 
+
+
   createMarker(location, order) {
-   let contentString = `<p> Checkpoint ${order}</p>`
+    order += 1;
+    let contentString = `<p> Checkpoint ${order}</p>`
 
     // create popup window to be shown on marker click
     var infoWindow = new google.maps.InfoWindow({
@@ -121,7 +142,6 @@ export default class PubMap extends React.Component {
 
     let checkpointMarker = new google.maps.Marker({
       position: location,
-      map: map,
       title: `Checkpoint ${order}`
     });
 
@@ -129,8 +149,11 @@ export default class PubMap extends React.Component {
       infoWindow.open(map, checkpointMarker);
     });
 
+    checkpointMarker.setMap(map);
     window.markers.push(checkpointMarker);
   }
+
+
 
   generateMarkersArray(markers) {
       let markersArr = [];
@@ -153,6 +176,8 @@ export default class PubMap extends React.Component {
       return markersArr;
   }
 
+
+
   pubnubConnect() {
     window.pnChannel = "map-channel";
     window.pubnub = new PubNub({
@@ -162,6 +187,8 @@ export default class PubMap extends React.Component {
     pubnub.subscribe({channels: [pnChannel]});
     pubnub.addListener({message:this.redrawMap.bind(this)});
   }
+
+
 
   render() {
     return (
