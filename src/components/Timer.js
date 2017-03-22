@@ -54,7 +54,6 @@ export default class Stopwatch extends React.Component {
       winner: window.currentUser,
       time: formattedTime
     }
-    console.log(raceResults);
 
     $.post('/saveRaceResults', raceResults)
       .done((res) => {
