@@ -14,8 +14,16 @@ export default class RunRace extends React.Component {
     this.state = {
       searchedRace: 'test',
       markers: null,
-      title: null
+      title: null,
+      raceComplete: false,
+      raceRunning: false
     }
+
+    // get users name for saving race results when page is loading.
+    $.get('/username')
+      .done((res) => {
+        window.currentUser = res.displayName;
+      });
   }
 
   searchedRaceNameChange(e) {
@@ -41,15 +49,27 @@ export default class RunRace extends React.Component {
   }
 
   verifyLocation() {
+    // if not running, start running race when checking start checkpoint location
+    if (!this.state.raceRunning) {
+      this.setState({
+        raceRunning: true
+      });
+    }
+
     let currLocation = new google.maps.LatLng( window.currentLocation[0], window.currentLocation[1] );
     let checkpointLocation = new google.maps.LatLng( window.markers[0].getPosition().lat(), window.markers[0].getPosition().lng() );
     let distance = google.maps.geometry.spherical.computeDistanceBetween(currLocation, checkpointLocation);
 
-    if (distance < 100) {
+    if (distance < 50) {
+      window.markers[0].setMap(null);
       window.markers.shift();
       if (!window.markers.length) {
         alert('Congrats, you have finished the race!');
+        this.setState({
+          raceComplete: true
+        });
       } else {
+        window.markers[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
         alert('Continue to next checkpoint!');
       }
     } else {
@@ -75,7 +95,7 @@ export default class RunRace extends React.Component {
           <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
         </form>
 
-        <Timer/>
+        <Timer raceTitle={this.state.title} running={this.state.raceRunning} complete={this.state.raceComplete}/>
 
         <div style={verifyBtnStyle}>
           <button type="button" className="btn btn-success btn-block" onClick={this.verifyLocation.bind(this)}>I Have Arrived at Current Checkpoint</button>
