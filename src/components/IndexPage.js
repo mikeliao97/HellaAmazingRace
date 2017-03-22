@@ -12,13 +12,24 @@ export default class IndexPage extends React.Component {
   }
 
   componentDidMount() {
-    
+    this.getUserData();
+  }
+
+  getUserData() {
+    $.get('/username')
+      .done((res) => {
+        // allow all components access to current user name
+        window.currentUser = res.displayName;
+        this.setState({
+          displayName: res.displayName
+        });
+      });
   }
 
   render() {
     return (
       <div>
-      <h1>You're logged in.</h1>
+      <h1>Welcome {this.state.displayName}</h1>
       </div>
     );
   }
