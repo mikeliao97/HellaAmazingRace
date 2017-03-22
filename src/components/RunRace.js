@@ -54,7 +54,7 @@ export default class RunRace extends React.Component {
     let checkpointLocation = new google.maps.LatLng( window.markers[0].getPosition().lat(), window.markers[0].getPosition().lng() );
     let distance = google.maps.geometry.spherical.computeDistanceBetween(currLocation, checkpointLocation);
 
-    if (distance < 100) {
+    if (distance < 50) {
       window.markers.shift();
       if (!window.markers.length) {
         alert('Congrats, you have finished the race!');
