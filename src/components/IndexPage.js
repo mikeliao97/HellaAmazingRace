@@ -30,9 +30,17 @@ export default class IndexPage extends React.Component {
 
   render() {
     return (
-      <div className="text-center">
-        <img className="img-circle" src={this.state.userPhoto}/>
-        <span><h1>Welcome {this.state.displayName}</h1></span>
+      <div>
+
+        <div className="text-center">
+          <img className="img-circle" src={this.state.userPhoto}/>
+          <span><h1>Welcome {this.state.displayName}</h1></span>
+        </div>
+
+        <div>
+          Past 10 completed race results will go here
+        </div>
+
       </div>
     );
   }
