@@ -108,14 +108,12 @@ export default class PubMap extends React.Component {
       let markersArr = this.generateMarkersArray(payload.message.markers);
 
       // clear out old checkpoint markers first
-      // if (window.markers.length) {
-      //   while (markers.length) {
-      //     console.log(markers);
-      //     markers[markers.length - 1].setMap(null);
-      //     markers[markers.length - 1] = null;
-      //     markers.splice(0, markers.length - 1);
-      //   }
-      // }
+      if (window.markers.length) {
+        while (markers.length) {
+          markers[0].setMap(null);
+          markers.shift();
+        }
+      }
 
       // add most recent search checkpoints
       markersArr.forEach((location, order) => {
