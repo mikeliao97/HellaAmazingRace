@@ -19,7 +19,6 @@ export default class IndexPage extends React.Component {
   getUserData() {
     $.get('/username')
       .done((res) => {
-        console.log(res);
         // allow all components access to current user name
         window.currentUser = res.displayName;
         this.setState({

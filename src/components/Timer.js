@@ -49,10 +49,11 @@ export default class Stopwatch extends React.Component {
       msec: (seconds % 1).toFixed(3).substring(2)
     }
     let raceResults = {
-      title: this.props.title,
+      title: this.props.raceTitle,
       winner: window.currentUser,
       time: formattedTime
     }
+    console.log(raceResults);
 
     $.post('/saveRaceResults', raceResults)
       .done((res) => {

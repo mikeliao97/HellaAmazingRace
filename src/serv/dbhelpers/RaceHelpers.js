@@ -35,6 +35,6 @@ exports.loadRaceData = (req, res) => {
 }
 
 exports.saveRaceResults = (req, res) => {
-  console.log(req.body);
-  res.send('testing');
+  console.log(req.body, 'request body -----------------------');
+  res.send(req.body);
 }
