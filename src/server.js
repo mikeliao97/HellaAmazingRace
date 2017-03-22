@@ -27,7 +27,8 @@ var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
   clientID: '630724287121611',
   clientSecret: '39b0e9bbb91cdb757f264099dff78b0b',
-  callbackURL: 'http://localhost:3000/auth/facebook/callback'
+  callbackURL: 'http://localhost:3000/auth/facebook/callback',
+  profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
 },
   function(accessToken, refreshToken, profile, cb) {
     return cb(null, profile);
@@ -77,8 +78,12 @@ app.get('/auth/facebook/callback',
   });
 
 
-///// get saved race route
+///// GET Requests /////
 
+// get user displayName on successful login
+app.get('/username', util.isLoggedIn, (req, res) => {
+  res.send(req.user);
+});
 
 // wildcard route for react routing
 app.get('*', util.isLoggedIn, (req, res) => {
@@ -93,7 +98,7 @@ app.post('/saveRace', RaceHelpers.storeSavedRace);
 
 app.post('/loadRace', RaceHelpers.loadRaceData);
 
-
+app.post('/saveRaceResults', RaceHelpers.saveRaceResults);
 
 
 
