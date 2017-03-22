@@ -52,7 +52,7 @@ export default class Stopwatch extends React.Component {
     let raceResults = {
       title: this.props.raceTitle,
       winner: window.currentUser,
-      time: formattedTime
+      time: JSON.stringify(formattedTime)
     }
 
     $.post('/saveRaceResults', raceResults)
