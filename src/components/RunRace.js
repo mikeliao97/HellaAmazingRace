@@ -61,6 +61,7 @@ export default class RunRace extends React.Component {
     let distance = google.maps.geometry.spherical.computeDistanceBetween(currLocation, checkpointLocation);
 
     if (distance < 50) {
+      window.markers[0].setMap(null);
       window.markers.shift();
       if (!window.markers.length) {
         alert('Congrats, you have finished the race!');
@@ -68,6 +69,7 @@ export default class RunRace extends React.Component {
           raceComplete: true
         });
       } else {
+        window.markers[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
         alert('Continue to next checkpoint!');
       }
     } else {
