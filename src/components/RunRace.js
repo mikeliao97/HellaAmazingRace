@@ -14,7 +14,8 @@ export default class RunRace extends React.Component {
     this.state = {
       searchedRace: 'test',
       markers: null,
-      title: null
+      title: null,
+      raceComplete: false
     }
   }
 
@@ -49,6 +50,7 @@ export default class RunRace extends React.Component {
       window.markers.shift();
       if (!window.markers.length) {
         alert('Congrats, you have finished the race!');
+        this.state.raceComplete = true;
       } else {
         alert('Continue to next checkpoint!');
       }
@@ -75,7 +77,7 @@ export default class RunRace extends React.Component {
           <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
         </form>
 
-        <Timer/>
+        <Timer complete={this.state.raceComplete}/>
 
         <div style={verifyBtnStyle}>
           <button type="button" className="btn btn-success btn-block" onClick={this.verifyLocation.bind(this)}>I Have Arrived at Current Checkpoint</button>
