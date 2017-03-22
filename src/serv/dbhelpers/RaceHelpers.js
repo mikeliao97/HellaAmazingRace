@@ -33,3 +33,8 @@ exports.loadRaceData = (req, res) => {
     }
   })
 }
+
+exports.saveRaceResults = (req, res) => {
+  console.log(req.body);
+  res.send('testing');
+}

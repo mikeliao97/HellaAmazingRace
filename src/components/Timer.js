@@ -26,26 +26,38 @@ export default class Stopwatch extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.complete) {
-      // stop max call stack
-      this.props.complete = false;
+    // start race on first checkpoint verify
+    if (this.props.running) {
+      this.props.running = false;
+      this.toggle();
+    }
 
+    // end race and send results data to be stored in database
+    if (this.props.complete) {
+      this.props.complete = false;
       this.toggle();
       const seconds = this.state.timeElapsed / 1000;
-      let formattedTime = {
-        min: Math.floor(seconds / 60).toString(),
-        sec: Math.floor(seconds % 60).toString(),
-        msec: (seconds % 1).toFixed(3).substring(2)
-      }
-      console.log(formattedTime, 'race over, stopping time');
+      this.saveRaceResults(seconds);
+
+    }
+  }
+
+  saveRaceResults(seconds) {
+    let formattedTime = {
+      min: Math.floor(seconds / 60).toString(),
+      sec: Math.floor(seconds % 60).toString(),
+      msec: (seconds % 1).toFixed(3).substring(2)
+    }
+    let raceResults = {
+      title: this.props.title,
+      winner: window.currentUser,
+      time: formattedTime
     }
 
-    if (this.props.running) {
-      // stop max call stack
-      this.props.running = false;
-      // starting race
-      this.toggle();
-    }
+    $.post('/saveRaceResults', raceResults)
+      .done((res) => {
+        console.log(res);
+      });
   }
 
   toggle() {

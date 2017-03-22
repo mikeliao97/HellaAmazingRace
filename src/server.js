@@ -98,7 +98,7 @@ app.post('/saveRace', RaceHelpers.storeSavedRace);
 
 app.post('/loadRace', RaceHelpers.loadRaceData);
 
-
+app.post('/saveRaceResults', RaceHelpers.saveRaceResults);
 
 
 
