@@ -68,6 +68,7 @@ export default class RunRace extends React.Component {
           raceComplete: true
         });
       } else {
+        window.markers[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
         alert('Continue to next checkpoint!');
       }
     } else {
