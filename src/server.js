@@ -77,8 +77,12 @@ app.get('/auth/facebook/callback',
   });
 
 
-///// get saved race route
+///// GET Requests /////
 
+// get user displayName on successful login
+app.get('/username', util.isLoggedIn, (req, res) => {
+  res.send(req.body);
+});
 
 // wildcard route for react routing
 app.get('*', util.isLoggedIn, (req, res) => {

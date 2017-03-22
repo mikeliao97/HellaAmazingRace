@@ -3,6 +3,18 @@
 import React from 'react';
 
 export default class IndexPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayName: null
+    }
+  }
+
+  componentDidMount() {
+    
+  }
+
   render() {
     return (
       <div>

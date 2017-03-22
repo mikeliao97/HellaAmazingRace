@@ -87,7 +87,7 @@ export default class RunRace extends React.Component {
           <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
         </form>
 
-        <Timer running={this.state.raceRunning} complete={this.state.raceComplete}/>
+        <Timer raceTitle={this.state.title} running={this.state.raceRunning} complete={this.state.raceComplete}/>
 
         <div style={verifyBtnStyle}>
           <button type="button" className="btn btn-success btn-block" onClick={this.verifyLocation.bind(this)}>I Have Arrived at Current Checkpoint</button>
