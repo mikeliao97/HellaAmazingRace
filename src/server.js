@@ -27,7 +27,8 @@ var Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
   clientID: '630724287121611',
   clientSecret: '39b0e9bbb91cdb757f264099dff78b0b',
-  callbackURL: 'http://localhost:3000/auth/facebook/callback'
+  callbackURL: 'http://localhost:3000/auth/facebook/callback',
+  profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
 },
   function(accessToken, refreshToken, profile, cb) {
     return cb(null, profile);
@@ -81,7 +82,6 @@ app.get('/auth/facebook/callback',
 
 // get user displayName on successful login
 app.get('/username', util.isLoggedIn, (req, res) => {
-  console.log(req.user);
   res.send(req.user);
 });
 

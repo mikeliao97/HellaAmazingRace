@@ -7,7 +7,8 @@ export default class IndexPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: null
+      displayName: null,
+      userPhoto: null
     }
   }
 
@@ -18,18 +19,21 @@ export default class IndexPage extends React.Component {
   getUserData() {
     $.get('/username')
       .done((res) => {
+        console.log(res);
         // allow all components access to current user name
         window.currentUser = res.displayName;
         this.setState({
-          displayName: res.displayName
+          displayName: res.displayName,
+          userPhoto: res.photos[0].value
         });
       });
   }
 
   render() {
     return (
-      <div>
-      <h1>Welcome {this.state.displayName}</h1>
+      <div className="text-center">
+        <img className="img-circle" src={this.state.userPhoto}/>
+        <span><h1>Welcome {this.state.displayName}</h1></span>
       </div>
     );
   }
