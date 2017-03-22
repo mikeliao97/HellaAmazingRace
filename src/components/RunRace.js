@@ -18,6 +18,12 @@ export default class RunRace extends React.Component {
       raceComplete: false,
       raceRunning: false
     }
+
+    // get users name for saving race results when page is loading.
+    $.get('/username')
+      .done((res) => {
+        window.currentUser = res.displayName;
+      });
   }
 
   searchedRaceNameChange(e) {

@@ -15,6 +15,7 @@ export default class Stopwatch extends React.Component {
   constructor(props) {
     super(props);
     
+    // bind all functions to 'this' context immediately
     ['update', 'toggle'].forEach((method) => {
       this[method] = this[method].bind(this);
     });
