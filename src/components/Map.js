@@ -9,10 +9,8 @@ export default class RaceMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lat: 37.8123698,
-      lng: -122.00116100000002,
-      // lat: null,
-      // lng: null
+      lat: null,
+      lng: null
     }
     window.markers = [];
   }
@@ -42,14 +40,12 @@ export default class RaceMap extends React.Component {
 
 
   componentDidMount() {
-    this.renderMap();
-
-    // this.getCurrentLocation((ready) => {
-    //   if (ready) {
-    //     // one time map render on page ready
-    //     this.renderMap();
-    //   }
-    // });
+    this.getCurrentLocation((ready) => {
+      if (ready) {
+        // one time map render on page ready
+        this.renderMap();
+      }
+    });
   }
 
 
