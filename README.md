@@ -44,6 +44,13 @@ npm run build
 npm start
 ```
 
+### Git remote
+```sh
+git remote add staging https://git.heroku.com/hella-amazing-race-staging.git
+git remote add heroku https://git.heroku.com/hella-amazing-race.git
+git remote add upstream https://github.com/HellaAmazingHackers/HellaAmazingRace.git
+```
+
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_DOC)
