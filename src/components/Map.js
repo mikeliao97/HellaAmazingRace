@@ -11,11 +11,9 @@ export default class RaceMap extends React.Component {
     this.state = {
       lat: null,
       lng: null
-    }
+    };
     window.markers = [];
   }
-
-
 
   getCurrentLocation(cb) {
     var options = {
@@ -34,10 +32,8 @@ export default class RaceMap extends React.Component {
       }
     }, (err) => {
       console.log('error occurred: ', err);
-    }, options)
+    }, options);
   }
-
-
 
   componentDidMount() {
     this.getCurrentLocation((ready) => {
@@ -47,8 +43,6 @@ export default class RaceMap extends React.Component {
       }
     });
   }
-
-
 
   renderMap() {
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
@@ -66,10 +60,7 @@ export default class RaceMap extends React.Component {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
 
-
-
   render() {
-
     return (
       <div id="map"/>
     );

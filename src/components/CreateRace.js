@@ -4,8 +4,6 @@ import React from 'react';
 import RaceMap from './Map';
 import Autocomplete from './Autocomplete';
 
-
-
 export default class CreateRace extends React.Component {
 
   constructor(props) {
@@ -16,7 +14,7 @@ export default class CreateRace extends React.Component {
       finish: null,
       checkpoints: [],
       searchData: null
-    }
+    };
   }
 
   addMapData(e) {
@@ -50,7 +48,7 @@ export default class CreateRace extends React.Component {
       Place: locationData.label,
       Latitude: locationData.location.lat,
       Longitude: locationData.location.lng
-    }
+    };
     this.setState({
       searchData: JSON.stringify(formattedLocationData)
     });
