@@ -23,7 +23,7 @@ exports.storeSavedRace = (req, res) => {
       res.send('Race name already exists');
     }
   });
-}
+};
 
 exports.loadRaceData = (req, res) => {
   Race.findOne(req.body).exec((err, raceData) => {
@@ -32,8 +32,8 @@ exports.loadRaceData = (req, res) => {
     } else {
       res.send(raceData);
     }
-  })
-}
+  });
+};
 
 exports.saveRaceResults = (req, res) => {
   let raceResults = new Results({
@@ -43,12 +43,13 @@ exports.saveRaceResults = (req, res) => {
   });
 
   raceResults.save((err, raceResults) => {
-    if (err) { throw err; }
-    else {
+    if (err) { 
+      throw err; 
+    } else {
       res.send('Results saved.');
     }
   });
-}
+};
 
 
 

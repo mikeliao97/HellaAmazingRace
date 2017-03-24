@@ -17,7 +17,7 @@ export default class RunRace extends React.Component {
       title: null,
       raceComplete: false,
       raceRunning: false
-    }
+    };
 
     // get users name for saving race results when page is loading.
     $.get('/username')

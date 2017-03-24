@@ -48,12 +48,12 @@ export default class Stopwatch extends React.Component {
       min: Math.floor(seconds / 60).toString(),
       sec: Math.floor(seconds % 60).toString(),
       msec: (seconds % 1).toFixed(3).substring(2)
-    }
+    };
     let raceResults = {
       title: this.props.raceTitle,
       winner: window.currentUser,
       time: JSON.stringify(formattedTime)
-    }
+    };
 
     $.post('/saveRaceResults', raceResults)
       .done((res) => {
@@ -63,7 +63,7 @@ export default class Stopwatch extends React.Component {
 
   toggle() {
     this.setState({isRunning: !this.state.isRunning}, () => {
-      this.state.isRunning ? this.startTimer() : clearInterval(this.timer)
+      this.state.isRunning ? this.startTimer() : clearInterval(this.timer);
     });
   }
 
@@ -87,8 +87,6 @@ export default class Stopwatch extends React.Component {
     );
   }
 }
-
-
 
 class TimeElapsed extends React.Component {
   getUnits() {

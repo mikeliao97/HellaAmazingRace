@@ -13,18 +13,14 @@ export default class PubMap extends React.Component {
       // lng: -122.00116100000002,
       lat: null,
       lng: null,
-    }
+    };
     window.lineCoords = [];
     window.markers = [];
     window.checkpointsLoaded = false;
   }
 
-
-
   componentDidMount() {
     this.pubnubConnect();
-
-
     // uncomment when navigator geolocation stops working randomly
     // this.renderMap();
 
@@ -41,22 +37,18 @@ export default class PubMap extends React.Component {
     }, 3000);
   }
 
-
-
   componentDidUpdate() {
     window.currentLocation = [this.state.lat, this.state.lng];
     // when current location in state changes, redraw map with path
     pubnub.publish({
-      channel:pnChannel, 
+      channel: pnChannel, 
       message: {
         lat: this.state.lat,
-        lng:this.state.lng, 
+        lng: this.state.lng, 
         markers: this.props.markers
       }
     });
   }
-
-
 
   renderMap() {
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
@@ -75,9 +67,7 @@ export default class PubMap extends React.Component {
 
   }
 
-
-
-   getCurrentLocation(cb) {
+  getCurrentLocation(cb) {
     var options = {
       enableHighAccuracy: true,
       timeout: 5000,
@@ -94,10 +84,8 @@ export default class PubMap extends React.Component {
       }
     }, (err) => {
       console.log('error occurred: ', err);
-    }, options)
+    }, options);
   }
-
-
 
   redrawMap(payload) {
     console.log('updating current location marker');
@@ -124,8 +112,8 @@ export default class PubMap extends React.Component {
     }
 
 
-    map.setCenter({lat:lat, lng:lng, alt:0});
-    marker.setPosition({lat:lat, lng:lng, alt:0});
+    map.setCenter({lat: lat, lng: lng, alt: 0});
+    marker.setPosition({lat: lat, lng: lng, alt: 0});
 
     lineCoords.push(new google.maps.LatLng(lat, lng));
 
@@ -138,11 +126,9 @@ export default class PubMap extends React.Component {
     lineCoordinatesPath.setMap(map);
   }
 
-
-
   createMarker(location, order) {
     order += 1;
-    let contentString = `<p> Checkpoint ${order}</p>`
+    let contentString = `<p> Checkpoint ${order}</p>`;
 
     // create popup window to be shown on marker click
     var infoWindow = new google.maps.InfoWindow({
@@ -162,42 +148,36 @@ export default class PubMap extends React.Component {
     window.markers.push(checkpointMarker);
   }
 
-
-
   generateMarkersArray(markers) {
-      let markersArr = [];
-      markers.start = JSON.parse(markers.start);
-      markers.checkpoints = JSON.parse(markers.checkpoints);
-      markers.finish = JSON.parse(markers.finish);
+    let markersArr = [];
+    markers.start = JSON.parse(markers.start);
+    markers.checkpoints = JSON.parse(markers.checkpoints);
+    markers.finish = JSON.parse(markers.finish);
 
-      // push start
-      markersArr.push({lat: markers.start.Latitude, lng: markers.start.Longitude});
+    // push start
+    markersArr.push({lat: markers.start.Latitude, lng: markers.start.Longitude});
 
-      // push all checkpoints
-      markers.checkpoints.forEach((marker) => {
-        marker = JSON.parse(marker);
-        markersArr.push({lat: marker.Latitude, lng: marker.Longitude});
-      });
+    // push all checkpoints
+    markers.checkpoints.forEach((marker) => {
+      marker = JSON.parse(marker);
+      markersArr.push({lat: marker.Latitude, lng: marker.Longitude});
+    });
 
-      // push finish
-      markersArr.push({lat: markers.finish.Latitude, lng: markers.finish.Longitude});
+    // push finish
+    markersArr.push({lat: markers.finish.Latitude, lng: markers.finish.Longitude});
 
-      return markersArr;
+    return markersArr;
   }
 
-
-
   pubnubConnect() {
-    window.pnChannel = "map-channel";
+    window.pnChannel = 'map-channel';
     window.pubnub = new PubNub({
       publishKey: 'pub-c-1e471fcb-f49a-481a-84ae-32b4e950ffa8',
       subscribeKey: 'sub-c-00a667ae-0a73-11e7-9734-02ee2ddab7fe'
     });
     pubnub.subscribe({channels: [pnChannel]});
-    pubnub.addListener({message:this.redrawMap.bind(this)});
+    pubnub.addListener({message: this.redrawMap.bind(this)});
   }
-
-
 
   render() {
     return (

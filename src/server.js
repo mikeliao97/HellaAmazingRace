@@ -104,9 +104,8 @@ app.get('/username', util.isLoggedIn, (req, res) => {
 
 // wildcard route for react routing
 app.get('*', util.isLoggedIn, (req, res) => {
-  res.sendFile(path.join(__dirname, 'static/index-static.html'))
+  res.sendFile(path.join(__dirname, 'static/index-static.html'));
 });
-
 
 ///// POST Requests /////
 
@@ -116,14 +115,6 @@ app.post('/saveRace', RaceHelpers.storeSavedRace);
 app.post('/loadRace', RaceHelpers.loadRaceData);
 
 app.post('/saveRaceResults', RaceHelpers.saveRaceResults);
-
-
-
-
-
-
-
-
 
 
 const port = process.env.PORT || 3000;
