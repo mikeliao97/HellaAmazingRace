@@ -1,6 +1,8 @@
 'use strict';
 
 import React from 'react';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 
 export default class IndexPage extends React.Component {
 
@@ -8,12 +10,13 @@ export default class IndexPage extends React.Component {
     super(props);
     this.state = {
       displayName: null,
-      userPhoto: null
+      userPhoto: null,
     };
   }
 
   componentDidMount() {
     this.getUserData();
+
   }
 
   getUserData() {
@@ -37,11 +40,68 @@ export default class IndexPage extends React.Component {
           <span><h1>Welcome {this.state.displayName}</h1></span>
         </div>
 
-        <div>
-          Past 10 completed race results will go here
+        <div className="text-center">
+          <h4>
+            Recent race results:
+          </h4>
+          <Table />
         </div>
 
       </div>
+    );
+  }
+}
+
+
+class Table extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      raceResults: []
+    }
+  }
+
+  componentDidMount() {
+    this.getRaceResults();
+  }
+
+  getRaceResults() {
+    $.post('/loadRaceResults')
+      .done((res) => {
+        console.log(res);
+        this.setState({
+        raceResults: res
+      });
+    });
+  }
+
+  render() {
+
+    const fakeData = [{
+      title: 'test1',
+      winner: 'jason',
+      time: 'n/a'
+    },{
+      title: 'test1',
+      winner: 'jason',
+      time: 'n/a'
+    },{
+      title: 'test1',
+      winner: 'jason',
+      time: 'n/a'
+    },{
+      title: 'test1',
+      winner: 'jason',
+      time: 'n/a'
+    }];
+
+    return (
+      <BootstrapTable data={ fakeData }>
+        <TableHeaderColumn dataField='title' isKey>Title</TableHeaderColumn>
+        <TableHeaderColumn dataField='winner'>Winner</TableHeaderColumn>
+        <TableHeaderColumn dataField='time'>Race Time</TableHeaderColumn>
+      </BootstrapTable>
     );
   }
 }
