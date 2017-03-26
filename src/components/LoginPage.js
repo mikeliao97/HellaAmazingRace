@@ -5,8 +5,10 @@ import React from 'react';
 export default class LoginPage extends React.Component {
   render() {
     return (
-      <div>
-        <a href="/auth/facebook" className="btn btn-facebook"></a>
+      <div className="text-center">
+        <a href="/auth/facebook">
+          <img  className="img-rounded" src="img/fb-login.png"/>
+        </a>
       </div>
     );
   }
