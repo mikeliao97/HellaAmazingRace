@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import Table from './Table';
 
 
 export default class IndexPage extends React.Component {
@@ -44,7 +45,7 @@ export default class IndexPage extends React.Component {
           <h4>
             Recent race results:
           </h4>
-          <Table />
+          <NoDataTable />
         </div>
 
       </div>
@@ -53,7 +54,7 @@ export default class IndexPage extends React.Component {
 }
 
 
-class Table extends React.Component {
+class NoDataTable extends React.Component {
 
   constructor(props) {
     super(props);
@@ -77,30 +78,11 @@ class Table extends React.Component {
   }
 
   render() {
-
-    const fakeData = [{
-      title: 'test1',
-      winner: 'jason',
-      time: 'n/a'
-    },{
-      title: 'test1',
-      winner: 'jason',
-      time: 'n/a'
-    },{
-      title: 'test1',
-      winner: 'jason',
-      time: 'n/a'
-    },{
-      title: 'test1',
-      winner: 'jason',
-      time: 'n/a'
-    }];
-
     return (
-      <BootstrapTable data={ fakeData }>
-        <TableHeaderColumn dataField='title' isKey>Title</TableHeaderColumn>
+      <BootstrapTable data={ this.state.raceResults } options={ { noDataText: 'No results to report, run a race!' } }>
+        <TableHeaderColumn dataField='title' isKey={ true }>Title</TableHeaderColumn>
         <TableHeaderColumn dataField='winner'>Winner</TableHeaderColumn>
-        <TableHeaderColumn dataField='time'>Race Time</TableHeaderColumn>
+        <TableHeaderColumn dataField='time'>Time</TableHeaderColumn>
       </BootstrapTable>
     );
   }
