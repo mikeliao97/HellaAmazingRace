@@ -51,6 +51,16 @@ exports.saveRaceResults = (req, res) => {
   });
 };
 
+exports.loadRaceResults = (req, res) => {
+  Results.find().exec((err, raceData) => {
+    if (!raceData) {
+      res.send('No previous race results...');
+    } else {
+      res.send(raceData);
+    }
+  });
+}
+
 
 
 

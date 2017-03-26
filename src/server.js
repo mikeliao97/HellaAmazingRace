@@ -116,6 +116,9 @@ app.post('/loadRace', RaceHelpers.loadRaceData);
 
 app.post('/saveRaceResults', RaceHelpers.saveRaceResults);
 
+app.post('/loadRaceResults', RaceHelpers.loadRaceResults);
+
+
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';
