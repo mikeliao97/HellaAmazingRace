@@ -53,7 +53,7 @@ git remote add upstream https://github.com/HellaAmazingHackers/HellaAmazingRace.
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [here](https://docs.google.com/spreadsheets/d/1EQ7wdky39jIwL4aOvjFb-Ll0lHRrMiNJ-ODrv6-hGTk/edit?ts=58c73430#gid=0)
 
 
 ## Contributing
