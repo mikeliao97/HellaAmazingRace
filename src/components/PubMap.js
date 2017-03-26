@@ -8,9 +8,6 @@ export default class PubMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // uncomment when navigator geolocation stops working randomly
-      // lat: 37.8123698,
-      // lng: -122.00116100000002,
       lat: null,
       lng: null,
     };
@@ -21,8 +18,6 @@ export default class PubMap extends React.Component {
 
   componentDidMount() {
     this.pubnubConnect();
-    // uncomment when navigator geolocation stops working randomly
-    // this.renderMap();
 
     this.getCurrentLocation((ready) => {
       if (ready) {
