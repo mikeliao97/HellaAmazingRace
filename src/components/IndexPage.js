@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import Table from './Table';
 
 
 export default class IndexPage extends React.Component {
@@ -42,66 +42,12 @@ export default class IndexPage extends React.Component {
 
         <div className="text-center">
           <h4>
-            Recent race results:
+            Recent race results
           </h4>
           <Table />
         </div>
 
       </div>
-    );
-  }
-}
-
-
-class Table extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      raceResults: []
-    }
-  }
-
-  componentDidMount() {
-    this.getRaceResults();
-  }
-
-  getRaceResults() {
-    $.post('/loadRaceResults')
-      .done((res) => {
-        console.log(res);
-        this.setState({
-        raceResults: res
-      });
-    });
-  }
-
-  render() {
-
-    const fakeData = [{
-      title: 'test1',
-      winner: 'jason',
-      time: 'n/a'
-    },{
-      title: 'test1',
-      winner: 'jason',
-      time: 'n/a'
-    },{
-      title: 'test1',
-      winner: 'jason',
-      time: 'n/a'
-    },{
-      title: 'test1',
-      winner: 'jason',
-      time: 'n/a'
-    }];
-
-    return (
-      <BootstrapTable data={ fakeData }>
-        <TableHeaderColumn dataField='title' isKey>Title</TableHeaderColumn>
-        <TableHeaderColumn dataField='winner'>Winner</TableHeaderColumn>
-        <TableHeaderColumn dataField='time'>Race Time</TableHeaderColumn>
-      </BootstrapTable>
     );
   }
 }
