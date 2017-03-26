@@ -1,7 +1,7 @@
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
-class NoDataTable extends React.Component {
+export default class NoDataTable extends React.Component {
 
   constructor(props) {
     super(props);
@@ -17,7 +17,6 @@ class NoDataTable extends React.Component {
   getRaceResults() {
     $.post('/loadRaceResults')
       .done((res) => {
-        console.log(res);
         this.setState({
         raceResults: res
       });
