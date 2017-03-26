@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import PubMap from './MapBox';
+import PubMap from './PubMap';
 import Autocomplete from './Autocomplete';
 import Timer from './Timer';
 
