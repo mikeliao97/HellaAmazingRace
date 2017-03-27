@@ -7,7 +7,7 @@ export default class NoDataTable extends React.Component {
     super(props);
     this.state = {
       raceResults: []
-    }
+    };
   }
 
   componentDidMount() {
