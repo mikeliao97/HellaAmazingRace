@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/hella-amazing-race');
+mongoose.connect('mongodb://jason:admin@ds135790.mlab.com:35790/hella-amazing-race');
 
 mongoose.connection.on('error', function(error) {
   console.error(error);
