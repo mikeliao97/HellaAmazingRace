@@ -1,6 +1,6 @@
 # Hella Amazing Race
 
-> Pithy project description
+> Hella Amazing Race allows you to create real-world races by setting start and end locations with checkpoints inbetween. Race yourself and your friends through the checkpoints to see who finishes first!
 
 ## Team
 

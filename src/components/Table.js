@@ -7,7 +7,7 @@ export default class NoDataTable extends React.Component {
     super(props);
     this.state = {
       raceResults: []
-    }
+    };
   }
 
   componentDidMount() {
@@ -18,9 +18,9 @@ export default class NoDataTable extends React.Component {
     $.post('/loadRaceResults')
       .done((res) => {
         this.setState({
-        raceResults: res
+          raceResults: res
+        });
       });
-    });
   }
 
   render() {
