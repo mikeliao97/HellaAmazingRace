@@ -38,8 +38,10 @@ export default class CreateRace extends React.Component {
   }
 
   saveRace() {
-    $.post('/SaveRace', this.state, (something) => {
-      console.log('something ', something);
+    $.post('/SaveRace', this.state, (response) => {
+      if (response === 'Race name already exists') {
+        alert('Race name already exists, please rename.');
+      }
     });
   }
 
