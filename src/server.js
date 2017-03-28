@@ -41,8 +41,8 @@ if (process.env.NODE_ENV === 'production') {
 } else {  // local development facebook auth info (test app)
   console.log('>>in development environment');
   passport.use(new Strategy({
-    clientID: '634348233425883',
-    clientSecret: '63219faae4bd288de878264586212ac2',
+    clientID: '1947534422132704',
+    clientSecret: 'c7340399067cf036c05f76c461903d61',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
   },
