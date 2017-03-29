@@ -39,7 +39,7 @@ export default class Users extends React.Component {
         <RaisedButton
           onTouchTap={this.handleTouchTap.bind(this)}
           onClick={this.handleTouchTap.bind(this)}
-          label="Show Racers"
+          label="Racers"
         />
         <Popover
           open={this.state.open}

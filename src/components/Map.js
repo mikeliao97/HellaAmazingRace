@@ -70,11 +70,11 @@ export default class RaceMap extends React.Component {
 
     marker.setAnimation(google.maps.Animation.BOUNCE);
 
-    // Resize the google maps for smaller screens
+    // Resize stuff
     google.maps.event.addDomListener(window, "resize", function() {
        var center = map.getCenter();
        google.maps.event.trigger(map, "resize");
-       map.setCenter(center);       
+       map.setCenter(center); 
     });
 
   }

@@ -6,6 +6,7 @@ import Autocomplete from './Autocomplete';
 import Timer from './Timer';
 import RaisedButton from 'material-ui/RaisedButton';
 import UsersButton from './Users.jsx'
+import BottomNavigationButtons from './BottomNavigation.jsx';
 
 
 
@@ -91,6 +92,7 @@ export default class RunRace extends React.Component {
             <UsersButton id="users"/>
             <Timer id="timer" raceTitle={'Amazing Racing'} running={true} />
         </div>
+        <BottomNavigationButtons id="runRaceFooterBar" />
       </div>
     );
   }
