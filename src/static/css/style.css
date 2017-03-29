@@ -1,5 +1,12 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
 body {
-  padding-top: 70px;
+  /*padding-top: 70px;*/
+  height: 100%;
+  width: 100%;
   /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
 }
 
@@ -21,6 +28,11 @@ body {
   }
 }
 
+#main {
+  background-color: blue;
+  width: 100%;
+  height: 100%;
+}
 
 /*Geosuggest autocomplete styling*/
 
@@ -103,8 +115,11 @@ body {
 /* Google Maps Styling */
 
 #map {
-  width: 800px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
+  /*width: 100%;*/
+  /*height: 100%;*/
+
   margin-left: auto;
   margin-right: auto;
   background-color: grey;
@@ -113,7 +128,44 @@ body {
 
 /* Font styling for Timer Component */
 
-#timer {
-  font-size: 1.45em;
-  font-weight: 100;
+
+.raceMapContainer {
+  background-color: orange;
+  height: 100%;
+  width: 100%;
+  z-index: 98;
 }
+
+#runRaceNavBar {
+  /*background-color: orange;*/
+  height: 50px;
+  width: 100%;
+
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 99px;
+
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#timer {
+  flex: 2;
+  font-size: 2.5em;
+  font-weight: 100;  
+  /*background-color: yellow;  */
+}
+
+#users {
+  flex: 1;
+  position: absolute;
+  left: 0;
+  margin-left: 10px;
+}
+
+
+
+

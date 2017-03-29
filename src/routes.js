@@ -8,15 +8,19 @@ import NotFoundPage from './components/NotFoundPage';
 import LoginPage from './components/LoginPage';
 import CreateRace from './components/CreateRace';
 import RunRace from './components/RunRace';
+import TestMap from './components/TestMap';
 
 const routes = (
+  <div> 
   <Route path="/" component={Layout}>
     <IndexRoute component={LoginPage}/>
     <Route path="/home" component={IndexPage}/>
     <Route path="/CreateRace" component = {CreateRace}/>
-    <Route path="/RunRace" component = {RunRace}/>
-    <Route path="*" component={NotFoundPage}/>
+    <Route path="/RunRace" component = {RunRace}/>    
   </Route>
+  <Route path="/TestMap" component = {TestMap} />
+  <Route path="*" component={NotFoundPage}/>
+  </div>
 );
 
 export default routes;

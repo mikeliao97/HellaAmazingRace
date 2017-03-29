@@ -19,6 +19,11 @@ import util from './config/utility';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 
 //passport
@@ -41,8 +46,9 @@ if (process.env.NODE_ENV === 'production') {
 } else {  // local development facebook auth info (test app)
   console.log('>>in development environment');
   passport.use(new Strategy({
-    clientID: '634348233425883',
-    clientSecret: '63219faae4bd288de878264586212ac2',
+    clientID: '1016193961847191',
+    clientSecret: '3b7240f21274cefcdc425d318a55e43d',
+    // callbackURL: 'http://884d47a9.ngrok.io/auth/facebook/callback',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
   },
@@ -80,8 +86,7 @@ app.use(passport.session());
 
 
 // passport routes
-app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
