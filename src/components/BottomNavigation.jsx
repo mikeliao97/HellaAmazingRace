@@ -23,12 +23,14 @@ export default class BottomNavigationButtons extends Component {
       selectedIndex: 0,
     };
     this.select.bind(this);
+    this.changeRoute.bind(this);
   }
 
-  select(index) {
-    this.setState({selectedIndex: index});
-  };
-
+  changeRoute(route) {
+    event.preventDefault();
+    console.log('trying to change route');
+    this.props.history.push(route);
+  }
 
   render() {
     return (
@@ -36,18 +38,18 @@ export default class BottomNavigationButtons extends Component {
         <BottomNavigation selectedIndex={this.state.selectedIndex}>
           <BottomNavigationItem
             label="Route Info"
-            icon={route_info}
-            onTouchTap={() => this.select(0)}
+            icon={route_info}            
+            onClick={() => this.changeRoute('/route_info')}
           />
            <BottomNavigationItem
             label="Nearby!"
             icon={nearbyIcon}
-            onTouchTap={() => this.select(2)}
+            onClick={this.handleClick.bind(this)}
           />
           <BottomNavigationItem
             label="Messaging"
             icon={messaging}
-            onTouchTap={() => this.select(1)}
+            onClick={this.handleClick.bind(this)}
           />         
         </BottomNavigation>
       </Paper>

@@ -5,7 +5,7 @@ import Map from './Map';
 import Autocomplete from './Autocomplete';
 import Timer from './Timer';
 import RaisedButton from 'material-ui/RaisedButton';
-import UsersButton from './Users.jsx'
+import UsersButton from './UsersButton.jsx'
 import BottomNavigationButtons from './BottomNavigation.jsx';
 
 
@@ -22,11 +22,7 @@ export default class RunRace extends React.Component {
       raceRunning: false
     };
 
-    // get users name for saving race results when page is loading.
-    $.get('/username')
-      .done((res) => {
-        window.currentUser = res.displayName;
-      });
+    // get users name for saving race results when page is loading.    
   }
 
   searchedRaceNameChange(e) {
@@ -79,6 +75,10 @@ export default class RunRace extends React.Component {
       alert(`You are still ${Math.floor(distance)} meters away.`);
     }
   }
+  handleClick(e) {
+    console.log('props', this.props);
+  }
+
 
   
 
@@ -86,13 +86,13 @@ export default class RunRace extends React.Component {
 
     return (
       <div className="raceMapContainer">
-        <Map markers={this.state.markers}/>
-
-        <div id="runRaceNavBar"> 
-            <UsersButton id="users"/>
+        <Map markers={this.state.markers} />
+        <RaisedButton id="test" onClick={this.handleClick.bind(this)} />
+        <div id="runRaceNavBar" onClick={this.handleClick.bind(this)} > 
+            <UsersButton id="users" />
             <Timer id="timer" raceTitle={'Amazing Racing'} running={true} />
         </div>
-        <BottomNavigationButtons id="runRaceFooterBar" />
+        <BottomNavigationButtons history={this.props.history} id="runRaceFooterBar" />
       </div>
     );
   }

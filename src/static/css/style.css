@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Francois+One|Revalia');
+
 html {
   width: 100%;
   height: 100%;
@@ -155,7 +157,12 @@ body {
 #timer {
   flex: 2;
   font-size: 2.2em;
-  font-weight: 1000;   
+  font-weight: 1000;  
+  /*font-family: 'Font Name', serif; */
+  /*font-family: 'Revalia', cursive;*/
+  font-family: 'Francois One', sans-serif;
+
+
   /*background-color: yellow;  */
 }
 
@@ -190,4 +197,9 @@ writing media queries specific to the iphone
   #timer {
     margin-left: 30px; 
   }
+}
+
+#test {
+  z-index: 1000;
+  background-color: blue;
 }

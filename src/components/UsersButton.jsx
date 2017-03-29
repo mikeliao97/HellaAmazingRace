@@ -4,6 +4,13 @@ import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
+import FontIcon from 'material-ui/FontIcon';
+import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
+
+
+
+
+const person = <FontIcon color='#8B8C8D' className="material-icons">face</FontIcon>
 export default class Users extends React.Component {
 
   constructor(props) {
@@ -15,6 +22,17 @@ export default class Users extends React.Component {
   }
 
   handleTouchTap(event) {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget,
+    });
+    console.log('touchedtap button');
+  };
+
+  handleClick(event) {
     // This prevents ghost click.
     event.preventDefault();
 
@@ -37,8 +55,7 @@ export default class Users extends React.Component {
     return (
       <div id={this.props.id}>
         <RaisedButton
-          onTouchTap={this.handleTouchTap.bind(this)}
-          onClick={this.handleTouchTap.bind(this)}
+          onClick={this.handleClick.bind(this)}
           label="Racers"
         />
         <Popover
@@ -49,10 +66,11 @@ export default class Users extends React.Component {
           onRequestClose={this.handleRequestClose.bind(this)}
         >
           <Menu>
-            <MenuItem primaryText="Whitney" />
-            <MenuItem primaryText="Hello" />
-            <MenuItem primaryText="somethingelse" />
-            <MenuItem primaryText="Sign out" />
+            <MenuItem primaryText="Whitney" rightIcon={person} />
+
+            <MenuItem primaryText="Hello" rightIcon={person}/>
+            <MenuItem primaryText="somethingelse" rightIcon={person} />
+            <MenuItem primaryText="Sign out" rightIcon={person}/>
           </Menu>
         </Popover>
       </div>
