@@ -19,7 +19,8 @@ import util from './config/utility';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-
+// import gcloud from 'google-cloud';
+import gCred from './config/gcloud/cred';
 
 //passport
 var Strategy = require('passport-facebook').Strategy;
@@ -58,6 +59,13 @@ passport.serializeUser(function(user, cb) {
 
 passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
+});
+
+//gcloud Authenticating
+var gcloud = require('google-cloud')({
+  projectId: gCred.projectId,
+  credentials: __dirname + '/src/config/gcloud/quoted-hella-keyFile.json',
+  key: gCred.key
 });
 
 
@@ -118,7 +126,7 @@ app.post('/saveRaceResults', RaceHelpers.saveRaceResults);
 
 app.post('/loadRaceResults', RaceHelpers.loadRaceResults);
 
-
+app.post('/analyzePhoto', RaceHelpers.analyzePhoto);
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';

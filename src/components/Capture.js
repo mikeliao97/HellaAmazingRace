@@ -40,30 +40,6 @@ export default class Capture extends React.Component {
     this.clearPhoto();    
   }
 
-  // componentDidUpdate() {
-  //   const constraints = this.state.constraints;
-  //   console.log('constraints: ', constraints);
-  //   const getUserMedia = (params) => (  
-  //     new Promise((successCallback, errorCallback) => {
-  //       navigator.webkitGetUserMedia.call(navigator, params, successCallback, errorCallback);
-  //     })
-  //   );
-
-  //   getUserMedia(constraints)  
-  //   .then((stream) => {
-  //     console.log('gUM stream: ', stream);
-  //     const video = document.querySelector('video');
-  //     const vendorURL = window.URL || window.webkitURL;
-  //     video.src = vendorURL.createObjectURL(stream);
-  //     video.play();
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-
-  //   this.clearPhoto();
-  // }
-
   clearPhoto() {
     const canvas = document.querySelector('canvas');  
     const photo = document.getElementById('photo');  

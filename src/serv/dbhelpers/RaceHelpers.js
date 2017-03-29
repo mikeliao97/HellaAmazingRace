@@ -1,5 +1,11 @@
 import Race from '../schemas/races';
 import Results from '../schemas/results';
+import gcloud from 'google-cloud';
+import gCred from '../../config/gcloud/cred';
+import path from 'path';
+
+var vision = gcloud.vision;
+
 
 exports.storeSavedRace = (req, res) => {
   var race = req.body;
@@ -60,8 +66,30 @@ exports.loadRaceResults = (req, res) => {
   });
 }
 
+exports.analyzePhoto = (req, res) => {
+var types = [
+  'label'
+]
 
+//expecting: req.body.image
+// var image = req.body.image;
+var image = 'http://az616578.vo.msecnd.net/files/2016/07/09/6360363022594514001256241258_SBSB.png';
 
+//FOR DEVELOPMENT
+var visionClient = vision({
+  projectId: gCred.projectId,
+  keyFilename: 'src/config/gcloud/quoted-hella-keyFile.json'
+});
+
+visionClient.detectLabels(image, function(err, result, apiResponse) {
+  if (err) {
+    console.log('Cloud Vision Error: ', err)
+    res.status(500).send(err);
+  } else {
+    console.log(result);
+  }
+});
+}
 
 
 
