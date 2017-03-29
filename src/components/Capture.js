@@ -8,17 +8,19 @@ export default class Capture extends React.Component {
     super(props);
     
   this.state = {  
-    constraints: { audio: false, video: { width: 400, height: 300 } }
+    constraints: { audio: false, video: { width: 400, height: 300 } },
+    file: ''
   };
 
+  this.handleImageChange = this.handleImageChange.bind(this);
+  this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this);
   this.handleStartClick = this.handleStartClick.bind(this);  
   this.takePicture = this.takePicture.bind(this);  
-  this.clearPhoto = this.clearPhoto.bind(this);  
+  this.clearPhoto = this.clearPhoto.bind(this);
   }
 
   componentDidMount() {
     const constraints = this.state.constraints;
-    console.log('constraints: ', constraints);
     const getUserMedia = (params) => (  
       new Promise((successCallback, errorCallback) => {
         navigator.webkitGetUserMedia.call(navigator, params, successCallback, errorCallback);
@@ -57,6 +59,32 @@ export default class Capture extends React.Component {
     this.takePicture();
   }
 
+  handleAnalyzeClick(event){
+    // event.preventDefault();
+    var form = new FormData();
+    var file = this.state.file;
+    console.log('file: ', file);
+    form.append('sampleFile', file, file.name);
+    console.log('form: ', form);
+  }
+
+  handleImageChange(e) {
+    e.preventDefault();
+
+    // let reader = new FileReader();
+    // let file = e.target.files[0];
+
+    // reader.onloadend = () => {
+    //   this.setState({
+    //     file: file
+    //   });
+    // }
+    // reader.readAsDataURL(file);
+    // console.log('this is the file: ', this.state.file);
+
+
+  }  
+
   takePicture() {
     const canvas = document.querySelector('canvas');  
     const context = canvas.getContext('2d');  
@@ -69,15 +97,16 @@ export default class Capture extends React.Component {
     context.drawImage(video, 0, 0, width, height);
 
     const data = canvas.toDataURL('image/png');  
-    photo.setAttribute('src', data);  
+    photo.setAttribute('src', data);
+    this.setState({file: photo});
   }
 
   render() {
     return (
       <div className="capture" >
         <Camera handleStartClick={ this.handleStartClick } />
-        <canvas id="canvas" hidden></canvas>
-        <Photo />
+        <canvas handleImageChange={ this.handleImageChange } id="canvas" hidden></canvas>
+        <Photo handleAnalyzeClick={ this.handleAnalyzeClick }/>
       </div>
     );
   }
@@ -95,8 +124,8 @@ const Camera = (props) => (
 const Photo = (props) =>(
   <div className="output" >
     <img id="photo" alt="Your photo" />
-    <a id="saveButton" onClick={ props.handleSaveClick } >
-      Save Photo
+    <a id="analyzeButton" onClick={ props.handleAnalyzeClick } >
+      Analyze Photo
     </a>
   </div>
 );
