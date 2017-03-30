@@ -9,8 +9,8 @@ export default class RaceMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lat: 37.78,
-      lng: -122.40
+      lat: null,
+      lng: null
     };
     window.markers = [];
   }
@@ -21,7 +21,6 @@ export default class RaceMap extends React.Component {
       timeout: 5000,
       maximumAge: 0
     };
-    
     navigator.geolocation.getCurrentPosition((location) => {
       this.setState({
         lat: location.coords.latitude,
@@ -34,33 +33,25 @@ export default class RaceMap extends React.Component {
     }, (err) => {
       console.log('error occurred: ', err);
     }, options);
-    
   }
 
   componentDidMount() {
-    
     this.getCurrentLocation((ready) => {
       if (ready) {
         // one time map render on page ready
+        console.log('about to render the map');
+        
         this.renderMap();
       }
     });
-    
-    console.log('componentdid mount');
-    this.renderMap();
   }
 
   renderMap() {
     let currLoc = {lat: this.state.lat, lng: this.state.lng};
-    console.log('currLoc', currLoc);
     // save map to window to be able to redraw as current location changes
     window.map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
-      center: currLoc,
-      mapTypeControlOptions: { 
-        mapTypeIds: [],        
-      },
-      fullscreenControl: false
+      zoom: 15,
+      center: currLoc
 
     });
     window.marker = new google.maps.Marker({
@@ -69,14 +60,6 @@ export default class RaceMap extends React.Component {
     });
 
     marker.setAnimation(google.maps.Animation.BOUNCE);
-
-    // Resize stuff
-    google.maps.event.addDomListener(window, "resize", function() {
-       var center = map.getCenter();
-       google.maps.event.trigger(map, "resize");
-       map.setCenter(center); 
-    });
-
   }
 
   render() {

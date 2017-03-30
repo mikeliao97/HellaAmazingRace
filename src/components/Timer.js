@@ -24,15 +24,14 @@ export default class Stopwatch extends React.Component {
       isRunning: false,
       timeElapsed: 0,
     };
-    this.startTimer.bind(this);
   }
 
   componentDidUpdate() {
     // start race on first checkpoint verify
-    // if (this.props.running) {
-    //   this.props.running = false;
-    //   this.toggle();
-    // }
+    if (this.props.running) {
+      this.props.running = false;
+      this.toggle();
+    }
 
     // end race and send results data to be stored in database
     if (this.props.complete) {
@@ -42,10 +41,6 @@ export default class Stopwatch extends React.Component {
       this.saveRaceResults(seconds);
 
     }
-  }
-
-  componentDidMount() {
-    this.startTimer();
   }
 
   saveRaceResults(seconds) {
@@ -73,7 +68,6 @@ export default class Stopwatch extends React.Component {
   }
 
   startTimer() {
-    console.log('started timer')
     this.startTime = Date.now();
     this.timer = setInterval(this.update, 10);
   }
@@ -107,7 +101,7 @@ class TimeElapsed extends React.Component {
   render() {
     const units = this.getUnits();
     return (
-      <div id={this.props.id} >
+      <div id={this.props.id}>
         <span>{leftPad(2, units.min)}:</span>
         <span>{leftPad(2, units.sec)}.</span>
         <span>{units.msec}</span>
@@ -115,4 +109,3 @@ class TimeElapsed extends React.Component {
     );
   }
 }
-
