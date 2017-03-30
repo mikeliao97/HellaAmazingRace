@@ -21,6 +21,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 // import gcloud from 'google-cloud';
 import gCred from './config/gcloud/cred';
+import fileUpload from 'express-fileupload';
 
 //passport
 var Strategy = require('passport-facebook').Strategy;
@@ -72,6 +73,7 @@ var gcloud = require('google-cloud')({
 // server setup
 const app = new express();
 const server = new Server(app);
+app.use(fileUpload());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'static')));

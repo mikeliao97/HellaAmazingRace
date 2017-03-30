@@ -3,6 +3,7 @@ import Results from '../schemas/results';
 import gcloud from 'google-cloud';
 import gCred from '../../config/gcloud/cred';
 import path from 'path';
+import fileUpload from 'express-fileupload';
 
 var vision = gcloud.vision;
 
@@ -67,28 +68,39 @@ exports.loadRaceResults = (req, res) => {
 }
 
 exports.analyzePhoto = (req, res) => {
-var types = [
-  'label'
-]
+  console.log('req files: ', req.file);
+  console.log('got something from client'); 
 
-//expecting: req.body.image
-// var image = req.body.image;
-var image = 'http://az616578.vo.msecnd.net/files/2016/07/09/6360363022594514001256241258_SBSB.png';
-
-//FOR DEVELOPMENT
-var visionClient = vision({
-  projectId: gCred.projectId,
-  keyFilename: 'src/config/gcloud/quoted-hella-keyFile.json'
-});
-
-visionClient.detectLabels(image, function(err, result, apiResponse) {
-  if (err) {
-    console.log('Cloud Vision Error: ', err)
-    res.status(500).send(err);
-  } else {
-    console.log(result);
+  if (!req.files) {
+    return res.status(400).send('No files were uploaded.');
   }
-});
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
+  let sampleFile = req.files.file.data;
+  console.log(sampleFile);
+
+  var types = [
+    'label'
+  ]
+
+  //expecting: req.body.image
+  var image = sampleFile;
+  // var image = 'http://az616578.vo.msecnd.net/files/2016/07/09/6360363022594514001256241258_SBSB.png';
+
+  //FOR DEVELOPMENT
+  var visionClient = vision({
+    projectId: gCred.projectId,
+    keyFilename: 'src/config/gcloud/quoted-hella-keyFile.json'
+  });
+
+  visionClient.detectLabels(image, function(err, result, apiResponse) {
+    if (err) {
+      console.log('Cloud Vision Error: ', err)
+      res.status(500).send(err);
+    } else {
+      console.log(result);
+      res.json(result);
+    }
+  });
 }
 
 

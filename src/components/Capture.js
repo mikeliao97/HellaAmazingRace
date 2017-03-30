@@ -9,10 +9,12 @@ export default class Capture extends React.Component {
     
   this.state = {  
     constraints: { audio: false, video: { width: 400, height: 300 } },
-    file: ''
+    fileData: '',
+    blob: ''
   };
 
-  this.handleImageChange = this.handleImageChange.bind(this);
+  this.dataURItoBlob = this.dataURItoBlob.bind(this);
+  this.download = this.download.bind(this);
   this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this);
   this.handleStartClick = this.handleStartClick.bind(this);  
   this.takePicture = this.takePicture.bind(this);  
@@ -61,29 +63,44 @@ export default class Capture extends React.Component {
 
   handleAnalyzeClick(event){
     // event.preventDefault();
+    let params = {};
+    params.image = this.state.fileData;
+    console.log(params);
+
     var form = new FormData();
-    var file = this.state.file;
-    console.log('file: ', file);
-    form.append('sampleFile', file, file.name);
-    console.log('form: ', form);
+    form.append("file", this.state.blob);
+    console.log(form);
+
+    $.post({
+      url: '/analyzePhoto',
+      data: form,
+      contentType: false,
+      processData: false,
+      success: function(data) {
+        console.log('data back from server:', data);
+      },
+      error: function(err) {
+        console.log('error: ', err);
+      }
+    });
   }
 
-  handleImageChange(e) {
-    e.preventDefault();
+  download(canvas, filename) {
+    var lnk = document.createElement('a'), e;
+    
+    lnk.download = filename;
+    lnk.href = canvas.toDataURL();
 
-    // let reader = new FileReader();
-    // let file = e.target.files[0];
-
-    // reader.onloadend = () => {
-    //   this.setState({
-    //     file: file
-    //   });
-    // }
-    // reader.readAsDataURL(file);
-    // console.log('this is the file: ', this.state.file);
-
-
-  }  
+    if (document.createEvent) {
+      e = document.createEvent("MouseEvents");
+      e.initMouseEvent("click", true, true, window,
+                       0, 0, 0, 0, 0, false, false, false,
+                       false, 0, null);
+        lnk.dispatchEvent(e);
+    } else if (lnk.fireEvent) {
+      lnk.fireEvent("onclick");
+    }
+}
 
   takePicture() {
     const canvas = document.querySelector('canvas');  
@@ -98,14 +115,52 @@ export default class Capture extends React.Component {
 
     const data = canvas.toDataURL('image/png');  
     photo.setAttribute('src', data);
-    this.setState({file: photo});
+
+    this.setState({fileData: data});
+
+    var blob = this.dataURItoBlob(data);
+
+    this.setState({blob: blob});
+
+
+    // var imageDataUrl = atob(canvas.toDataURL('image/png').split(',')[1]);
+    // var array = [];
+    // for(var i = 0; i< imageDataUrl.length; i++) {
+    //   array.push(imageDataUrl.charCodeAt(i));
+    // }
+
+    // var blob=new Blob([new Uint8Array(array)], {type: 'image/png'});
+    // console.log('blob: ', blob);
+
+    // var imageDataUrl = canvas.toDataURL('image/png').substring(22);
+    // var blob = new Blob([imageDataUrl], {type:'image/png'});
+    // var url = window.URL.createObjectURL(blob);
+    // this.setState({blob: blob});
+
+    // this.download(canvas, 'test.png');
+  }
+
+  dataURItoBlob (dataURI){
+    var byteString = atob(dataURI.split(',')[1]);
+
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++)
+    {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    var bb = new Blob([ab], { "type": mimeString });
+    return bb;
   }
 
   render() {
     return (
       <div className="capture" >
         <Camera handleStartClick={ this.handleStartClick } />
-        <canvas handleImageChange={ this.handleImageChange } id="canvas" hidden></canvas>
+        <canvas id="canvas" hidden></canvas>
         <Photo handleAnalyzeClick={ this.handleAnalyzeClick }/>
       </div>
     );
