@@ -173,6 +173,7 @@ body {
   margin-left: 10px;  
 }
 
+
 #runRaceFooterBar {
   position: absolute;  
   left: 0px;
@@ -181,6 +182,46 @@ body {
   height: 50px;
   width: 100%;
 }
+
+
+
+/*
+Styling for checkpoint
+*/
+
+#checkPointContainer {
+  background-color:;
+}
+
+
+/*
+Styling for RouteInfo
+*/
+
+#RouteInfoContainer {
+  width: 100%;
+  height: 100%;
+  /*background: linear-gradient(#232526 , #414345);;*/
+  /*background: linear-gradient(to left, #757F9A , #D7DDE8);*/
+  background: linear-gradient(#FF5F6D , #FFC371);
+  display: flex;  
+  flex-direction: column;
+  align-items: center;
+  overflow-y:scroll;
+
+}
+
+#RouteInfoBlock {
+  width: 80%;
+  height: 70px;
+  background-color: white;
+  border: 10px; 
+  border: 1px gray;
+  margin: 20px;
+}
+
+
+
 
 /*
 writing media queries specific to the iphone
@@ -199,7 +240,4 @@ writing media queries specific to the iphone
   }
 }
 
-#test {
-  z-index: 1000;
-  background-color: blue;
-}
+

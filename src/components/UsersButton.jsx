@@ -66,11 +66,11 @@ export default class Users extends React.Component {
           onRequestClose={this.handleRequestClose.bind(this)}
         >
           <Menu>
-            <MenuItem primaryText="Whitney" rightIcon={person} />
+            <MenuItem primaryText="Han" rightIcon={person} />
 
-            <MenuItem primaryText="Hello" rightIcon={person}/>
-            <MenuItem primaryText="somethingelse" rightIcon={person} />
-            <MenuItem primaryText="Sign out" rightIcon={person}/>
+            <MenuItem primaryText="Edwin" rightIcon={person}/>
+            <MenuItem primaryText="Jason" rightIcon={person} />
+            <MenuItem primaryText="Mike" rightIcon={person}/>
           </Menu>
         </Popover>
       </div>

@@ -22,13 +22,15 @@ export default class BottomNavigationButtons extends Component {
     this.state = {
       selectedIndex: 0,
     };
-    this.select.bind(this);
+    
     this.changeRoute.bind(this);
   }
 
   changeRoute(route) {
     event.preventDefault();
     console.log('trying to change route');
+
+    //Uncomment this line route to go to that place
     this.props.history.push(route);
   }
 
@@ -44,12 +46,12 @@ export default class BottomNavigationButtons extends Component {
            <BottomNavigationItem
             label="Nearby!"
             icon={nearbyIcon}
-            onClick={this.handleClick.bind(this)}
+            onClick={() => this.changeRoute('/nearby')}
           />
           <BottomNavigationItem
             label="Messaging"
             icon={messaging}
-            onClick={this.handleClick.bind(this)}
+            onClick={() => this.changeRoute('/message')}
           />         
         </BottomNavigation>
       </Paper>
