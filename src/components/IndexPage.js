@@ -24,6 +24,7 @@ export default class IndexPage extends React.Component {
       .done((res) => {
         // allow all components access to current user name
         window.currentUser = res.displayName;
+        // window.currentUserPic = res.photos[0].value;
         this.setState({
           displayName: res.displayName,
           userPhoto: res.photos[0].value
