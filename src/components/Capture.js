@@ -121,23 +121,6 @@ export default class Capture extends React.Component {
     var blob = this.dataURItoBlob(data);
 
     this.setState({blob: blob});
-
-
-    // var imageDataUrl = atob(canvas.toDataURL('image/png').split(',')[1]);
-    // var array = [];
-    // for(var i = 0; i< imageDataUrl.length; i++) {
-    //   array.push(imageDataUrl.charCodeAt(i));
-    // }
-
-    // var blob=new Blob([new Uint8Array(array)], {type: 'image/png'});
-    // console.log('blob: ', blob);
-
-    // var imageDataUrl = canvas.toDataURL('image/png').substring(22);
-    // var blob = new Blob([imageDataUrl], {type:'image/png'});
-    // var url = window.URL.createObjectURL(blob);
-    // this.setState({blob: blob});
-
-    // this.download(canvas, 'test.png');
   }
 
   dataURItoBlob (dataURI){
