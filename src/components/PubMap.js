@@ -17,7 +17,15 @@ export default class PubMap extends React.Component {
     window.lineCoords = [];
     window.markers = [];
     window.checkpointsLoaded = false; 
-    // window.length = 
+    window.colorGenerator = function () {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+
     window.count = 0;
 
     // edwin's attempt at players
@@ -146,23 +154,21 @@ export default class PubMap extends React.Component {
     if (window.players[player] === undefined) {
       window.players[player] = {lineCoords: [], userPic: pic};
       if (player !== window.currentUser) {
-        // window.player[player].currentUserPic = this.state.pic
-        window.marker1 = new google.maps.Marker({
+        window.players[player].color = window.colorGenerator();
+        // trying to make player marker dynamic
+        window.players[player].marker = new google.maps.Marker({
           position: {lat: this.state.lat, lng: this.state.lng},
-          // icon: 'http://www.fredx.com/fredDancing.gif',
-          // icon: 'http://www.smwcentral.net/images/ranks/poptartcat/cache/1980.gif',
           icon: pic,
           map: map
         });
-        marker1.setAnimation(google.maps.Animation.BOUNCE);
+        // window.marker1 = new google.maps.Marker({
+        //   position: {lat: this.state.lat, lng: this.state.lng},
+        //   icon: pic,
+        //   map: map
+        // });
+        window.players[player].marker.setAnimation(google.maps.Animation.BOUNCE);
+        // marker1.setAnimation(google.maps.Animation.BOUNCE);
       }
-
-      // window.marker = new google.maps.Marker({
-      //   position: currLoc,
-      //   map: map
-      // });
-      // marker.setAnimation(google.maps.Animation.BOUNCE);
-
 
     } 
     (window.players[player].lineCoords).push(new google.maps.LatLng(lat, lng));
@@ -182,14 +188,15 @@ export default class PubMap extends React.Component {
       });
 
     } else {
-      marker1.setPosition({lat: lat, lng: lng, alt: 0});
+      window.players[player].marker.setPosition({lat: lat, lng: lng, alt: 0});
+      // marker1.setPosition({lat: lat, lng: lng, alt: 0});
       // (marker+name).setPos
       // marker.setPosition({lat: lat, lng: lng, alt: 0});
       lineCoordinatesPath = new google.maps.Polyline({
         // path: window.lineCoords,
         path: window.players[player].lineCoords,
         geodesic: true,
-        strokeColor: '#ff0000'
+        strokeColor: window.players[player].color
       }); 
     }
 
