@@ -30,4 +30,4 @@ bower_components/
 babel_cache/
 
 # Webpack
-# src/static/js/
+src/static/js/
