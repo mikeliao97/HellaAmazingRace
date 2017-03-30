@@ -106,9 +106,6 @@ export default class RunRace extends React.Component {
         </form>
 
         <Timer raceTitle={this.state.title} running={this.state.raceRunning} complete={this.state.raceComplete}/>
-
-        <Capture state={this.state} />
-
         <div style={verifyBtnStyle}>
           <button type="button" className="btn btn-success btn-block" onClick={this.verifyLocation.bind(this)}>I Have Arrived at Current Checkpoint</button>
         </div>
