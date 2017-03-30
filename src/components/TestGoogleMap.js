@@ -21,7 +21,7 @@ export default class RaceMap extends React.Component {
       timeout: 5000,
       maximumAge: 0
     };
-    
+    /*
     navigator.geolocation.getCurrentPosition((location) => {
       this.setState({
         lat: location.coords.latitude,
@@ -34,18 +34,18 @@ export default class RaceMap extends React.Component {
     }, (err) => {
       console.log('error occurred: ', err);
     }, options);
-    
+    */
   }
 
   componentDidMount() {
-    
+    /*
     this.getCurrentLocation((ready) => {
       if (ready) {
         // one time map render on page ready
         this.renderMap();
       }
     });
-    
+    */
     console.log('componentdid mount');
     this.renderMap();
   }
