@@ -153,7 +153,6 @@ export default class PubMap extends React.Component {
     if (window.players[player] === undefined) {
       window.players[player] = {lineCoords: [], userPic: pic};
       if (player !== window.currentUser) {
-<<<<<<< HEAD
         window.players[player].color = window.colorGenerator();
         // trying to make player marker dynamic
         window.players[player].marker = new google.maps.Marker({
@@ -170,18 +169,6 @@ export default class PubMap extends React.Component {
         // marker1.setAnimation(google.maps.Animation.BOUNCE);
       }
 
-=======
-        // window.player[player].currentUserPic = this.state.pic
-        window.marker1 = new google.maps.Marker({
-          position: {lat: this.state.lat, lng: this.state.lng},
-          // icon: 'http://www.fredx.com/fredDancing.gif',
-          // icon: 'http://www.smwcentral.net/images/ranks/poptartcat/cache/1980.gif',
-          icon: pic,
-          map: map
-        });
-        marker1.setAnimation(google.maps.Animation.BOUNCE);
-      }
-
       // window.marker = new google.maps.Marker({
       //   position: currLoc,
       //   map: map
@@ -189,7 +176,6 @@ export default class PubMap extends React.Component {
       // marker.setAnimation(google.maps.Animation.BOUNCE);
 
 
->>>>>>> de032fdccf1d8d8db3def04c66807475f21aa201
     } 
     (window.players[player].lineCoords).push(new google.maps.LatLng(lat, lng));
     console.log('tha players', players);
@@ -208,23 +194,15 @@ export default class PubMap extends React.Component {
       });
 
     } else {
-<<<<<<< HEAD
       window.players[player].marker.setPosition({lat: lat, lng: lng, alt: 0});
       // marker1.setPosition({lat: lat, lng: lng, alt: 0});
-=======
-      marker1.setPosition({lat: lat, lng: lng, alt: 0});
->>>>>>> de032fdccf1d8d8db3def04c66807475f21aa201
       // (marker+name).setPos
       // marker.setPosition({lat: lat, lng: lng, alt: 0});
       lineCoordinatesPath = new google.maps.Polyline({
         // path: window.lineCoords,
         path: window.players[player].lineCoords,
         geodesic: true,
-<<<<<<< HEAD
         strokeColor: window.players[player].color
-=======
-        strokeColor: '#ff0000'
->>>>>>> de032fdccf1d8d8db3def04c66807475f21aa201
       }); 
     }
 
