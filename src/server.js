@@ -53,7 +53,7 @@ if (process.env.NODE_ENV === 'production') {
     clientID: '1016193961847191',
     clientSecret: '3b7240f21274cefcdc425d318a55e43d',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
-    profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
+    profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(small)']
   },
     function(accessToken, refreshToken, profile, cb) {
       return cb(null, profile);
@@ -103,7 +103,9 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
     // on successful login check user credentials and store in DB if not found yet.
-    UserHelpers.checkUserIfNewAndCreate(req.user.id, req.user.displayName)
+    // console.log('FACEBOOK USER',req.user)
+    // console.log('Picture!!!!', req.user._json.picture.data.url)
+    UserHelpers.checkUserIfNewAndCreate(req.user.id, req.user.displayName, req.user.photos[0].value)
       .then(res.redirect('/home'))
       .catch((err) => {
         console.log(err);
@@ -126,6 +128,7 @@ app.get('*', util.isLoggedIn, (req, res) => {
 ///// POST Requests /////
 
 // store saved race
+
 app.post('/saveRace', RaceHelpers.storeSavedRace);
 
 app.post('/loadRace', RaceHelpers.loadRaceData);
