@@ -19,7 +19,9 @@ import util from './config/utility';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-
+// import gcloud from 'google-cloud';
+import gCred from './config/gcloud/cred';
+import fileUpload from 'express-fileupload';
 
 //passport
 var Strategy = require('passport-facebook').Strategy;
@@ -41,8 +43,8 @@ if (process.env.NODE_ENV === 'production') {
 } else {  // local development facebook auth info (test app)
   console.log('>>in development environment');
   passport.use(new Strategy({
-    clientID: '634348233425883',
-    clientSecret: '63219faae4bd288de878264586212ac2',
+    clientID: '1947534422132704',
+    clientSecret: 'c7340399067cf036c05f76c461903d61',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
   },
@@ -60,10 +62,18 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
+//gcloud Authenticating
+var gcloud = require('google-cloud')({
+  projectId: gCred.projectId,
+  credentials: __dirname + '/src/config/gcloud/quoted-hella-keyFile.json',
+  key: gCred.key
+});
+
 
 // server setup
 const app = new express();
 const server = new Server(app);
+app.use(fileUpload());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'static')));
@@ -118,7 +128,7 @@ app.post('/saveRaceResults', RaceHelpers.saveRaceResults);
 
 app.post('/loadRaceResults', RaceHelpers.loadRaceResults);
 
-
+app.post('/analyzePhoto', RaceHelpers.analyzePhoto);
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';
