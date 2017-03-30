@@ -26,6 +26,7 @@
     "cookie-parser": "^1.4.3",
     "cross-env": "^3.1.4",
     "ejs": "^2.5.1",
+    "eon-map": "^1.0.2",
     "express": "^4.14.0",
     "express-fileupload": "^0.1.2",
     "express-session": "^1.15.1",
@@ -36,6 +37,7 @@
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "path": "^0.12.7",
     "react": "^15.3.1",
     "react-bootstrap-table": "^3.1.1",
     "react-dom": "^15.3.1",
@@ -45,5 +47,7 @@
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.14.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.0"
+  }
 }

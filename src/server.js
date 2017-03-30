@@ -43,10 +43,10 @@ if (process.env.NODE_ENV === 'production') {
 } else {  // local development facebook auth info (test app)
   console.log('>>in development environment');
   passport.use(new Strategy({
-    clientID: '1947534422132704',
-    clientSecret: 'c7340399067cf036c05f76c461903d61',
+    clientID: '1688391161459186',
+    clientSecret: '5246f436cebd0d4b62ef8ec2791c5ed0',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
-    profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
+    profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(small)']
   },
     function(accessToken, refreshToken, profile, cb) {
       return cb(null, profile);
@@ -97,7 +97,9 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
     // on successful login check user credentials and store in DB if not found yet.
-    UserHelpers.checkUserIfNewAndCreate(req.user.id, req.user.displayName)
+    // console.log('FACEBOOK USER',req.user)
+    // console.log('Picture!!!!', req.user._json.picture.data.url)
+    UserHelpers.checkUserIfNewAndCreate(req.user.id, req.user.displayName, req.user.photos[0].value)
       .then(res.redirect('/home'))
       .catch((err) => {
         console.log(err);
@@ -120,6 +122,7 @@ app.get('*', util.isLoggedIn, (req, res) => {
 ///// POST Requests /////
 
 // store saved race
+
 app.post('/saveRace', RaceHelpers.storeSavedRace);
 
 app.post('/loadRace', RaceHelpers.loadRaceData);

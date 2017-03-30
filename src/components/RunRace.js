@@ -17,12 +17,14 @@ export default class RunRace extends React.Component {
       markers: null,
       title: null,
       raceComplete: false,
-      raceRunning: false
+      raceRunning: false,
+      opponent: ''
     };
 
     // get users name for saving race results when page is loading.
     $.get('/username')
       .done((res) => {
+        window.currentUserPic = res.photos[0].value;
         window.currentUser = res.displayName;
       });
   }
@@ -91,9 +93,16 @@ export default class RunRace extends React.Component {
         <h1 className="text-center"> Run a Race</h1>
         <h3 className="text-center"> {this.state.title ? `Get Ready to start ${this.state.title}!` : ''}</h3>
 
+
+
         <form>
           <input type="text" value={this.state.searchedRace} onChange={this.searchedRaceNameChange.bind(this)}/>
           <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
+        </form>
+
+        <form>
+          <input type="text" value={this.state.opponent}/>
+          <button type="button" className="btn btn-primary" >Find Opponent</button>
         </form>
 
         <Timer raceTitle={this.state.title} running={this.state.raceRunning} complete={this.state.raceComplete}/>
