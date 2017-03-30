@@ -19,12 +19,16 @@ import util from './config/utility';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+/* Need this for material UI */
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+// import gcloud from 'google-cloud';
+import gCred from './config/gcloud/cred';
+import fileUpload from 'express-fileupload';
 
 //passport
 var Strategy = require('passport-facebook').Strategy;
@@ -48,7 +52,6 @@ if (process.env.NODE_ENV === 'production') {
   passport.use(new Strategy({
     clientID: '1016193961847191',
     clientSecret: '3b7240f21274cefcdc425d318a55e43d',
-    // callbackURL: 'http://884d47a9.ngrok.io/auth/facebook/callback',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
   },
@@ -66,10 +69,18 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
+//gcloud Authenticating
+var gcloud = require('google-cloud')({
+  projectId: gCred.projectId,
+  credentials: __dirname + '/src/config/gcloud/quoted-hella-keyFile.json',
+  key: gCred.key
+});
+
 
 // server setup
 const app = new express();
 const server = new Server(app);
+app.use(fileUpload());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'static')));
@@ -123,7 +134,7 @@ app.post('/saveRaceResults', RaceHelpers.saveRaceResults);
 
 app.post('/loadRaceResults', RaceHelpers.loadRaceResults);
 
-
+app.post('/analyzePhoto', RaceHelpers.analyzePhoto);
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';

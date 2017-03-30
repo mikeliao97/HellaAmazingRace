@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "quoted-hellaamazingrace",
+  "private_key_id": "d16232e3ead297863fb2b109ba33249281559f12",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDGU/87xqs1mUqu\nZ8yrYQVKKbgxw4W+SBbu+O9hLP0Ae+dSCHLO7rdEpQsg290BafhV3pIujx9ki0G7\nP3MAon2+X1X7uE1KXbENDhHOCTiWLdD/pCq5ZJJU7zlDRWihEeFQ12koaqsUuC/g\nbzeMuSM7NkgqcBT03ZoZwVj4CAmcpP7KqGNKvWgxB1o/UjRzDBadf/Cop4IXOIFz\nbzuhms0IJVyi77Rbzsp3jN4GoToILLjmrULbZWlWKzsnDU0EWK19bLFSuFkHuMSz\n37k4xAr/sGgndLDcHwrq5/5TerS3pLy3LdDhnfK2EX2f19rXfyzeSWkpey2dml8B\nunarCeiVAgMBAAECggEBAIJEDbMPjMkJxLnFR/ORKE5MFMXq7N/MrfOM4n5rdEpr\nF8cT8YTl2s5lsWeFwiX5mrmcFVwrea0qoqQAyuKx1/HA4NMTfQDJhU9T3HH+MILD\n2TDwfXeEDXFoJ6592nlhKyNUOafoWDKlwBykMFJoEDIGN2RYdgtXuq4MBwnzDY0q\n0obJTMQbbA4vmnzdBPh8KnnV8WpAZjHXxML/Zon8rpBAbGgbc3/c28tQZmPqe0sv\nXr/XwIKsvJaxNwCxk7cWdWLAhiiefG1C6v2uHFVkQFR4ARaKUPswb/FJEgm7Li3e\nbfxWnM4ypDZGomXGHh449w0VOvj+7rpIg9cISFBI4MECgYEA4kAH2Di9FiRE5CXq\n26aW/hJ4RJpI1JuDunl7lMNHiPWxVNCBC3hx6ik2c2NSsQNwK0qetV6oz266x04L\nLfS3vAc9GnnesJYqLMjm6lbl9yvETLJxyUHC1poxgFHu/2IDfzUih/OMqlbi7GTW\nwMWHRf4BsgdhUc+sae+Xc/B6Y3kCgYEA4GgQPq1Twfoin1JqcLubvxkp7pdnlXSU\n67yo4yb0yV2MNSjkdnXo5bqP7VF1DbNsaPrf9fa9lLWsxSU8L8fJTzqPf8PyvJsY\ne2RSic2t8WzkbRueIKaXRsDGRJyLXSsFYPvlqx/D1jeazQ5fvrtxcRAwQnMBm52k\nsyrgRqEx6v0CgYBNhE6rwFTYnziTSoJ7G0qkZkOajZnibh3l5/V1dKqvvC4ztvRf\nr7an2dL0GdWdHGZ0Dq7tyS7hUzjfTFf8ONoyq/A9f//SVMDCc1rac0d7Nh2dgY4G\nvGc7C71mD6xpB3XXQadBGSraucYp5CrIBWVhj7OZAXpQg2y5JwOnD39/UQKBgB5g\nF6rUPV0pZZxZRI0j5+4TEuj3146UbEAIlnfA4yuKnRrpARvD1BWcjjTabNTA77C6\nHKynjHvfp5Y79wykp2wxChGKTYYYHFU/fCipDZ17VuQp89qJkjqCh5Pr+LVQyHab\nQjhKoXCSsEKHapBfwPhD77Re6t3MlemmqRsGYMJlAoGBANVOBwUlV8e+AnxMOaoQ\nkXmVSrqod5kryCj825dyUcEj5YJvJsM5JTMaG8ycCo58lcyERI9Yqpn5AjyI3Bn6\nbk0WDbvSFikca9K5KQGBEgmpLRODOegeb/pYOmTZ7844vwQAcXh83cVtYvHdCotz\nbUHoR8DHfdPIZgpaBEcXyBEl\n-----END PRIVATE KEY-----\n",
+  "client_email": "quoted-hellaamazingrace-servic@quoted-hellaamazingrace.iam.gserviceaccount.com",
+  "client_id": "105643800065655863633",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/quoted-hellaamazingrace-servic%40quoted-hellaamazingrace.iam.gserviceaccount.com"
+}
