@@ -299,7 +299,9 @@ export default class PubMap extends React.Component {
 
   render() {
     return (
-      <div id="map"></div>
+      <div  className="raceMapContainer" >
+        <div id="map"></div>
+      </div>
     );
   }
 
