@@ -19,8 +19,8 @@ const routes = (
     <IndexRoute component={LoginPage}/>
     <Route path="/home" component={IndexPage}/>
     <Route path="/CreateRace" component = {CreateRace}/>
-    <Route path="/RunRace" component = {RunRace}/>    
   </Route>
+  <Route path="/RunRace" component = {RunRace}/>    
   <Route path="/TestMap" component = {TestMap} />
   <Route path="/Checkpoint" component={CheckPoint} />
   <Route path="/route_info" component={RouteInfo} />

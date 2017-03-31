@@ -5,7 +5,9 @@ import PubMap from './PubMap';
 import Autocomplete from './Autocomplete';
 import Timer from './Timer';
 import Capture from './Capture';
-
+import RaisedButton from 'material-ui/RaisedButton';
+import UsersButton from './UsersButton.jsx'
+import BottomNavigationButtons from './BottomNavigation.jsx';
 
 
 export default class RunRace extends React.Component {
@@ -17,12 +19,14 @@ export default class RunRace extends React.Component {
       markers: null,
       title: null,
       raceComplete: false,
-      raceRunning: false
+      raceRunning: false,
+      opponent: ''
     };
 
     // get users name for saving race results when page is loading.
     $.get('/username')
       .done((res) => {
+        window.currentUserPic = res.photos[0].value;
         window.currentUser = res.displayName;
       });
   }
@@ -77,32 +81,21 @@ export default class RunRace extends React.Component {
       alert(`You are still ${Math.floor(distance)} meters away.`);
     }
   }
+  handleClick(e) {
+    console.log('props', this.props);
+  }
 
   render() {
 
-    const verifyBtnStyle = {
-      'width': '800px',
-      'margin-left': 'auto',
-      'margin-right': 'auto'
-    };
-
-    return (
-      <div className="text-center">
-        <h1 className="text-center"> Run a Race</h1>
-        <h3 className="text-center"> {this.state.title ? `Get Ready to start ${this.state.title}!` : ''}</h3>
-
-        <form>
-          <input type="text" value={this.state.searchedRace} onChange={this.searchedRaceNameChange.bind(this)}/>
-          <button type="button" className="btn btn-primary" onClick={this.loadRace.bind(this)}>Load Race</button>
-        </form>
-
-        <Timer raceTitle={this.state.title} running={this.state.raceRunning} complete={this.state.raceComplete}/>
-        <div style={verifyBtnStyle}>
-          <button type="button" className="btn btn-success btn-block" onClick={this.verifyLocation.bind(this)}>I Have Arrived at Current Checkpoint</button>
-        </div>
-
-
+    return (      
+      <div className="raceMapContainer">
         <PubMap markers={this.state.markers}/>
+        <RaisedButton id="test" onClick={this.handleClick.bind(this)} />
+        <div id="runRaceNavBar" onClick={this.handleClick.bind(this)} > 
+            <UsersButton id="users" />
+            <Timer id="timer" raceTitle={'Amazing Racing'} running={true} />
+        </div>
+        <BottomNavigationButtons history={this.props.history} id="runRaceFooterBar" />
       </div>
     );
   }
