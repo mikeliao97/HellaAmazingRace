@@ -53,6 +53,15 @@ export default class RunRace extends React.Component {
     });
   }
 
+  distanceAway() {
+    let currLocation = new google.maps.LatLng( window.currentLocation[0], window.currentLocation[1] );
+    let checkpointLocation = new google.maps.LatLng( window.markers[0].getPosition().lat(), window.markers[0].getPosition().lng() );
+    let distance = google.maps.geometry.spherical.computeDistanceBetween(currLocation, checkpointLocation);
+
+    return distance;
+  }
+
+
   verifyLocation() {
     // if not running, start running race when checking start checkpoint location
     if (!this.state.raceRunning) {

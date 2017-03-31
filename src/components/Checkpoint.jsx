@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
+import Spinner from './Spinner'
 // import CameraIcon from '../static/img/camera-icon.png'
 
 
@@ -35,9 +36,7 @@ export default class Checkpoint extends Component {
            <h1> Task </h1>
            <h4> Beat Jason at Connect </h4>
         </div>
-        <div id="space"> 
-        </div>
-        <input id="fileUploader" type="file" src="img/camera-icon.png" />
+        <Spinner />        
         <div className="camera-iconBox">
           <img  className="img-rounded camera-iconBox" src="img/camera-icon.png" onClick={this.handleClick}/>
         </div>
