@@ -6,23 +6,21 @@ export default class Capture extends React.Component {
 
   constructor(props) {
     super(props);
-    
-  this.state = {  
-    constraints: { audio: false, video: { width: 400, height: 300 } },
-    fileData: '',
-    blob: ''
-  };
+    this.state = {
+      blob: ''
+    };
+
 
   this.dataURItoBlob = this.dataURItoBlob.bind(this);
   this.download = this.download.bind(this);
-  this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this);
+  this.handleAnalyzeClickBlob = this.handleAnalyzeClickBlob.bind(this);
   this.handleStartClick = this.handleStartClick.bind(this);  
   this.takePicture = this.takePicture.bind(this);  
   this.clearPhoto = this.clearPhoto.bind(this);
   }
 
   componentDidMount() {
-    const constraints = this.state.constraints;
+    const constraints = this.props.state.constraints;
     const getUserMedia = (params) => (  
       new Promise((successCallback, errorCallback) => {
         navigator.webkitGetUserMedia.call(navigator, params, successCallback, errorCallback);
@@ -48,7 +46,7 @@ export default class Capture extends React.Component {
     const canvas = document.querySelector('canvas');  
     const photo = document.getElementById('photo');  
     const context = canvas.getContext('2d');  
-    const { width, height } = this.state.constraints.video;  
+    const { width, height } = this.props.state.constraints.video;  
     context.fillStyle = '#FFF';  
     context.fillRect(0, 0, width, height);
 
@@ -61,23 +59,20 @@ export default class Capture extends React.Component {
     this.takePicture();
   }
 
-  handleAnalyzeClick(event){
-    // event.preventDefault();
-    let params = {};
-    params.image = this.state.fileData;
-    console.log(params);
-
+  handleAnalyzeClickBlob(event){
+    var self = this;    
     var form = new FormData();
     form.append("file", this.state.blob);
     console.log(form);
 
     $.post({
-      url: '/analyzePhoto',
+      url: '/analyzePhoto/category/' + this.props.state.category,
       data: form,
       contentType: false,
       processData: false,
       success: function(data) {
         console.log('data back from server:', data);
+        self.setState({result: data[0]});
       },
       error: function(err) {
         console.log('error: ', err);
@@ -87,10 +82,8 @@ export default class Capture extends React.Component {
 
   download(canvas, filename) {
     var lnk = document.createElement('a'), e;
-    
     lnk.download = filename;
     lnk.href = canvas.toDataURL();
-
     if (document.createEvent) {
       e = document.createEvent("MouseEvents");
       e.initMouseEvent("click", true, true, window,
@@ -107,7 +100,7 @@ export default class Capture extends React.Component {
     const context = canvas.getContext('2d');  
     const video = document.querySelector('video');  
     const photo = document.getElementById('photo');  
-    const { width, height } = this.state.constraints.video;
+    const { width, height } = this.props.state.constraints.video;
 
     canvas.width = width;  
     canvas.height = height;  
@@ -116,25 +109,19 @@ export default class Capture extends React.Component {
     const data = canvas.toDataURL('image/png');  
     photo.setAttribute('src', data);
 
-    this.setState({fileData: data});
-
     var blob = this.dataURItoBlob(data);
-
     this.setState({blob: blob});
+    console.log('check the state: ', this.state.blob);
   }
 
   dataURItoBlob (dataURI){
     var byteString = atob(dataURI.split(',')[1]);
-
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
     var ab = new ArrayBuffer(byteString.length);
     var ia = new Uint8Array(ab);
-    for (var i = 0; i < byteString.length; i++)
-    {
+    for (var i = 0; i < byteString.length; i++){
         ia[i] = byteString.charCodeAt(i);
     }
-
     var bb = new Blob([ab], { "type": mimeString });
     return bb;
   }
@@ -144,26 +131,30 @@ export default class Capture extends React.Component {
       <div className="capture" >
         <Camera handleStartClick={ this.handleStartClick } />
         <canvas id="canvas" hidden></canvas>
-        <Photo handleAnalyzeClick={ this.handleAnalyzeClick }/>
+        <Photo handleAnalyzeClickBlob={ this.handleAnalyzeClickBlob }/>
       </div>
     );
   }
 };
 
 const Camera = (props) => (
-    <div className="camera">
+  <div className="camera">
     <video id="video"></video>
-    <a id="startButton" onClick={ props.handleStartClick }>
-      Take photo
-    </a>
+    <div>
+      <a id="startButton" onClick={ props.handleStartClick }>
+        Take photo
+      </a>
+    </div>
   </div>
 );
 
 const Photo = (props) =>(
   <div className="output" >
     <img id="photo" alt="Your photo" />
-    <a id="analyzeButton" onClick={ props.handleAnalyzeClick } >
-      Analyze Photo
-    </a>
+    <div>
+      <a id="analyzeButton" onClick={ props.handleAnalyzeClickBlob } >
+        Analyze Photo
+      </a>
+    </div>
   </div>
 );

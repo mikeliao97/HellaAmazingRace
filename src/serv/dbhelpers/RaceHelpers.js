@@ -67,24 +67,47 @@ exports.loadRaceResults = (req, res) => {
   });
 }
 
+exports.getObjective = (req, res) => {
+  if(categoryType !== 'label') {
+    let categoryType = req.params.categoryType;
+    let currentLng = req.params.currentLng;
+    let currentLat = req.params.currentLat;
+    let radius = 50 //meters
+    let key = gCred.key;
+
+    var https = require('https');
+    var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&amplocation=" + currentLat + "," + currentLng + "&ampradius=" + radius + "&ampkeyword=" + categoryType;
+    console.log('url: ', url);
+    https.get(url, function(response) {
+      var body ='';
+      response.on('data', function(chunk) {
+        body += chunk;
+      });
+      response.on('end', function() {
+        var places = JSON.parse(body);
+        var locations = places.results;
+        var randLoc = locations[Math.floor(Math.random() * locations.length)];
+
+        res.json(randLoc);
+      });
+    }).on('error', function(e) {
+      console.log("Got error: " + e.message);
+    });
+  } else {
+    console.log('im here');
+    var objectives = ['chair', 'machine', 'musical instrument', 'toy', 'car', 'bus'];
+    var randomObject = objects[Math.floor(Math.random() * objectives.length)];
+    res.json(randomObject);
+  }
+}
+
 exports.analyzePhoto = (req, res) => {
-  console.log('req files: ', req.file);
-  console.log('got something from client'); 
+  let categoryType = req.params.categoryType;
 
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
-  let sampleFile = req.files.file.data;
-  console.log(sampleFile);
-
-  var types = [
-    'label'
-  ]
-
-  //expecting: req.body.image
-  var image = sampleFile;
-  // var image = 'http://az616578.vo.msecnd.net/files/2016/07/09/6360363022594514001256241258_SBSB.png';
+  let image = req.files.file.data;
 
   //FOR DEVELOPMENT
   var visionClient = vision({
@@ -92,16 +115,20 @@ exports.analyzePhoto = (req, res) => {
     keyFilename: 'src/config/gcloud/quoted-hella-keyFile.json'
   });
 
-  visionClient.detectLabels(image, function(err, result, apiResponse) {
-    if (err) {
-      console.log('Cloud Vision Error: ', err)
+  var analysisFunctions = {
+    'label': visionClient.detectLabels(image),
+    'logos': visionClient.detectLogos(image),
+    'landmarks': visionClient.detectLandmarks(image)
+  };
+
+  analysisFunctions[categoryType]
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((error) => {
       res.status(500).send(err);
-    } else {
-      console.log(result);
-      res.json(result);
-    }
-  });
-}
+    })
+};
 
 
 

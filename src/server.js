@@ -138,7 +138,9 @@ app.post('/saveRaceResults', RaceHelpers.saveRaceResults);
 
 app.post('/loadRaceResults', RaceHelpers.loadRaceResults);
 
-app.post('/analyzePhoto', RaceHelpers.analyzePhoto);
+app.post('/analyzePhoto/category/:categoryType', RaceHelpers.analyzePhoto);
+
+app.get('/getObjective/category/:categoryType/longitude/:currentLng/latitude/:currentLat', RaceHelpers.getObjective);
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';
