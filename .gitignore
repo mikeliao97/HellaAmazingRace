@@ -30,7 +30,6 @@ bower_components/
 babel_cache/
 
 # Webpack
-src/static/js/
-
-src/static/js/bundle.js
-src/static/js/bundle.js.map
+# src/static/js/
+# src/static/js/bundle.js
+# src/static/js/bundle.js.map

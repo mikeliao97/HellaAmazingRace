@@ -233,7 +233,8 @@ Styling for checkpoint
   /*background: linear-gradient(#232526 , #414345);;*/
   /*background: linear-gradient(to left, #757F9A , #D7DDE8);*/
 
-  background: linear-gradient(#FF5F6D , #FFC371);
+  /*background: linear-gradient(#FF5F6D , #FFC371);*/
+  background: linear-gradient(#8e9eab , #eef2f3);
   display: flex;  
   flex-direction: column;
   justify-content: center; 
