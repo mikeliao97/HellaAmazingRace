@@ -34,9 +34,8 @@ export default class Layout extends React.Component {
                             {/*<a href="RunRace">Run Races</a>*/}
                             <Link to='/RunRace'> Run Race </Link>
                         </li>
-                        <li>
-                            {/*<a href="TestMap"> Test Map </a> */}
-                            <Link to="/TestMap"> Test Map </Link>
+                        <li> 
+                            <Link to='/LoadRace'> Load Race </Link>
                         </li>
                     </ul>
                 </div>
