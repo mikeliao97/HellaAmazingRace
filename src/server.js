@@ -37,8 +37,8 @@ var Strategy = require('passport-facebook').Strategy;
 if (process.env.NODE_ENV === 'production') {
   console.log('>>in production environment');
   passport.use(new Strategy({
-    clientID: '630724287121611',
-    clientSecret: '39b0e9bbb91cdb757f264099dff78b0b',
+    clientID: '1016193961847191',
+    clientSecret: '3b7240f21274cefcdc425d318a55e43d',
     callbackURL: 'https://wicked-amazing-race.herokuapp.com/auth/facebook/callback',
 
     profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
