@@ -18,7 +18,7 @@ export default class RunRace extends React.Component {
       title: null,
       raceComplete: false,
       raceRunning: false,
-      opponent: ''
+      raceName: null
     };
 
     // get users name for saving race results when page is loading.
@@ -79,6 +79,11 @@ export default class RunRace extends React.Component {
       alert(`You are still ${Math.floor(distance)} meters away.`);
     }
   }
+  searchType(e){
+    this.setState({
+      raceName: e.target.value
+    })
+  }
 
   render() {
 
@@ -101,9 +106,10 @@ export default class RunRace extends React.Component {
         </form>
 
         <form>
-          <input type="text" value={this.state.opponent}/>
-          <button type="button" className="btn btn-primary" >Find Opponent</button>
+          <input type="text" value={this.state.raceName} onChange={this.searchType.bind(this)}/>
+          <button type="button" className="btn btn-primary" onClick={ () => { console.log('hi') }}>Load Racers</button>
         </form>
+
 
         <Timer raceTitle={this.state.title} running={this.state.raceRunning} complete={this.state.raceComplete}/>
 
@@ -114,7 +120,7 @@ export default class RunRace extends React.Component {
         </div>
 
 
-        <PubMap markers={this.state.markers}/>
+        <PubMap markers={this.state.markers} raceName={this.state.raceName}/>
       </div>
     );
   }

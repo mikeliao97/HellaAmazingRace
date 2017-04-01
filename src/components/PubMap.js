@@ -33,6 +33,8 @@ export default class PubMap extends React.Component {
   }
 
   componentDidMount() {
+
+
     this.pubnubConnect();
 
     this.getCurrentLocation((ready) => {
@@ -60,7 +62,8 @@ export default class PubMap extends React.Component {
         pic: window.currentUserPic,
         lat: this.state.lat,
         lng: this.state.lng, 
-        markers: this.props.markers
+        markers: this.props.markers,
+        race: this.props.raceName
       }
     });
   }
@@ -112,19 +115,16 @@ export default class PubMap extends React.Component {
   }
 
   redrawMap(payload) {
+
+    console.log(payload.message.race)
     console.log('payload ', payload.message.player);
     console.log('updating current location marker');
     let lat = payload.message.lat;
+    let lineCoordinatesPath;
     let lng = payload.message.lng;
     let player = payload.message.player;
     let pic = payload.message.pic;
-
-    // if (player !== window.currentUser) {
-    //   this.setState({
-    //     olat: player.message.lat,
-    //     olng: player.message.lng
-    //   });
-    // }
+    let race = payload.message.race;
 
     if (payload.message.markers && !window.checkpointsLoaded) {
       let markersArr = this.generateMarkersArray(payload.message.markers);
@@ -146,43 +146,27 @@ export default class PubMap extends React.Component {
     }
 
 
-    // map.setCenter({lat: lat, lng: lng, alt: 0});
-    // marker.setPosition({lat: lat, lng: lng, alt: 0});
-
     // if there's is a new player add it to the list and create a new marker.
-    if (window.players[player] === undefined) {
-      window.players[player] = {lineCoords: [], userPic: pic};
-      if (player !== window.currentUser) {
-        window.players[player].color = window.colorGenerator();
-        // trying to make player marker dynamic
-        window.players[player].marker = new google.maps.Marker({
-          position: {lat: this.state.lat, lng: this.state.lng},
-          icon: pic,
-          map: map
-        });
-        // window.marker1 = new google.maps.Marker({
-        //   position: {lat: this.state.lat, lng: this.state.lng},
-        //   icon: pic,
-        //   map: map
-        // });
-        window.players[player].marker.setAnimation(google.maps.Animation.BOUNCE);
-        // marker1.setAnimation(google.maps.Animation.BOUNCE);
-      }
+    if (race === this.props.raceName) {
 
-      // window.marker = new google.maps.Marker({
-      //   position: currLoc,
-      //   map: map
-      // });
-      // marker.setAnimation(google.maps.Animation.BOUNCE);
+      if (window.players[player] === undefined ) {
+        window.players[player] = {lineCoords: [], userPic: pic};
+        if (player !== window.currentUser && race === this.props.raceName) {
+          window.players[player].color = window.colorGenerator();
+          // trying to make player marker dynamic
+          window.players[player].marker = new google.maps.Marker({
+            position: {lat: this.state.lat, lng: this.state.lng},
+            icon: pic,
+            map: map
+          });
+          window.players[player].marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      } 
 
+      (window.players[player].lineCoords).push(new google.maps.LatLng(lat, lng));
+      console.log('tha players', players);
+    }
 
-    } 
-    (window.players[player].lineCoords).push(new google.maps.LatLng(lat, lng));
-    console.log('tha players', players);
-
-    // old code
-    // lineCoords.push(new google.maps.LatLng(lat, lng));
-    let lineCoordinatesPath;
     if (player === window.currentUser) {
       map.setCenter({lat: lat, lng: lng, alt: 0});
       marker.setPosition({lat: lat, lng: lng, alt: 0});
@@ -194,22 +178,28 @@ export default class PubMap extends React.Component {
       });
 
     } else {
-      window.players[player].marker.setPosition({lat: lat, lng: lng, alt: 0});
-      // marker1.setPosition({lat: lat, lng: lng, alt: 0});
-      // (marker+name).setPos
-      // marker.setPosition({lat: lat, lng: lng, alt: 0});
-      lineCoordinatesPath = new google.maps.Polyline({
-        // path: window.lineCoords,
-        path: window.players[player].lineCoords,
-        geodesic: true,
-        strokeColor: window.players[player].color
-      }); 
+
+      if ( race === this.props.raceName ) {
+
+        window.players[player].marker.setPosition({lat: lat, lng: lng, alt: 0});
+        lineCoordinatesPath = new google.maps.Polyline({
+          path: window.players[player].lineCoords,
+          geodesic: true,
+          strokeColor: window.players[player].color
+        }); 
+
+      }
+
     }
 
 
-
-    lineCoordinatesPath.setMap(map);
-    // lineCoordinatesPath.setMap(map);
+    if (player === window.currentUser) {
+      lineCoordinatesPath.setMap(map);
+    } else {
+      if ( race === this.props.raceName) {
+        lineCoordinatesPath.setMap(map);
+      }
+    }
   }
 
   createMarker(location, order) {
@@ -299,7 +289,8 @@ export default class PubMap extends React.Component {
 
   render() {
     return (
-      <div id="map"></div>
+      <div id="map">
+      </div>
     );
   }
 }
