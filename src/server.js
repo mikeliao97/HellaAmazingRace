@@ -136,7 +136,9 @@ app.post('/loadRaceResults', RaceHelpers.loadRaceResults);
 
 app.post('/analyzePhoto/category/:categoryType', RaceHelpers.analyzePhoto);
 
-app.get('/getObjective/:categoryType/:currentLng/:currentLat', RaceHelpers.getObjective);
+// app.get('/getObjective/:categoryType/:currentLng/:currentLat', RaceHelpers.getObjective); //GEOLOCATIONN
+
+app.get('/getObjective/:categoryType', RaceHelpers.getObjective);
 
 
 // wildcard route for react routing

@@ -16,22 +16,23 @@ import Spinner from './Spinner'
 export default class Checkpoint extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isMobile: false, 
       constraints: { audio: false, video: { width: 400, height: 300 } },
-      imageFile: '',
-      category: 'label',
-      objective: 'bell',
+      category: '',
+      objective: '',
       result: [],
       blob: '',
-      lat: -33.8670522,
-      lon: 151.1957362,
+      spun: false,
+      // lat: -33.8670522,
+      // lon: 151.1957362,
+      file: ''
     };
-  this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this);
-  this.handleClick = this.handleClick.bind(this);
-  this.handleImageFile = this.handleImageFile.bind(this);
-  this.getCategory = this.getCategory.bind(this);
+
+    this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleImageFile = this.handleImageFile.bind(this);
+    this.getCategory = this.getCategory.bind(this);
   }
 
   // componentDidMount() {
@@ -42,24 +43,27 @@ export default class Checkpoint extends Component {
   //   }
   //   console.log('isMobile: ', this.state.isMobile);
   // }  
-  getCategory(val) {    
-    this.setState({category: val}, function() {
+
+  getCategory(val) { 
+
+    this.setState({category: val, spun: true}, function() {
       console.log('set the value into from spinner ', val);
-      var str = `/getObjective/${this.state.category}/${this.state.lon}/${this.state.lat}`
+      var str = `/getObjective/${this.state.category}/`
+      // var str = `/getObjective/${this.state.category}/${this.state.lon}/${this.state.lat}` //GEOLOCATIONN   
       console.log('str', str);
       $.get({
         url: str,                      
         success: (data) => {
           console.log('data back from server:', data);
-          this.setState({result: data[0]});
+            this.setState({objective: data});
         },
         error: function(err) {
           console.log('error: ', err);
         }
       });
     });
-
   }
+
   handleClick() {
     console.log('clicked');
     var uploader = $('#fileUploader');
@@ -68,9 +72,10 @@ export default class Checkpoint extends Component {
 
   handleAnalyzeClick(event){
     var self = this;
-    var form = new FormData();
-    form.append("file", this.state.imageFile);
-    console.log(form);
+    // var form = new FormData();
+    // form.append("file", this.state.imageFile);
+    var form = this.state.file;
+    console.log('form: ', form);
 
     $.post({
       url: '/analyzePhoto/category/' + this.state.category,
@@ -95,43 +100,25 @@ export default class Checkpoint extends Component {
       return;
     } else {
       var imageFile = uploader.files["0"];
-      this.setState({imageFile: imageFile});
+      // this.setState({imageFile: imageFile});
+      var form = new FormData();
+      form.append("file", imageFile);
+      this.setState({file: form});
     }
   }
-      // <div id="checkPointContainer">
-      //   <div id="checkPointTask"> 
-      //      <h1> Task </h1>
-      //      <h4> Beat Jason at Connect </h4>
-      //      { objectivePassed ? <p> Nice Find! </p> : <p> Sorry. It look like you took a picture of {this.state.result} </p> } 
-      //   </div>
-      //   <div id="space">
-      //   </div>
-      //   { this.state.isMobile && 
-      //     <div>
-      //       <input id="fileUploader" type="file" src="img/camera-icon.png" accept="image/*;capture=camera" onChange={this.handleImageFile} />
-      //       <div className="camera-iconBox">
-      //         <img  className="img-rounded camera-iconBox" src="img/camera-icon.png" onClick={this.handleClick}/>
-      //         <img className="img-rounded camera-iconBox" src="img/camera-icon2.png" onClick={this.handleAnalyzeClick}/>   
-      //       </div>
-      //     </div> 
-      //   }
-      //   { !this.state.isMobile && 
-      //     <Capture state={this.state} />
-      //   }
-      // </div>
 
   render() {
-    const objectivePassed = this.state.result.indexOf(this.state.objective) !== -1;
+    const objectivePassed = this.state.result.indexOf(this.state.objective) !== -1; 
 
     return (
             <div id="checkPointContainer">
         <div id="checkPointTask"> 
            <h1> Task </h1>
-           <h4> Beat Jason at Connect </h4>
+           { this.state.spun && <h4> Your task is to take a picture of a {this.state.objective} </h4> }
            { objectivePassed ? <p> Nice Find! </p> : <p> Sorry. It look like you took a picture of {this.state.result} </p> } 
         </div>
         <Spinner getCategory={this.getCategory} />        
-        <input id="fileUploader" type="file" src="img/camera-icon.png" accept="image/*;capture=camera" onChange={this.handleImageFile} />
+        <input id="fileUploader" type="file" src="img/camera-icon.png" style={{display: 'none'}} accept="image/*;capture=camera" onChange={this.handleImageFile} />
             <div className="camera-iconBox">
               <img  className="img-rounded camera-iconBox" src="img/camera-icon.png" onClick={this.handleClick}/>
               <img className="img-rounded camera-iconBox" src="img/camera-icon2.png" onClick={this.handleAnalyzeClick}/>   
