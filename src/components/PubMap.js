@@ -30,6 +30,7 @@ export default class PubMap extends React.Component {
     // edwin's attempt at players
     // object of arrays where player name is the key and lineCoords is the value
     window.players = {};
+    window.races = [];
   }
 
   componentDidMount() {
@@ -52,20 +53,49 @@ export default class PubMap extends React.Component {
   }
 
   componentDidUpdate() {
+    // console.log('componentDidUpdate');
     window.currentLocation = [this.state.lat, this.state.lng];
-    // console.log(window.currentUser);
-    // when current location in state changes, redraw map with path
-    pubnub.publish({
-      channel: pnChannel, 
-      message: {
-        player: window.currentUser,
-        pic: window.currentUserPic,
-        lat: this.state.lat,
-        lng: this.state.lng, 
-        markers: this.props.markers,
-        race: this.props.raceName
+    // console.log(window.currentLocation);    
+    if (players[currentUser] !== undefined) {
+      let lineCoordsArray = players[currentUser].lineCoords;
+      // console.log('party', players[currentUser].lineCoords.length);
+      console.log('currentLocation', currentLocation);
+      console.log('previousLocation', [lineCoordsArray[lineCoordsArray.length - 1].lat(), lineCoordsArray[lineCoordsArray.length - 1].lng()]);
+      
+      // Geo stabilization - it has to move far enough but cannot error and go too far.
+      if ( Math.abs(this.state.lat - lineCoordsArray[lineCoordsArray.length - 1].lat()) > 0.00003 || Math.abs(this.state.lng - lineCoordsArray[lineCoordsArray.length - 1].lng()) > 0.000075 ) {
+        if (Math.abs(this.state.lat - lineCoordsArray[lineCoordsArray.length - 1].lat()) < 0.001 || Math.abs(this.state.lng - lineCoordsArray[lineCoordsArray.length - 1].lng()) < 0.001 ) {
+      // if (true) { // this is for all the moves
+          console.log('moving')
+          pubnub.publish({
+            channel: pnChannel, 
+            message: {
+              player: window.currentUser,
+              pic: window.currentUserPic,
+              lat: this.state.lat,
+              lng: this.state.lng, 
+              markers: this.props.markers,
+              race: this.props.raceName
+            }
+          }); 
+        }    
+      } else {
+        console.log('you did not move enough');
       }
-    });
+    } else {
+      console.log('players not yet defined', players);
+      pubnub.publish({
+        channel: pnChannel, 
+        message: {
+          player: window.currentUser,
+          pic: window.currentUserPic,
+          lat: this.state.lat,
+          lng: this.state.lng, 
+          markers: this.props.markers,
+          race: this.props.raceName
+        }
+      });
+    } 
   }
 
   renderMap() {
@@ -125,6 +155,10 @@ export default class PubMap extends React.Component {
     let player = payload.message.player;
     let pic = payload.message.pic;
     let race = payload.message.race;
+
+    if (window.races.indexOf(race) === -1) {
+      window.races.push(race);
+    }
 
     if (payload.message.markers && !window.checkpointsLoaded) {
       let markersArr = this.generateMarkersArray(payload.message.markers);
