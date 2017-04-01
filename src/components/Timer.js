@@ -29,6 +29,7 @@ export default class Stopwatch extends React.Component {
   componentDidUpdate() {
     // start race on first checkpoint verify
     if (this.props.running) {
+      console.log(this.props.running)
       this.props.running = false;
       this.toggle();
     }
