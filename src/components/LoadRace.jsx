@@ -93,7 +93,9 @@ export default class LoadRace extends React.Component {
     return (
       <div className="raceMapContainer">
       {
-        this.state.showMap ? (<RunRace markers={this.state.markers} raceName={this.state.title.trim()} />): 
+        this.state.showMap ? (<RunRace history={this.props.history} 
+          markers={this.state.markers} 
+          raceName={this.state.title.trim()} />): 
         <div>         
           <h1> pls render </h1>  
           <div className="dropdown">
