@@ -11,6 +11,7 @@ import RunRace from './components/RunRace';
 import TestMap from './components/TestMap';
 import CheckPoint from './components/Checkpoint.jsx';
 import RouteInfo from './components/Route_info';
+import LoadRace from './components/LoadRace.jsx';
 
 
 const routes = (
@@ -24,6 +25,7 @@ const routes = (
   <Route path="/TestMap" component = {TestMap} />
   <Route path="/Checkpoint" component={CheckPoint} />
   <Route path="/route_info" component={RouteInfo} />
+  <Route path="/loadRace" component={LoadRace} />
   <Route path="*" component={NotFoundPage}/>
   </div>
 );

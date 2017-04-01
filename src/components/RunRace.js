@@ -102,9 +102,9 @@ export default class RunRace extends React.Component {
         <RaisedButton id="test" onClick={this.handleClick.bind(this)} />
         <div id="runRaceNavBar" onClick={this.handleClick.bind(this)} > 
             <UsersButton id="users" />
-            <Timer id="timer" raceTitle={'Amazing Racing'} running={true} />
+            <Timer id="timer" raceTitle={'Amazing Racing'} running={true} />            
         </div>
-        <BottomNavigationButtons history={this.props.history} id="runRaceFooterBar" />
+        <BottomNavigationButtons history={this.props.history} distanceAway={this.distanceAway} id="runRaceFooterBar" />
       </div>
     );
   }

@@ -60,7 +60,8 @@ export default class PubMap extends React.Component {
         pic: window.currentUserPic,
         lat: this.state.lat,
         lng: this.state.lng, 
-        markers: this.props.markers
+        markers: this.props.markers,
+        race: 'greenfield'
       }
     });
   }

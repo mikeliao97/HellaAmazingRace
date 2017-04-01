@@ -40,8 +40,14 @@ export default class BottomNavigationButtons extends Component {
   }
 
   handleOpen() {
-    console.log('button clicked', this);
-    this.setState({open: true});
+    var distance = this.props.distanceAway() 
+    console.log('distance', distance);
+    if (distance < 50) {
+      this.props.history.push('/checkPoint');
+    } else {
+      console.log('button clicked', this);
+      this.setState({open: true});
+    }
   };
 
   handleClose() {
