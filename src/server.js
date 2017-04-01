@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
   passport.use(new Strategy({
     clientID: '630724287121611',
     clientSecret: '39b0e9bbb91cdb757f264099dff78b0b',
-    callbackURL: 'https://secure-reef-34714.herokuapp.com/auth/facebook/callback',
+    callbackURL: 'https://wicked-amazing-race.herokuapp.com/auth/facebook/callback',
 
     profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
   },
