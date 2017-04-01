@@ -23,16 +23,18 @@ export default class Stopwatch extends React.Component {
     this.state = this.initialState = {
       isRunning: false,
       timeElapsed: 0,
-    };
+    }
   }
 
   componentDidUpdate() {
     // start race on first checkpoint verify
+    /*
     if (this.props.running) {
       console.log(this.props.running)
       this.props.running = false;
       this.toggle();
     }
+    */
 
     // end race and send results data to be stored in database
     if (this.props.complete) {

@@ -160,6 +160,7 @@ export default class PubMap extends React.Component {
       window.races.push(race);
     }
 
+    console.log('payload', payload.message.markers)
     if (payload.message.markers && !window.checkpointsLoaded) {
       let markersArr = this.generateMarkersArray(payload.message.markers);
 

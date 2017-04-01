@@ -14,6 +14,7 @@ export default class RunRace extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       searchedRace: 'test',
       markers: null,
@@ -21,7 +22,10 @@ export default class RunRace extends React.Component {
       raceComplete: false,
       raceRunning: false,
       raceName: null
-    };
+    }
+
+
+    // this.setState({markers: this.props.markers});
 
         // get users name for saving race results when page is loading.
     $.get('/username')
@@ -31,6 +35,9 @@ export default class RunRace extends React.Component {
       });
   }
 
+  componentWillMount() {
+    this.setState({markers: this.props.markers})
+  }
   
 
   searchedRaceNameChange(e) {
@@ -57,7 +64,7 @@ export default class RunRace extends React.Component {
 
   distanceAway() {
     let currLocation = new google.maps.LatLng( window.currentLocation[0], window.currentLocation[1] );
-    let checkpointLocation = new google.maps.LatLng( window.markers[0].getPosition().lat(), window.markers[0].getPosition().lng() );
+    let checkpointLocation = new google.maps.LatLng(window.markers[0].getPosition().lat(), window.markers[0].getPosition().lng() );
     let distance = google.maps.geometry.spherical.computeDistanceBetween(currLocation, checkpointLocation);
 
     return distance;
@@ -93,11 +100,15 @@ export default class RunRace extends React.Component {
     }
   }
 
+  handleClick(e) {
+    console.log('props', this.props);
+  }
+  
   render() {
 
     return (      
       <div className="raceMapContainer">
-        <PubMap markers={this.state.markers}/>
+        <PubMap markers={this.props.markers} raceName={this.props.raceName} />
         <RaisedButton id="test" onClick={this.handleClick.bind(this)} />
         <div id="runRaceNavBar" onClick={this.handleClick.bind(this)} > 
             <UsersButton id="users" />
