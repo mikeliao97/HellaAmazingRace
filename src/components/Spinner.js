@@ -71,10 +71,10 @@ export default class Spinner extends Component {
     var text = this.options[randIndex];
     console.log('text', text);
     console.log('className', className);
-    $('#canvas').addClass(className);
+    $('#canvas').removeClass(className).addClass(className);
 
-    setTimeout(() => {this.drawText(text)}, 2000);
 
+    setTimeout(() => {this.drawText(text)}, 2000);    
     this.props.getCategory(text);    
   }
 

@@ -67,6 +67,19 @@ exports.loadRaceResults = (req, res) => {
   });
 }
 
+exports.getRaces = (req, res) => {
+  Race.find({})
+  .then((data) =>  {    
+    console.log('data', data);
+    res.json(data);
+  })
+  .catch((err) => {
+    console.log('errr', err);
+    res.status(500).send(err);
+  })
+}
+
+
 exports.getObjective = (req, res) => {
 
   let categoryType = req.params.categoryType; 

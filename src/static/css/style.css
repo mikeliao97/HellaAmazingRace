@@ -133,7 +133,6 @@ body {
 
 
 .raceMapContainer {
-  background-color: orange;
   height: 100%;
   width: 100%;
   z-index: 98;
@@ -290,8 +289,10 @@ Flex box implementation
 
 .spinLogos {
   animation-name: spinLogos;  
-  animation-duration: 2s;
+  animation-duration: 2s;  
+  animation-iteration-count: 1;
   -webkit-animation-fill-mode: forwards;
+
 }
 @keyframes spinLogos { 
   0% {transform:rotate(0deg); }
@@ -301,6 +302,7 @@ Flex box implementation
 .spinLandmarks{
   animation-name: spinLandmarks;  
   animation-duration: 2s;
+  animation-iteration-count: 1;
   -webkit-animation-fill-mode: forwards;
 }
 @keyframes spinLandmarks { 
@@ -311,6 +313,7 @@ Flex box implementation
 .spinLabels{
   animation-name: spinLabels;  
   animation-duration: 2s;
+  animation-iteration-count: 1;
   -webkit-animation-fill-mode: forwards;
 }
 @keyframes spinLabels { 
@@ -376,6 +379,10 @@ writing media queries specific to the iphone
 
 }
 
+
+.highZ {
+  z-index: 1000;
+}
 
 
 

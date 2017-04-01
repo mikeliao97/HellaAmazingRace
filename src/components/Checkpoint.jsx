@@ -47,16 +47,16 @@ export default class Checkpoint extends Component {
       console.log('set the value into from spinner ', val);
       var str = `/getObjective/${this.state.category}/${this.state.lon}/${this.state.lat}`
       console.log('str', str);
-      $.get({
-        url: str,                      
-        success: (data) => {
-          console.log('data back from server:', data);
-          this.setState({result: data[0]});
-        },
-        error: function(err) {
-          console.log('error: ', err);
-        }
-      });
+      // $.get({
+      //   url: str,                      
+      //   success: (data) => {
+      //     console.log('data back from server:', data);
+      //     this.setState({result: data[0]});
+      //   },
+      //   error: function(err) {
+      //     console.log('error: ', err);
+      //   }
+      // });
     });
 
   }

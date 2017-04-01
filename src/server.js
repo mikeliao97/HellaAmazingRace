@@ -51,8 +51,8 @@ if (process.env.NODE_ENV === 'production') {
 } else {  // local development facebook auth info (test app)
   console.log('>>in development environment');
   passport.use(new Strategy({
-    clientID: '1947534422132704',
-    clientSecret: 'c7340399067cf036c05f76c461903d61',
+    clientID: '1016193961847191',
+    clientSecret: '3b7240f21274cefcdc425d318a55e43d',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(small)']
   },
@@ -137,6 +137,9 @@ app.post('/loadRaceResults', RaceHelpers.loadRaceResults);
 app.post('/analyzePhoto/category/:categoryType', RaceHelpers.analyzePhoto);
 
 app.get('/getObjective/:categoryType/:currentLng/:currentLat', RaceHelpers.getObjective);
+
+
+app.get('/Races', RaceHelpers.getRaces);
 
 
 // wildcard route for react routing

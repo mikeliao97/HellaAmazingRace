@@ -8,7 +8,9 @@ import Capture from './Capture';
 import RaisedButton from 'material-ui/RaisedButton';
 import UsersButton from './UsersButton.jsx'
 import BottomNavigationButtons from './BottomNavigation.jsx';
+import loadRaceDropDown from './loadRaceDropDown'
 import RunRace from './RunRace'
+
 
 export default class LoadRace extends React.Component {
 
@@ -21,7 +23,9 @@ export default class LoadRace extends React.Component {
       raceComplete: false,
       raceRunning: false,
       opponent: '',
-      showMap: false
+      showMap: false,
+      races: [],
+      value: 1
     };
 
     // get users name for saving race results when page is loading.
@@ -30,6 +34,29 @@ export default class LoadRace extends React.Component {
         window.currentUserPic = res.photos[0].value;
         window.currentUser = res.displayName;
       });
+
+    $.get('/Races')
+     .then((data) => {
+      var races = data.map((race) => {
+        return race.title;
+      })
+
+      console.log('races on client', races);
+      this.setState({races: races});
+    });
+
+     var otherThis = this;
+
+     $('html').on('click', 'li', function(){
+
+      const raceName = $(this).text();
+      alert($(this).text());
+      otherThis.setState({searchedRace: raceName}, function() {
+        otherThis.loadRace();      
+        otherThis.setState({showMap: true});
+      });
+    });
+
   }
 
   searchedRaceNameChange(e) {
@@ -57,20 +84,25 @@ export default class LoadRace extends React.Component {
   }
 
 
-
   render() {
     return (
       <div className="raceMapContainer">
       {
-        this.state.showMap ? 
-        <RunRace />
-        : 
-        (
-          <div>
-            <input type='text' onChange={this.searchedRaceNameChange.bind(this)} />
-            <button title="Learn More" color="#841584" onClick={this.loadRace.bind(this)}> LoadRace </button>
+        this.state.showMap ? (<RunRace />): 
+        <div>         
+          <h1> pls render </h1>  
+          <div className="dropdown">
+            <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+            <span className="caret"></span></button>
+            <ul className="dropdown-menu">
+              {
+                this.state.races.map((race) => {
+                  return (<li> <a href="#"> {race} </a> </li>);
+                })
+              }
+            </ul>
           </div>
-        )
+        </div>
       }
       </div>
     );
