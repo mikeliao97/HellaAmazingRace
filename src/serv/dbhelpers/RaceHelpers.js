@@ -98,9 +98,9 @@ exports.getObjective = (req, res) => {
   //   });
   // } else {
     var objectives = {
-      animals: ['cat', 'dog', 'bird', 'hamster', 'aligator'],
+      animals: ['cat', 'dog', 'bird', 'person', 'aligator'],
       travel: ['car', 'bus', 'train', 'boat', 'plane'],
-      stationaries: ['table', 'musical instrument', 'pencil', 'chair', 'toy']
+      stationaries: ['table', 'musical instrument', 'pencil', 'chair', 'toy', 'computer']
       };
     var randomObject = objectives[category][Math.floor(Math.random() * objectives[category].length)];
     res.json(randomObject);

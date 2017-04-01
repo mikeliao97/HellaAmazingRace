@@ -13,6 +13,9 @@ import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 export default class Spinner extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      spins: 0
+    }
 
     this.options = ["animals", "travel", "stationaries"];
     //Warning, this optionsClasses must be in the same order
@@ -58,8 +61,9 @@ export default class Spinner extends Component {
     console.log('text', text);
     console.log('className', className);
     $('#canvas').addClass(className);
+    this.setState((prevState) => ({spins: prevState.spins+=1}));
     setTimeout(() => {this.drawText(text)}, 2000);
-    this.props.getCategory(text);
+    this.props.getCategory(text, this.state.spins);
   }
 
 

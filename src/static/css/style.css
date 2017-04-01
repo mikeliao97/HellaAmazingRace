@@ -194,8 +194,6 @@ body {
 
 
 
-
-
 /*
 Styling for RouteInfo
 */
@@ -272,6 +270,8 @@ Flex box implementation
   margin-bottom: 10%;
   display: -webkit-flex;
   display: flex;
+  flex-flow: row;
+  justify-content: center;  
 }
 
 .camera-iconBox img {
@@ -280,9 +280,17 @@ Flex box implementation
   margin: 10px;
 }
 
-#checkPointTask {
+#canvas {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;    
 }
 
+#checkPointTask {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
 
 #space {
   flex: 1; 
