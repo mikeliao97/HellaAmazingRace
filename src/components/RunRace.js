@@ -23,13 +23,15 @@ export default class RunRace extends React.Component {
       opponent: ''
     };
 
-    // get users name for saving race results when page is loading.
+        // get users name for saving race results when page is loading.
     $.get('/username')
       .done((res) => {
         window.currentUserPic = res.photos[0].value;
         window.currentUser = res.displayName;
       });
   }
+
+  
 
   searchedRaceNameChange(e) {
     this.setState({

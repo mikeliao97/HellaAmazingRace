@@ -33,6 +33,7 @@ exports.storeSavedRace = (req, res) => {
 };
 
 exports.loadRaceData = (req, res) => {
+  console.log('req body', req.body);
   Race.findOne(req.body).exec((err, raceData) => {
     if (!raceData) {
       res.send('Race doesn\'t exist');
@@ -71,11 +72,9 @@ exports.loadRaceResults = (req, res) => {
 exports.getRaces = (req, res) => {
   Race.find({})
   .then((data) =>  {    
-    console.log('data', data);
     res.json(data);
   })
   .catch((err) => {
-    console.log('errr', err);
     res.status(500).send(err);
   })
 }

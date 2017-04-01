@@ -124,7 +124,7 @@ export default class Checkpoint extends Component {
            { (this.state.spun && this.state.attempts === 0) && <h1> Take Photo Of {this.state.objective} </h1> }
            { this.state.attempts > 0 && 
              <div>
-             { !objectivePassed ? 
+             { objectivePassed ? 
               <button type="button" className="btn btn-success" style={{height: '70px'}}>Passed. Continue to Next Checkpoint</button>
               : 
               <div className="alert alert-danger">

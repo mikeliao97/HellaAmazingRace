@@ -67,18 +67,24 @@ export default class LoadRace extends React.Component {
   }
 
   loadRace() {
-    let raceTitle = { title: this.state.searchedRace };
-
+    var searchedRace = this.state.searchedRace.trim(); 
+    let raceTitle = { title: searchedRace };
+    
     $.post('/loadRace', raceTitle, (response) => {
       if (response === 'Race doesn\'t exist') {
         alert('Race title doesn\'t exist, search again.');
       } else {
         window.checkpointsLoaded = false;
+        console.log('response', response);
         this.setState({
           markers: response,
           title: this.state.searchedRace,
           showMap: true
+        }, function() {
+          console.log('the markers are here', this.state.markers);
         });
+
+
       }
     });
   }
@@ -88,7 +94,7 @@ export default class LoadRace extends React.Component {
     return (
       <div className="raceMapContainer">
       {
-        this.state.showMap ? (<RunRace />): 
+        this.state.showMap ? (<RunRace markers={this.state.markers} />): 
         <div>         
           <h1> pls render </h1>  
           <div className="dropdown">
