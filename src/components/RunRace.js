@@ -20,7 +20,7 @@ export default class RunRace extends React.Component {
       title: null,
       raceComplete: false,
       raceRunning: false,
-      opponent: ''
+      raceName: null
     };
 
         // get users name for saving race results when page is loading.
@@ -91,9 +91,6 @@ export default class RunRace extends React.Component {
     } else {
       alert(`You are still ${Math.floor(distance)} meters away.`);
     }
-  }
-  handleClick(e) {
-    console.log('props', this.props);
   }
 
   render() {
