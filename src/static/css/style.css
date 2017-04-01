@@ -284,9 +284,52 @@ Flex box implementation
 
 
 #space {
-  background-color: yellow;
-  flex: 1;
+  flex: 1; 
 }
+
+
+.spinLogos {
+  animation-name: spinLogos;  
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: forwards;
+}
+@keyframes spinLogos { 
+  0% {transform:rotate(0deg); }
+  100% {transform:rotate(42000deg); } 
+}
+
+.spinLandmarks{
+  animation-name: spinLandmarks;  
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: forwards;
+}
+@keyframes spinLandmarks { 
+  0% {transform:rotate(0deg); }
+  100% {transform:rotate(45000deg); } 
+}
+
+.spinLabels{
+  animation-name: spinLabels;  
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: forwards;
+}
+@keyframes spinLabels { 
+  0% {transform:rotate(0deg); }
+  100% {transform:rotate(48000deg); } 
+}
+
+
+
+
+
+
+.makeSmaller {
+  width: 350px;
+  height: 350px;
+}
+
+
+
 
 #fileUploader {
   /*display: none;*/
@@ -332,5 +375,8 @@ writing media queries specific to the iphone
   }
 
 }
+
+
+
 
 

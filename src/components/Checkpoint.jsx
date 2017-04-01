@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import Capture from './Capture'
+import Spinner from './Spinner'
+
 // import CameraIcon from '../static/img/camera-icon.png'
 
 
@@ -22,12 +24,14 @@ export default class Checkpoint extends Component {
       category: 'label',
       objective: 'bell',
       result: [],
-      blob: ''
+      blob: '',
+      lat: -33.8670522,
+      lon: 151.1957362,
     };
-  
   this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this);
   this.handleClick = this.handleClick.bind(this);
   this.handleImageFile = this.handleImageFile.bind(this);
+  this.getCategory = this.getCategory.bind(this);
   }
 
   // componentDidMount() {
@@ -38,7 +42,24 @@ export default class Checkpoint extends Component {
   //   }
   //   console.log('isMobile: ', this.state.isMobile);
   // }  
+  getCategory(val) {    
+    this.setState({category: val}, function() {
+      console.log('set the value into from spinner ', val);
+      var str = `/getObjective/${this.state.category}/${this.state.lon}/${this.state.lat}`
+      console.log('str', str);
+      $.get({
+        url: str,                      
+        success: (data) => {
+          console.log('data back from server:', data);
+          this.setState({result: data[0]});
+        },
+        error: function(err) {
+          console.log('error: ', err);
+        }
+      });
+    });
 
+  }
   handleClick() {
     console.log('clicked');
     var uploader = $('#fileUploader');
@@ -109,15 +130,12 @@ export default class Checkpoint extends Component {
            <h4> Beat Jason at Connect </h4>
            { objectivePassed ? <p> Nice Find! </p> : <p> Sorry. It look like you took a picture of {this.state.result} </p> } 
         </div>
-        <div id="space">
-        </div>
-          <div>
-            <input id="fileUploader" type="file" src="img/camera-icon.png" accept="image/*;capture=camera" onChange={this.handleImageFile} />
+        <Spinner getCategory={this.getCategory} />        
+        <input id="fileUploader" type="file" src="img/camera-icon.png" accept="image/*;capture=camera" onChange={this.handleImageFile} />
             <div className="camera-iconBox">
               <img  className="img-rounded camera-iconBox" src="img/camera-icon.png" onClick={this.handleClick}/>
               <img className="img-rounded camera-iconBox" src="img/camera-icon2.png" onClick={this.handleAnalyzeClick}/>   
             </div>
-          </div> 
       </div>
     )
   }

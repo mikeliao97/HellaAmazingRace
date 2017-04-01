@@ -68,15 +68,26 @@ exports.loadRaceResults = (req, res) => {
 }
 
 exports.getObjective = (req, res) => {
-  if(categoryType !== 'label') {
-    let categoryType = req.params.categoryType;
+
+  let categoryType = req.params.categoryType; 
+  let currentLng = req.params.currentLng;
+  let currentLat = req.params.currentLat;
+  console.log('currentLn', currentLng)
+  console.log('currentLat', currentLat)
+  console.log('categoryType', categoryType);
+  res.status(200).send({
+    'categoryType': categoryType,
+    'lat': currentLat,
+    'ln': currentLng,
+  });
+  if(categoryType !== 'label') {    
     let currentLng = req.params.currentLng;
     let currentLat = req.params.currentLat;
     let radius = 50 //meters
     let key = gCred.key;
 
     var https = require('https');
-    var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "key=" + key + "&amplocation=" + currentLat + "," + currentLng + "&ampradius=" + radius + "&ampkeyword=" + categoryType;
+    var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + currentLat + "," + currentLng + "&radius=" + radius + "&keyword=" + categoryType + "&key=" + key;
     console.log('url: ', url);
     https.get(url, function(response) {
       var body ='';

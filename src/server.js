@@ -121,10 +121,6 @@ app.get('/username', util.isLoggedIn, (req, res) => {
   res.send(req.user);
 });
 
-// wildcard route for react routing
-app.get('*', util.isLoggedIn, (req, res) => {
-  res.sendFile(path.join(__dirname, 'static/index-static.html'));
-});
 
 ///// POST Requests /////
 
@@ -140,7 +136,13 @@ app.post('/loadRaceResults', RaceHelpers.loadRaceResults);
 
 app.post('/analyzePhoto/category/:categoryType', RaceHelpers.analyzePhoto);
 
-app.get('/getObjective/category/:categoryType/longitude/:currentLng/latitude/:currentLat', RaceHelpers.getObjective);
+app.get('/getObjective/:categoryType/:currentLng/:currentLat', RaceHelpers.getObjective);
+
+
+// wildcard route for react routing
+app.get('*', util.isLoggedIn, (req, res) => {
+  res.sendFile(path.join(__dirname, 'static/index-static.html'));
+});
 
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';
