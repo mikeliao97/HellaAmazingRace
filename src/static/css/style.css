@@ -193,8 +193,6 @@ body {
 
 
 
-
-
 /*
 Styling for RouteInfo
 */
@@ -266,21 +264,32 @@ Non flex box implementation
 Flex box implementation
 */
 .camera-iconBox {
-  
   height: 20%;
   width: 20%;
   margin-bottom: 10%;
-  margin-left: -4%;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;  
 }
 
 .camera-iconBox img {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
+  margin: 10px;
+}
+
+#canvas {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;    
 }
 
 #checkPointTask {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
-
 
 #space {
   flex: 1; 

@@ -13,32 +13,22 @@ import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 export default class Spinner extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      
-    };
+      spins: 0
+    }
 
-    this.options = ["landmarks", "logos", "label"];
+    this.options = ["animals", "travel", "stationaries"];
     //Warning, this optionsClasses must be in the same order
     // and have corresponding css classes to the options
     this.optionsClasses = ["spinLandmarks", "spinLogos", "spinLabels"];
-
-    
-    
-    
     this.startAngle = 10;
     this.arc = Math.PI / (this.options.length / 2);
     this.spinTimeout = null;
-
     this.spinArcStart = 10;
     this.spinTime = 0;
     this.spinTimeTotal = 0;
-
     this.ctx;
-
     this.totalAngle = 434233241;
-    
-
     /*
     this.rotateWheel.bind(this);
     this.drawRouletteWheel.bind(this);
@@ -66,18 +56,15 @@ export default class Spinner extends Component {
 
   makeSpin() {    
     var randIndex = Math.floor(Math.random() * this.options.length);
-
     var className = this.optionsClasses[randIndex];
     var text = this.options[randIndex];
     console.log('text', text);
     console.log('className', className);
-    $('#canvas').removeClass(className).addClass(className);
-
-
-    setTimeout(() => {this.drawText(text)}, 2000);    
-    this.props.getCategory(text);    
+    $('#canvas').addClass(className);
+    this.setState((prevState) => ({spins: prevState.spins+=1}));
+    setTimeout(() => {this.drawText(text)}, 2000);
+    this.props.getCategory(text, this.state.spins);
   }
-
 
 
 
