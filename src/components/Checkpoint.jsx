@@ -21,7 +21,7 @@ export default class Checkpoint extends Component {
       constraints: { audio: false, video: { width: 400, height: 300 } },
       category: '',
       objective: '',
-      result: '',
+      result: [],
       blob: '',
       spun: false,
       spins: 0,
@@ -112,15 +112,26 @@ export default class Checkpoint extends Component {
   }
 
   render() {
-    const objectivePassed = this.state.result.indexOf(this.state.objective) !== -1;    
+    var otherThis = this;
+    const objectivePassed = this.state.result.reduce(function(acc, val) {
+      return acc || val.includes(otherThis.state.objective.toLowerCase());
+    }, false);
+
     return (
       <div id="checkPointContainer">
         <div id="checkPointTask"> 
-           <h1> Task </h1>
-           { this.state.spun && <h4> Your task is to take a picture of a {this.state.objective} </h4> }
+           { !this.state.spun && <h1> Hit the Wheel of Doom </h1>}
+           { (this.state.spun && this.state.attempts === 0) && <h1> Take Photo Of {this.state.objective} </h1> }
            { this.state.attempts > 0 && 
              <div>
-             { objectivePassed ? <p> Nice Find! </p> : <p> Sorry. It look like you took a picture of {this.state.result.join(', ')} </p> }
+             { !objectivePassed ? 
+              <button type="button" className="btn btn-success" style={{height: '70px'}}>Passed. Continue to Next Checkpoint</button>
+              : 
+              <div className="alert alert-danger">
+                <strong>Sorry!</strong> You took a photo of: {this.state.result.slice(0, 3).join(', ')}. Your objective was: {this.state.objective}.
+              </div>
+               }
+
              </div> 
            }
         </div>
