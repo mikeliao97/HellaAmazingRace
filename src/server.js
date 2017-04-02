@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
     clientSecret: '3b7240f21274cefcdc425d318a55e43d',
     callbackURL: 'https://wicked-amazing-race.herokuapp.com/auth/facebook/callback',
 
-    profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)']
+    profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(small)']
   },
     function(accessToken, refreshToken, profile, cb) {
       return cb(null, profile);

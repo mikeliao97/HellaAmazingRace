@@ -21,7 +21,8 @@ export default class RunRace extends React.Component {
       title: null,
       raceComplete: false,
       raceRunning: false,
-      raceName: null
+      raceName: null,
+      showPopUp: false
     }
 
 

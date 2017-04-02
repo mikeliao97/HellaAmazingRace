@@ -43,6 +43,7 @@ export default class BottomNavigationButtons extends Component {
     var distance = this.props.distanceAway() 
     console.log('distance', distance);
     if (distance < 50) {
+          
       this.props.history.push('/checkPoint');
     } else {
       console.log('button clicked', this);
